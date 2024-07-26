@@ -39,9 +39,7 @@ astro_patch.smd({
   'filename': __filename
 }, async (context, message) => {
   try { 
-  await message.reply("Konnichiwa from QUEEN-ALYA how may i help you 💓");
-  
-    const { commands } = require("../lib");
+   const { commands } = require("../lib");
     if (message.split(" ")[0]) {
       let responseLines = [];
       const command = commands.find(cmd => cmd.pattern === message.split(" ")[0].toLowerCase());
