@@ -39,7 +39,8 @@ astro_patch.smd({
   'filename': __filename
 }, async (context, message) => {
   try { 
-   const { commands } = require("../lib");
+  
+    const { commands } = require("../lib");
     if (message.split(" ")[0]) {
       let responseLines = [];
       const command = commands.find(cmd => cmd.pattern === message.split(" ")[0].toLowerCase());
@@ -75,17 +76,17 @@ astro_patch.smd({
     }
     if (menuStyle === 1 || Config.menu.trim().startsWith('1') || Config.menu.toLowerCase().includes('menu1')) {
       header = "┏﹝ *" + Config.botname + "* ﹞";
-      lineSeparator = "┃ ✗";
+      lineSeparator = "┃۞";
       commandPrefix = '┌『';
       commandSuffix = '』';
       lineBreak = " | ";
       footer = "\n└═════════════⋙";
     } else if (menuStyle === 2 || Config.menu.trim().startsWith('2') || Config.menu.toLowerCase().includes("menu2")) {
       header = "┌═[ *" + Config.botname + "* ]";
-      lineSeparator = '¤│▸';
+      lineSeparator = '☯│▸';
       commandPrefix = '┌〈';
       commandSuffix = '〉';
-      lineBreak = "¤│▸ ";
+      lineBreak = "☯│▸ ";
       footer = "\n│╰══════════···▸▸";
     } else {
       header = "╭〘  " + Config.botname + "  〙";
@@ -108,7 +109,7 @@ astro_patch.smd({
 
     const currentTime = context.time;
     const currentDate = context.date;
-    let menuContent = "\n  " + header + "\n  " + lineSeparator + " *ᴏᴡɴᴇʀ:* " + Config.ownername + "\n  " + lineSeparator + " *ᴜᴘᴛɪᴍᴇ:* " + runtime(process.uptime()) + "\n  " + lineSeparator + " *ʀᴀᴍ ᴜsᴀɢᴇ:* " + formatp(os.totalmem() - os.freemem()) + "\n  " + lineSeparator + " *ᴛɪᴍᴇ:* " + currentTime + "\n  " + lineSeparator + " *ᴅᴀᴛᴇ:* " + currentDate + "\n  " + lineSeparator + " *ᴄᴏᴍᴍᴀɴᴅs:* " + commands.length + "\n  " + lineSeparator + " *ᴜsᴀɢᴇ ᴛʀᴇɴᴅ:* " + trend_usage + "\n  " + lineSeparator + " *ᴅᴀᴛᴀʙᴀsᴇ:* " + database_info + "\n  " + footer + "\n                   ┌┤✑  Thanks for Choosing QUEEN_ALYA\n│└────────────┈·:·.☽✧        \n│*©2024-2099 STAR KING*\n└─────────────────┈.·:·.☽✧\n  \n" + readmore + "\n";
+    let menuContent = "\n  " + header + "\n  " + lineSeparator + " *ᴏᴡɴᴇʀ:* " + Config.ownername + "\n  " + lineSeparator + " *ᴜᴘᴛɪᴍᴇ:* " + runtime(process.uptime()) + "\n  " + lineSeparator + " *ʀᴀᴍ ᴜsᴀɢᴇ:* " + formatp(os.totalmem() - os.freemem()) + "\n  " + lineSeparator + " *ᴛɪᴍᴇ:* " + currentTime + "\n  " + lineSeparator + " *ᴅᴀᴛᴇ:* " + currentDate + "\n  " + lineSeparator + " *ᴄᴏᴍᴍᴀɴᴅs:* " + commands.length + "\n  " + lineSeparator + " *ᴜsᴀɢᴇ ᴛʀᴇɴᴅ:* " + trend_usage + "\n  " + lineSeparator + " *ᴅᴀᴛᴀʙᴀsᴇ:* " + database_info + "\n  " + footer + "\n                   ┌┤💓  Thanks for Choosing QUEEN_ALYA\n│└────────────┈·:·.☽✧        \n│*©2024-2099 STAR KING*\n└─────────────────┈.·:·.☽✧\n  \n" + readmore + "\n";
 
     for (const category in commandCategories) {
       menuContent += commandPrefix + " *" + tiny(category) + "* " + commandSuffix + "\n";
