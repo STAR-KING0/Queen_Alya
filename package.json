@@ -63,8 +63,8 @@
       "util": "^0.12.4",
       "wa-sticker-formatter": "^4.3.2",
       "youtubei.js": "^7.0.0",
-      "ytdl-core": "github:soya-daizu/ytdl-core#sig-patch",
-      "ytdl-secktor": "^0.0.1-development"
+      "ytdl-core": "^4.11.5",
+      "ytdl-secktor": "github:soya-daizu/ytdl-core#sig-patch"
    },
    "directories": {
       "lib": "lib",
