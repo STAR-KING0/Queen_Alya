@@ -81,7 +81,7 @@ smd({ on: "text" }, async (message, text, { icmd }) => {
     )
       message.bot.sendPresenceUpdate(waPresence, message.from);
     if (message.isAstro && !message.fromMe && !message.text.startsWith("$"))
-      message.react("🤖");
+      message.react("");
   } catch (e) {
     console.log(e);
   }
@@ -117,12 +117,12 @@ smd({ on: "status" }, async (message, text) => {
 
 smd(
   {
-    cmdname: "asta",
+    cmdname: "alya",
     desc: "total Users Currently using asta",
   },
   async (message, text) => {
     try {
-      message.send(`An Estimated 60+ Users On Asta_Md`.trim());
+      message.send(`An Estimated 60+ Users On QUEEN_ALYA`.trim());
     } catch (e) {
       console.error("Error:", e);
       message.reply(`*ERROR!* `);
