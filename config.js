@@ -67,7 +67,7 @@ module.exports = {
   LANG: (process.env.THEME || "A L Y A").toUpperCase(),
 };
 global.rank = "updated";
-global.isMongodb = false;
+global.isMongodb = true;
 let file = require.resolve(__filename);
 fs.watchFile(file, () => {
   fs.unwatchFile(file);
