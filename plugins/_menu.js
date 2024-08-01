@@ -75,19 +75,19 @@ astro_patch.smd({
       menuStyle = Math.floor(Math.random() * 4) + 1;
     }
     if (menuStyle === 1 || Config.menu.trim().startsWith('1') || Config.menu.toLowerCase().includes('menu1')) {
-      header = "┏﹝ *" + Config.botname + "* ﹞";
-      lineSeparator = "┃۞";
+      header = "╔「 *" + Config.botname + "* 」";
+      lineSeparator = "┃";
       commandPrefix = '┌『';
       commandSuffix = '』';
       lineBreak = " | ";
       footer = "\n└═════════════⋙";
     } else if (menuStyle === 2 || Config.menu.trim().startsWith('2') || Config.menu.toLowerCase().includes("menu2")) {
-      header = "┌═[ *" + Config.botname + "* ]";
-      lineSeparator = '☯│▸';
-      commandPrefix = '┌〈';
-      commandSuffix = '〉';
-      lineBreak = "☯│▸ ";
-      footer = "\n│╰══════════···▸▸";
+      header = "╔═[ *" + Config.botname + "* ]";
+      lineSeparator = '࿇│▸';
+      commandPrefix = '╭─◆,';
+      commandSuffix = '◆';
+      lineBreak = "࿇│▸ ";
+      footer = "\n│╚─━━━━━━━━━━━⋙";
     } else {
       header = "╭〘  " + Config.botname + "  〙";
       lineSeparator = "│ │";
@@ -109,7 +109,7 @@ astro_patch.smd({
 
     const currentTime = context.time;
     const currentDate = context.date;
-    let menuContent = "\n  " + header + "\n  " + lineSeparator + " *ᴏᴡɴᴇʀ:* " + Config.ownername + "\n  " + lineSeparator + " *ᴜᴘᴛɪᴍᴇ:* " + runtime(process.uptime()) + "\n  " + lineSeparator + " *ʀᴀᴍ ᴜsᴀɢᴇ:* " + formatp(os.totalmem() - os.freemem()) + "\n  " + lineSeparator + " *ᴛɪᴍᴇ:* " + currentTime + "\n  " + lineSeparator + " *ᴅᴀᴛᴇ:* " + currentDate + "\n  " + lineSeparator + " *ᴄᴏᴍᴍᴀɴᴅs:* " + commands.length + "\n  " + lineSeparator + " *ᴜsᴀɢᴇ ᴛʀᴇɴᴅ:* " + trend_usage + "\n  " + lineSeparator + " *ᴅᴀᴛᴀʙᴀsᴇ:* " + database_info + "\n  " + footer + "\n                   ┌┤💓  Thanks for Choosing QUEEN_ALYA\n│└────────────┈·:·.☽✧        \n│*©2024-2099 STAR KING*\n└─────────────────┈.·:·.☽✧\n  \n" + readmore + "\n";
+    let menuContent = "\n  " + header + "\n  " + lineSeparator + " *ᴏᴡɴᴇʀ:* " + Config.ownername + "\n  " + lineSeparator + " *ᴜᴘᴛɪᴍᴇ:* " + runtime(process.uptime()) + "\n  " + lineSeparator + " *ʀᴀᴍ ᴜsᴀɢᴇ:* " + formatp(os.totalmem() - os.freemem()) + "\n  " + lineSeparator + " *ᴛɪᴍᴇ:* " + currentTime + "\n  " + lineSeparator + " *ᴅᴀᴛᴇ:* " + currentDate + "\n  " + lineSeparator + " *ᴄᴏᴍᴍᴀɴᴅs:* " + commands.length + "\n  " + lineSeparator + " *ᴜsᴀɢᴇ ᴛʀᴇɴᴅ:* " + trend_usage + "\n  " + lineSeparator + " *ᴅᴀᴛᴀʙᴀsᴇ:* " + database_info + "\n  " + footer + "\n                   ┌┤💓  Thanks for Choosing QUEEN_ALYA\n│╚━━━━━━━━━━━━══ ࿇        \n│*©2024-2099 STAR KING*\n╚━━━━━━━━━━━━━━━━━══ ࿇\n  \n" + readmore + "\n";
 
     for (const category in commandCategories) {
       menuContent += commandPrefix + " *" + tiny(category) + "* " + commandSuffix + "\n";
