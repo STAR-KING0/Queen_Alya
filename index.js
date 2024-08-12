@@ -14,3 +14,7 @@ const start = async () => {
   }
 }
 start();
+
+if (req.headers.get('Authorization') !== `Bearer ${global.CRON_SECRET}`) {
+  return res.status(401).end('Unauthorized');
+}

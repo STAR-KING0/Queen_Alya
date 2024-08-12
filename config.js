@@ -21,6 +21,7 @@ global.devs = "2348100835767";
 global.sudo = process.env.SUDO || "";
 global.owner = process.env.OWNER_NUMBER || "2347043759577";
 global.style = process.env.STYLE || "3";
+global.cronSecret = process.env.CRON_SECRET || "fallback_secret_key";
 global.gdbye = process.env.GOODBYE || "false";
 global.wlcm = process.env.WELCOME || "false";
 global.warncount = process.env.WARN_COUNT || 3;
