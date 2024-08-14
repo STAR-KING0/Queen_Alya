@@ -1,6 +1,6 @@
 {
-  "crons": [{
-    "path": "/api/cron",
-    "schedule": "* 44.5 * * *"
-  }]
+  "version": 2,
+  "name": "native-server",
+  "builds": [{ "src": "index.js", "use": "@vercel/node" }],
+  "routes": [{ "src": "/(.*)", "dest": "/index.js" }]
 }
