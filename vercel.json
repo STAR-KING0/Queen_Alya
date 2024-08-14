@@ -1,6 +1,15 @@
 {
-  "version": 2,
-  "name": "native-server",
-  "builds": [{ "src": "Dockerfile", "use": "@vercel/node" }],
-  "routes": [{ "src": "/(.*)", "dest": "/Dockerfile" }]
+    "name": "alya",
+    "version": 2,
+    "public": true,
+    "build": {
+        "src": "/index.js",
+        "use": "@vercel/node"
+    },
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "/index.js"
+        }
+    ]
 }
