@@ -13,7 +13,7 @@ RUN git clone https://github.com/STAR-KING0/Queen_Alya  /root/STAR-KING0
 WORKDIR /root/STAR-KING0/
 
 
-COPY package.json .
+COPY alya.json .
 RUN npm install pm2 -g
 RUN npm install --legacy-peer-deps
 
