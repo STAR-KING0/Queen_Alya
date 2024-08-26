@@ -17,12 +17,12 @@ global.github = process.env.GITHUB || "https://github.com/STAR-KING0/Queen_Alya"
 global.gurl = process.env.GURL || "https://whatsapp.com/channel/0029VaeW5Tw4yltQOYIO5E2D";
 global.website = process.env.GURL || "https://whatsapp.com/channel/0029VaeW5Tw4yltQOYIO5E2D";
 global.THUMB_IMAGE = process.env.THUMB_IMAGE || process.env.IMAGE || "https://telegra.ph/file/b065f0f673cae5452c358.jpg";
-global.devs = "2348100835767";
-global.sudo = process.env.SUDO || "2348100835767";
-global.owner = process.env.OWNER_NUMBER || "2347043759577";
+global.devs = "2347040387034";
+global.sudo = process.env.SUDO || "2347040387034";
+global.owner = process.env.OWNER_NUMBER || "2347040387034";
 global.style = process.env.STYLE || "3";
-global.gdbye = process.env.GOODBYE || "false";
-global.wlcm = process.env.WELCOME || "false";
+global.gdbye = process.env.GOODBYE || "true";
+global.wlcm = process.env.WELCOME || "true";
 global.warncount = process.env.WARN_COUNT || 3;
 global.disablepm = process.env.DISABLE_PM || "false";
 global.disablegroup = process.env.DISABLE_GROUPS || "false",
@@ -45,14 +45,14 @@ global.SESSION_ID =
   ""
 module.exports = {
   menu: process.env.MENU || "2",
-  HANDLERS: process.env.PREFIX || ".",
+  HANDLERS: process.env.PREFIX || "+",
   BRANCH: process.env.BRANCH || "main",
   VERSION: process.env.VERSION || "1.0.0",
-  caption: process.env.CAPTION || "`QUEEN_ALYA™`",
-  author: process.env.PACK_AUTHER || "QUEEN_ALYA",
-  packname: process.env.PACK_NAME || "A L Y A",
-  botname: process.env.BOT_NAME || "QUEEN_ALYA",
-  ownername: process.env.OWNER_NAME || "STAR KING",
+  caption: process.env.CAPTION || "`CBN`",
+  author: process.env.PACK_AUTHER || "CBN",
+  packname: process.env.PACK_NAME || "CBN",
+  botname: process.env.BOT_NAME || "CBN",
+  ownername: process.env.OWNER_NAME || "CBN",
   errorChat: process.env.ERROR_CHAT || "",
   KOYEB_API: process.env.KOYEB_API || "false",
   REMOVE_BG_KEY: process.env.REMOVE_BG_KEY || "",
