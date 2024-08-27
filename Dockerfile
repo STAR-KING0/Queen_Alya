@@ -1,24 +1,16 @@
-FROM node:20
+FROM quay.io/sampandey001/secktor
 
-RUN apt-get update && \
-  apt-get install -y \
-  ffmpeg \
-  imagemagick \
-  webp && \
-  apt-get upgrade -y && \
-  npm i pm2 -g && \
-  rm -rf /var/lib/apt/lists/*
-  
-RUN git clone https://github.com/STAR-KING0/Queen_Alya  /root/STAR-KING0
-WORKDIR /root/STAR-KING0/
+RUN git clone https://github.com/STAR-KING0/Queen_Alya.git /root/STAR-KING0
 
+# Clear npm cache and remove node_modules directories
+RUN npm cache clean --force
+RUN rm -rf /root/STAR-KING0/node_modules
 
-COPY package.json .
-RUN npm install pm2 -g
-RUN npm install --legacy-peer-deps
+# Install dependencies
+WORKDIR /root/STAR-KING0
+RUN npm install
 
-COPY . .
-
-EXPOSE 8000
-
+# Add additional Steps To Run...
+EXPOSE 3000
 CMD ["npm","start" ]
+# IF YOU ARE MODIFYING THIS BOT DONT CHANGE THIS  RUN rm -rf /root/STAR-KING0/node_modules
