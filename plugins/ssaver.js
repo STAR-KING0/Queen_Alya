@@ -131,20 +131,18 @@ smd(
 );
 smd(
   {
-    pattern: "donate",
+    cmdname: "donate",
     desc: "To encourage me",
-    react: "🫂",
-    category: "user",
-    filename: __filename,
   },
-  async (message) => {
-    const SupportMsg = `Support QUEEN ALYA\n\n OPay Bank: OPay Digital Services Limited(OPay) \n\n OPay Account: 8078144253 Name: ADENIKE AYOADE MARY\n\n ${Config.botname} *Nigeria Show Love*`;
-
-    const contextInfo = {
-      forwardingScore: 999,
-      isForwarded: true,
-    };
-
-    await message.send(SupportMsg, { contextInfo });
+  async (message, text) => {
+    try {
+      const SupportMsg = `Support QUEEN ALYA\n\nOPay Bank: OPay Digital Services Limited(OPay)\n\nOPay Account: 8078144253\nName: ADENIKE AYOADE MARY\n\n${Config.botname} *Nigeria Show Love*`;
+      
+      // Send the donation message
+      await message.send(SupportMsg);
+    } catch (e) {
+      console.error("Error:", e);
+      await message.reply(`*ERROR!* Could not send donation details.`);
+    }
   }
 );
