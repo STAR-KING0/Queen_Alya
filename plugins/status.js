@@ -1,6 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
+// Import smd from the ../lib directory
+const { smd } = require('../lib');
+
 // Correct path to the config.js file based on the repo structure
 const configPath = path.join(__dirname, '../config.js');
 
