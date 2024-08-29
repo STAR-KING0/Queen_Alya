@@ -3,7 +3,7 @@ const path = require('path');
 const configPath = path.join(__dirname, 'config.js');
 
 // Load the configuration
-let config = require(../config);
+let config = require('./lib'); // Ensure the path is correct
 
 smd({
   pattern: "status",
@@ -14,7 +14,7 @@ smd({
 }, async (message, inputText, { smd: commandName }) => {
   try {
     // Fetch the current state of the AUTO_STATUS_VIEW variable from the config
-    let currentStatus = config.AUTO_STATUS_VIEW;
+    let currentStatus = config.AUTO_READ_STATUS;
 
     // Determine the new state based on the input or toggle behavior
     let newStatus;
@@ -26,7 +26,7 @@ smd({
     }
 
     // Update the status in the config object
-    config.AUTO_STATUS_VIEW = newStatus;
+    config.AUTO_READ_STATUS = newStatus;
 
     // Write the updated config back to the config.js file
     const updatedConfigContent = `module.exports = ${JSON.stringify(config, null, 4)};`;
