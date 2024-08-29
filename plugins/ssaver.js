@@ -114,18 +114,23 @@ smd({ on: "status" }, async (message, text) => {
     console.log(e);
   }
 });
-
 smd(
   {
     cmdname: "alya",
-    desc: "total Users Currently using asta",
+    desc: "alya",
+    type: "misc",
+    filename: __filename,
   },
-  async (message, text) => {
+  async (m) => {
     try {
-      message.send(`An Estimated 60+ Users On QUEEN_ALYA`.trim());
+      await m.send(
+        "https://i.imgur.com/r0J6Veo.jpeg",
+        { caption: "*I AM QUEEN ALYA 💓*" },
+        "img",
+        m
+      );
     } catch (e) {
-      console.error("Error:", e);
-      message.reply(`*ERROR!* `);
+      m.error(`${e}\n\nCommand: alya`, e, false);
     }
   }
 );

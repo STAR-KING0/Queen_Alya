@@ -3,7 +3,7 @@ const path = require('path');
 const configPath = path.join(__dirname, 'config.js');
 
 // Load the configuration
-let config = require(../config.js);
+let config = require(../config);
 
 smd({
   pattern: "status",
