@@ -39,67 +39,27 @@ astro_patch.smd({
   'filename': __filename
 }, async (context, message) => {
   try { 
-  
     const { commands } = require("../lib");
-    if (message.split(" ")[0]) {
-      let responseLines = [];
-      const command = commands.find(cmd => cmd.pattern === message.split(" ")[0].toLowerCase());
-      if (command) {
-        responseLines.push("*🔉Command:* " + command.pattern);
-        if (command.category) {
-          responseLines.push("*💁Category:* " + command.category);
-        }
-        if (command.alias && command.alias[0]) {
-          responseLines.push("*💁Alias:* " + command.alias.join(", "));
-        }
-        if (command.desc) {
-          responseLines.push("*💁Description:* " + command.desc);
-        }
-        if (command.use) {
-          responseLines.push("*〽️Usage:*\n ```" + prefix + command.pattern + " " + command.use + "```");
-        }
-        if (command.usage) {
-          responseLines.push("*〽️Usage:*\n ```" + command.usage + "```");
-        }
-        await context.reply(responseLines.join("\n"));
-      }
-    }
-    let menuStyle;
-    let header;
-    let lineSeparator;
-    let commandPrefix;
-    let commandSuffix;
-    let lineBreak;
+    const os = require('os');
+    const { formatp, runtime, fancytext, tiny, readmore } = require('../utils');
+    const currentTime = new Date();
+    const hours = currentTime.getHours();
+    const currentDate = currentTime.toLocaleDateString();
+    let greeting = "";
 
-    if (Config.menu === '') {
-      menuStyle = Math.floor(Math.random() * 4) + 1;
-    }
-    if (menuStyle === 1 || Config.menu.trim().startsWith('1') || Config.menu.toLowerCase().includes('menu1')) {
-      header = "╔「 *" + Config.botname + "* 」";
-      lineSeparator = "┃";
-      commandPrefix = '┌『';
-      commandSuffix = '』';
-      lineBreak = " | ";
-      footer = "\n└═════════════⋙";
-    } else if (menuStyle === 2 || Config.menu.trim().startsWith('2') || Config.menu.toLowerCase().includes("menu2")) {
-      header = "╔═[ *" + Config.botname + "* ]";
-      lineSeparator = '࿇│▸';
-      commandPrefix = '╭─◆,';
-      commandSuffix = '◆';
-      lineBreak = "࿇│▸ ";
-      footer = "\n│╚─━━━━━━━━━━━⋙";
+    if (hours >= 5 && hours < 12) {
+      greeting = "🌅 Good Morning!";
+    } else if (hours >= 12 && hours < 18) {
+      greeting = "☀️ Good Afternoon!";
+    } else if (hours >= 18 && hours < 22) {
+      greeting = "🌇 Good Evening!";
     } else {
-      header = "╭〘  " + Config.botname + "  〙";
-      lineSeparator = "│ │";
-      commandPrefix = "╭─❏";
-      commandSuffix = '❏';
-      lineBreak = '│';
-      footer = '╰════════════─⊷';
+      greeting = "🌙 Good Night!";
     }
 
     const commandCategories = {};
-    commands.map(async (cmd) => {
-      if (cmd.dontAddCommandList === false && cmd.pattern !== undefined) {
+    commands.forEach(cmd => {
+      if (!cmd.dontAddCommandList && cmd.pattern) {
         if (!commandCategories[cmd.category]) {
           commandCategories[cmd.category] = [];
         }
@@ -107,31 +67,36 @@ astro_patch.smd({
       }
     });
 
-    const currentTime = context.time;
-    const currentDate = context.date;
-    let menuContent = "\n  " + header + "\n  " + lineSeparator + " *ᴏᴡɴᴇʀ:* " + Config.ownername + "\n  " + lineSeparator + " *ᴜᴘᴛɪᴍᴇ:* " + runtime(process.uptime()) + "\n  " + lineSeparator + " *ʀᴀᴍ ᴜsᴀɢᴇ:* " + formatp(os.totalmem() - os.freemem()) + "\n  " + lineSeparator + " *ᴛɪᴍᴇ:* " + currentTime + "\n  " + lineSeparator + " *ᴅᴀᴛᴇ:* " + currentDate + "\n  " + lineSeparator + " *ᴄᴏᴍᴍᴀɴᴅs:* " + commands.length + "\n  " + lineSeparator + " *ᴜsᴀɢᴇ ᴛʀᴇɴᴅ:* " + trend_usage + "\n  " + lineSeparator + " *ᴅᴀᴛᴀʙᴀsᴇ:* " + database_info + "\n  " + footer + "\n                   ┌┤💓  Thanks for Choosing QUEEN_ALYA\n│╚━━━━━━━━━━━━══ ࿇        \n│*©2024-2099 STAR KING*\n╚━━━━━━━━━━━━━━━━━══ ࿇\n  \n" + readmore + "\n";
+    // Set the desired menu design
+    const header = "╭─❏  *" + Config.botname + "*  ❏───\n";
+    const lineSeparator = "│ ";
+    const commandPrefix = "├─";
+    const commandSuffix = "";
+    const footer = "╰─────────────────❏";
 
+    let menuContent = header;
+    menuContent += lineSeparator + "👤 *Owner:* " + Config.ownername + "\n";
+    menuContent += lineSeparator + "🕒 *Uptime:* " + runtime(process.uptime()) + "\n";
+    menuContent += lineSeparator + "💻 *RAM Usage:* " + formatp(os.totalmem() - os.freemem()) + "\n";
+    menuContent += lineSeparator + "📅 *Date:* " + currentDate + "\n";
+    menuContent += lineSeparator + "📊 *Commands:* " + commands.length + "\n";
+    menuContent += lineSeparator + greeting + "\n";
+
+    // List commands by category
     for (const category in commandCategories) {
       menuContent += commandPrefix + " *" + tiny(category) + "* " + commandSuffix + "\n";
-      if (message.toLowerCase() === category.toLowerCase()) {
-        menuContent = commandPrefix + " *" + tiny(category) + "* " + commandSuffix + "\n";
-        for (const cmd of commandCategories[category]) {
-          menuContent += lineBreak + " " + fancytext(cmd, 1) + "\n";
-        }
-        menuContent += footer + "\n";
-        break;
-      } else {
-        for (const cmd of commandCategories[category]) {
-          menuContent += lineBreak + " " + fancytext(cmd, 1) + "\n";
-        }
-        menuContent += footer + "\n";
-      }
+      commandCategories[category].forEach(cmd => {
+        menuContent += "│   📌 " + fancytext(cmd, 1) + "\n";
+      });
     }
-    menuContent += Config.caption;
+    
+    menuContent += footer + "\n\nThanks for using *" + Config.botname + "*!\n©2024 STAR KING\n" + readmore;
+
     const response = {
       'caption': menuContent,
       'ephemeralExpiration': 3000
     };
+
     return await context.sendUi(context.chat, response, context);
   } catch (error) {
     await context.error(error + "\nCommand: menu", error);

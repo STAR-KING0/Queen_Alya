@@ -868,44 +868,75 @@ events.cmd({
 });
 events.cmd({
   cmdname: "sharebot",
-  desc: "allow or rent your bot to someone!",
+  desc: "Allow or rent your bot to someone!",
   fromMe: true,
   type: "share"
-}, async (_0x2bd5d0, _0x3cbbb0, {
-  args: _0x28f7b9
+}, async (_context, _message, {
+  args: _args
 }) => {
   try {
-    let _0x2dd6fb = (_0x28f7b9[0] || "").toLowerCase();
-    let _0x5ae18a = ["qr", "pair", "session"].includes(_0x2dd6fb) ? _0x2dd6fb : false;
-    if (!_0x5ae18a) {
-      return await _0x2bd5d0.reply("*Please follow the below option!*\n    _" + prefix + "sharebot qr/pair |" + _0x2bd5d0.senderNum + "_\n    _" + prefix + "sharebot session scan_Id_\n");
+    // Extract and normalize the first argument
+    let commandType = (_args[0] || "").toLowerCase();
+    let validCommands = ["qr", "pair", "session"];
+    let command = validCommands.includes(commandType) ? commandType : false;
+
+    // Validate the command type
+    if (!command) {
+      return await _context.reply("*Please follow the instructions below!*\n" +
+        "`" + prefix + "sharebot qr/pair |" + _context.senderNum + "`\n" +
+        "`" + prefix + "sharebot session <session_id>`");
     }
-    let _0x4320e3 = _0x2bd5d0.reply_message ? _0x2bd5d0.reply_message.sender : _0x2bd5d0.mentionedJid[0] ? _0x2bd5d0.mentionedJid[0] : false;
-    let _0x22ebbc = (_0x3cbbb0.split("|")[1] || "")?.replace(/[\s+]/g, "") || "";
-    let _0x5c7b6c = _0x4320e3 ? _0x4320e3.split("@")[0] : _0x22ebbc ? _0x22ebbc : "";
-    if (_0x5ae18a == "pair" && !_0x5c7b6c) {
-      return _0x2bd5d0.reply("*_please provide number for \"pair\" connection!_*\n_Example: " + prefix + "sharebot pair | " + _0x2bd5d0.senderNum + "!_\n_OR : " + prefix + "rentbot pair by reply/mention user!_");
+
+    // Determine the user (via reply, mention, or provided number)
+    let mentionedUser = _context.reply_message 
+        ? _context.reply_message.sender 
+        : (_context.mentionedJid && _context.mentionedJid[0]) 
+        ? _context.mentionedJid[0] 
+        : false;
+
+    let providedNumber = (_message.split("|")[1] || "").trim();
+    let targetUser = mentionedUser 
+        ? mentionedUser.split("@")[0] 
+        : providedNumber ? providedNumber : "";
+
+    // Check if the command is "pair" and ensure the target user is provided
+    if (command === "pair" && !targetUser) {
+      return _context.reply("*Please provide a number for 'pair' connection!* \n" +
+        "`Example: " + prefix + "sharebot pair | " + _context.senderNum + "`\n" +
+        "_OR: Mention the user with 'pair' to share the bot._");
     }
-    let _0x1794f2 = _0x28f7b9[1] || "";
-    let _0xac7ec4 = _0x1794f2 && _0x1794f2.length > 30 ? _0x1794f2 : "";
-    if (_0x5ae18a == "session" && !_0xac7ec4) {
-      return _0x2bd5d0.reply("*You ask for \"Session\" but not provide session_ID!*");
+
+    // Extract and validate the session ID for the "session" command
+    let sessionId = _args[1] || "";
+    if (command === "session" && (!sessionId || sessionId.length < 30)) {
+      return _context.reply("*You requested 'Session' but did not provide a valid session ID!*");
     }
-    let _0x681014 = {
-      type: _0x5ae18a,
-      [_0x5ae18a]: _0xac7ec4,
-      user: _0x5c7b6c
+
+    // Prepare the bot sharing data
+    let shareData = {
+      type: command,
+      [command]: sessionId,
+      user: targetUser
     };
-    if (_0x5ae18a == "pair" && _0x2bd5d0.user.split("@")[0] === _0x5c7b6c) {
-      return _0x2bd5d0.reply("_Hey Master! I am already a bot!_");
+
+    // Check if the bot is trying to pair with its own owner
+    if (command === "pair" && _context.user.split("@")[0] === targetUser) {
+      return _context.reply("_Hey Master! I am already your bot!_");
     }
-    _0x2bd5d0.reply("*Please wait!*");
-    Rentt(_0x2bd5d0.bot, _0x2bd5d0, "", _0x681014).catch(_0x222581 => {
-      console.log(_0x222581);
-    });
-  } catch (_0x385a10) {
-    mm.reply("_ERROR!_");
-    console.log(_0x385a10);
+
+    // Acknowledge the request and perform the sharing action
+    _context.reply("*Processing your request... Please wait!*");
+    
+    // Perform the sharing or pairing action with the Rent function
+    await Rentt(_context.bot, _context, "", shareData);
+
+    // If successful, send confirmation
+    _context.reply("*Bot successfully shared with user:* " + targetUser + " ✅");
+    
+  } catch (error) {
+    // Handle and log any errors that occur
+    _context.reply("_ERROR! Something went wrong during the sharing process._");
+    console.log(error);
   }
 });
 events.cmd({
