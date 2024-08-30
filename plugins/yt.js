@@ -2,7 +2,6 @@ const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
 const fs = require('fs');
 const path = require('path');
-const smd = require ('../lib')
 // Command to download YouTube video as audio
 smd({
   pattern: "ytaudio",
