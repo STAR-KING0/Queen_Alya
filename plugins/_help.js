@@ -184,25 +184,37 @@ astro_patch.cmd(
 );
 
 // Command: Ping
-astro_patch.smd(
+smd(
   {
     pattern: "ping",
-    desc: "To check ping",
+    react: "⚡",
+    desc: "Types 'I am Queen Alya and my speed is' and shows ping",
     category: "misc",
     filename: __filename,
   },
   async (message) => {
+    const text = "I am Queen Alya and my speed is: ";
+    let typedMessage = "";
+
+    // Measure start time for the ping calculation
     var startTime = new Date().getTime();
-    const { key } = await message.reply("*Testing Ping!!!*");
+
+    // Send initial message
+    const { key } = await message.reply("*Typing...*");
+
+    // Type one character at a time
+    for (let i = 0; i < text.length; i++) {
+      typedMessage += text[i];
+      await new Promise((resolve) => setTimeout(resolve, 500)); // Delay of 500ms between characters
+      await message.send(`**${typedMessage}**`, { edit: key });
+    }
+
+    // Calculate the ping time
     var endTime = new Date().getTime();
-    return await message.send(
-      `*Pong*\n *${endTime - startTime} ms*`,
-      {
-        edit: key,
-      },
-      "",
-      message
-    );
+    var speed = endTime - startTime;
+
+    // Final message with speed
+    await message.send(`**${typedMessage}${speed} ms**`, { edit: key });
   }
 );
 
