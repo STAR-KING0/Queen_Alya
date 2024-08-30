@@ -118,6 +118,7 @@ smd(
   {
     cmdname: "alya",
     desc: "alya",
+    react: "👑"
     type: "misc",
     filename: __filename,
   },
@@ -137,17 +138,21 @@ smd(
 smd(
   {
     cmdname: "donate",
-    desc: "To encourage me",
+    desc: "Send donation details",
+    type: "misc",
+    react: "💰",
+    filename: __filename,
   },
-  async (message, text) => {
+  async (m) => {
     try {
-      const SupportMsg = `Support QUEEN ALYA\n\nOPay Bank: OPay Digital Services Limited(OPay)\n\nOPay Account: 8078144253\nName: ADENIKE AYOADE MARY\n\n${Config.botname} *Nigeria Show Love*`;
-      
-      // Send the donation message
-      await message.send(SupportMsg);
+      await m.send(
+        "https://i.imgur.com/DeJiOrr.jpeg",
+        { caption: "*Support QUEEN ALYA OPay Bank: OPay Digital Services Limited(OPay) OPay Account: 8078144253 Name: ADENIKE AYOADE MARY Nigeria Show Love*" },
+        "img",
+        m
+      );
     } catch (e) {
-      console.error("Error:", e);
-      await message.reply(`*ERROR!* Could not send donation details.`);
+      m.error(`${e}\n\nCommand: donate`, e, false);
     }
   }
 );
