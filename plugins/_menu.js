@@ -41,7 +41,7 @@ astro_patch.smd({
   try { 
     const { commands } = require("../lib");
     const os = require('os');
-    const { formatp, runtime, fancytext, tiny, readmore } = require('../utils');
+    const { formatp, runtime, fancytext, tiny, readmore } = require('../lib');
     const currentTime = new Date();
     const hours = currentTime.getHours();
     const currentDate = currentTime.toLocaleDateString();
