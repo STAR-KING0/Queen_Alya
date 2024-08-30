@@ -118,7 +118,7 @@ smd(
   {
     cmdname: "alya",
     desc: "alya",
-    react: "👑"
+    react: "👑",
     type: "misc",
     filename: __filename,
   },
