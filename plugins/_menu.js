@@ -68,11 +68,11 @@ astro_patch.smd({
     });
 
     // Set the desired menu design
-    const header = "╭─❏  *" + Config.botname + "*  ❏───\n";
-    const lineSeparator = "│ ";
-    const commandPrefix = "├─";
-    const commandSuffix = "";
-    const footer = "╰─────────────────❏";
+    const header = "┏━━⟪ *" + Config.botname + "* ⟫━━⦿\n";
+    const lineSeparator = "┃ ";
+    const commandPrefix = "┏━━⟪";
+    const commandSuffix = "⟫━━⦿";
+    const footer = "┗━━━━━━━━━━━━━━⦿";
 
     let menuContent = header;
     menuContent += lineSeparator + "👤 *Owner:* " + Config.ownername + "\n";
@@ -86,7 +86,7 @@ astro_patch.smd({
     for (const category in commandCategories) {
       menuContent += commandPrefix + " *" + tiny(category) + "* " + commandSuffix + "\n";
       commandCategories[category].forEach(cmd => {
-        menuContent += "│   📌 " + fancytext(cmd, 1) + "\n";
+        menuContent += "┃   🌸 " + fancytext(cmd, 1) + "\n";
       });
     }
     
