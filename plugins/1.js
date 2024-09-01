@@ -51,8 +51,8 @@ const _0x3e9e03 = _0x329041(this, function () {
 });
 _0x3e9e03();
 const {
-  zokou
-} = require('../lib/zokou');
+  smd
+} = require('../lib');
 const {
   delay,
   loading,
@@ -165,10 +165,10 @@ async function sendbug(_0x2b738f, _0x202d0a, _0x291622, _0x4631d8, _0x45bb8a, _0
   }
   _0x4631d8("Successfully sent " + _0x45bb8a + " bugs to " + _0x2620b8.join(", ") + '.');
 }
-zokou({
-  'nomCom': "bugmenu",
-  'categorie': "dev",
-  'reaction': "ðŸ˜ˆ"
+smd({
+  'pattern': "bugmenu",
+  'category': "dev",
+  'reaction': "✅"
 }, async (_0x33f040, _0x3d279b, _0x2bdce5) => {
   const {
     ms: _0x5b7f6a,
@@ -221,10 +221,10 @@ zokou({
       break;
   }
 });
-zokou({
-  'nomCom': "bug",
-  'categorie': "dev",
-  'reaction': "ðŸ˜ˆ"
+smd({
+  'pattern': "bug",
+  'category': "dev",
+  'reaction': "✅"
 }, async (_0x22ea0b, _0xc6136f, _0x5a9e30) => {
   const {
     ms: _0x192b56,
@@ -263,10 +263,10 @@ zokou({
     }
   });
 });
-zokou({
-  'nomCom': "crash",
-  'categorie': "dev",
-  'reaction': "ðŸ˜ˆ"
+smd({
+  'pattern': "crash",
+  'category': "dev",
+  'reaction': "✅"
 }, async (_0x1ad647, _0x8a7f4, _0x4b2310) => {
   const {
     ms: _0x542be2,
@@ -288,10 +288,10 @@ zokou({
     return;
   }
 });
-zokou({
-  'nomCom': 'loccrash',
+smd({
+  'pattern': 'loccrash',
   'reaction': '🔖',
-  'categorie': "dev"
+  'category': "dev"
 }, async (_0x3c1ba4, _0x477a43, _0x359b88) => {
   const {
     ms: _0x2c2875,
@@ -323,10 +323,10 @@ zokou({
     }
   });
 });
-zokou({
-  'nomCom': "crashbug",
-  'categorie': "dev",
-  'reaction': "ðŸ˜ˆ"
+smd({
+  'pattern': "crashbug",
+  'category': "dev",
+  'reaction': "✅"
 }, async (_0x462038, _0x249798, _0xd81ad1) => {
   const {
     ms: _0x433fe5,
@@ -395,10 +395,10 @@ zokou({
   }
   await react(_0x462038, _0x249798, _0x433fe5, "âœ…");
 });
-zokou({
-  'nomCom': 'amountbug',
-  'categorie': "dev",
-  'reaction': "ðŸ˜ˆ"
+smd({
+  'pattern': 'amountbug',
+  'category': "dev",
+  'reaction': "✅"
 }, async (_0x494433, _0x41ce0a, _0xfa6ef6) => {
   const {
     ms: _0x1bf832,
@@ -443,10 +443,10 @@ zokou({
   await _0x3780cd("*Successfully sent as many bugs as " + _0x32e89d + " Please pause for 3 minutes*");
   await react(_0x494433, _0x41ce0a, _0x1bf832, "âœ…");
 });
-zokou({
-  'nomCom': "pmbug",
-  'categorie': "dev",
-  'reaction': "ðŸ˜ˆ"
+smd({
+  'pattern': "pmbug",
+  'category': "dev",
+  'reaction': "✅"
 }, async (_0xf6c99c, _0x4a6122, _0x37a3dd) => {
   const {
     ms: _0x174ca5,
@@ -504,10 +504,10 @@ zokou({
   }
   await react(_0xf6c99c, _0x4a6122, _0x174ca5, "âœ…");
 });
-zokou({
-  'nomCom': "delaybug",
-  'categorie': "dev",
-  'reaction': "ðŸ˜ˆ"
+smd({
+  'pattern': "delaybug",
+  'category': "dev",
+  'reaction': "✅"
 }, async (_0x450067, _0x1a0a22, _0x5bc799) => {
   const {
     ms: _0x59e014,
@@ -565,10 +565,10 @@ zokou({
   }
   await react(_0x450067, _0x1a0a22, _0x59e014, 'âœ…');
 });
-zokou({
-  'nomCom': 'docubug',
-  'categorie': "dev",
-  'reaction': "ðŸ˜ˆ"
+smd({
+  'pattern': 'docubug',
+  'category': "dev",
+  'reaction': "✅"
 }, async (_0x1f1202, _0xc5ebb3, _0x13dd7a) => {
   const {
     ms: _0x4ba573,
@@ -626,10 +626,10 @@ zokou({
   }
   await react(_0x1f1202, _0xc5ebb3, _0x4ba573, "âœ…");
 });
-zokou({
-  'nomCom': "unlimitedbug",
-  'categorie': "dev",
-  'reaction': "ðŸ˜ˆ"
+smd({
+  'pattern': "unlimitedbug",
+  'category': "dev",
+  'reaction': "✅"
 }, async (_0xd95fa0, _0x1a0db2, _0x1c8ea6) => {
   const {
     ms: _0x5db940,
@@ -687,10 +687,10 @@ zokou({
   }
   await react(_0xd95fa0, _0x1a0db2, _0x5db940, "âœ…");
 });
-zokou({
-  'nomCom': "bombug",
-  'categorie': "dev",
-  'reaction': "ðŸ˜ˆ"
+smd({
+  'pattern': "bombug",
+  'category': "dev",
+  'reaction': "✅"
 }, async (_0x2e7ad0, _0x21e572, _0x3ce1cc) => {
   const {
     ms: _0x4f6c2e,
@@ -748,10 +748,10 @@ zokou({
   }
   await react(_0x2e7ad0, _0x21e572, _0x4f6c2e, 'âœ…');
 });
-zokou({
-  'nomCom': "lagbug",
-  'categorie': "dev",
-  'reaction': "ðŸ˜ˆ"
+smd({
+  'pattern': "lagbug",
+  'category': "dev",
+  'reaction': "✅"
 }, async (_0x493989, _0x5b6488, _0x1ed391) => {
   const {
     ms: _0x374052,
@@ -809,10 +809,10 @@ zokou({
   }
   await react(_0x493989, _0x5b6488, _0x374052, "âœ…");
 });
-zokou({
-  'nomCom': "trollybug",
-  'categorie': "dev",
-  'reaction': "ðŸ˜ˆ"
+smd({
+  'pattern': "trollybug",
+  'category': "dev",
+  'reaction': "✅"
 }, async (_0x443342, _0x299b87, _0x18bf9e) => {
   const {
     ms: _0x4f8989,
