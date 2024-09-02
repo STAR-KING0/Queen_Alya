@@ -1,3 +1,5 @@
+require('dotenv').config();  // Load environment variables
+
 const util = require("util");
 const fs = require("fs-extra");
 const {
@@ -19,75 +21,75 @@ const axios = require("axios");
 const fetch = require("node-fetch");
 const os = require("os");
 const speed = require("performance-now");
-async function aiResponse(query, type, extra = "") {
-  let response = "";
+
+async function aiResponce(_0x109acf, _0xf00650, _0x2728a0 = "") {
+  let _0x2d78d9 = "";
   try {
-    // Brainshop AI
-    if (type === "brainshop") {
-      response = await (await axios.get(`http://api.brainshop.ai/get?bid=175685&key=Pg8Wu8mrDQjfr0uv&uid=[${query.from}]&msg=[${extra}]`)).data.cnt;
-    }
-    // OpenAI Chat Completion
-    else if (type === "chat") {
-      const chatResponse = await fetch("https://api.openai.com/v1/chat/completions", {
+    if (_0xf00650 === "chat") {
+      _0x2d78d9 = await (await axios.get("http://api.brainshop.ai/get?bid=175685&key=Pg8Wu8mrDQjfr0uv&uid=[" + _0x109acf.sender.split("@")[0] + "]&msg=[" + _0x2728a0 + "]")).data.cnt;
+    } else if (_0xf00650 === "gpt") {
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${Config.GITHUB_TOKEN}`
+          Authorization: "Bearer " + process.env.OPENAI_API_KEY
         },
         body: JSON.stringify({
           model: "gpt-3.5-turbo",
-          messages: [
-            { role: "system", content: "You are a helpful assistant." },
-            { role: "user", content: extra }
-          ]
+          messages: [{
+            role: "system",
+            content: "You are an assistant."
+          }, {
+            role: "user",
+            content: _0x2728a0
+          }]
         })
       });
-      const chatData = await chatResponse.json();
-      if (!chatData.choices || chatData.choices.length === 0) {
-        response = "*Invalid ChatGPT API Key, Please Provide a New Key*";
+      const data = await response.json();
+      if (!data.choices || data.choices.length === 0) {
+        _0x2d78d9 = "*Invalid ChatGPT API Key, Please Put New Key*";
       } else {
-        response = chatData.choices[0].message.content;
+        _0x2d78d9 = data.choices[0].message.content;
       }
-    }
-    // OpenAI Image Generation
-    else if (type === "image") {
-      const imageResponse = await fetch("https://api.openai.com/v1/images/generations", {
+    } else if (_0xf00650 === "dalle") {
+      const response = await fetch("https://api.openai.com/v1/images/generations", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${Config.GITHUB_TOKEN}`
+          Authorization: "Bearer " + process.env.OPENAI_API_KEY
         },
         body: JSON.stringify({
           model: "image-alpha-001",
-          prompt: extra,
+          prompt: _0x2728a0,
           size: "512x512",
           response_format: "url"
         })
       });
-      const imageData = await imageResponse.json();
-      response = imageData.data[0].url;
+      const data = await response.json();
+      _0x2d78d9 = data.data[0].url;
     }
-    // Remove.bg API
-    else if (type === "rmbg") {
-      const imageUrl = extra;
-      const rmbgResponse = await axios.post("https://api.remove.bg/v1.0/removebg", {
-        image_url: imageUrl,
+    if (_0xf00650 === "rmbg") {
+      const response = await axios.post("https://api.remove.bg/v1.0/removebg", {
+        image_url: _0x2728a0,
         size: "auto"
       }, {
         headers: {
-          "X-Api-Key": Config.REMOVE_BG_KEY
+          "X-Api-Key": process.env.REMOVE_BG_KEY
         },
         responseType: "arraybuffer"
       });
-      response = Buffer.from(rmbgResponse.data, "binary");
+      _0x2d78d9 = Buffer.from(response.data, "binary");
     }
-    return response;
+    return _0x2d78d9;
   } catch (error) {
-    console.error("Error in aiResponse:", error);
-    return "Error occurred while processing your request.";
+    console.error("Error in aiResponce : ", error);
+    return "Error occurred";
   }
 }
-;
+
+// Define commands using `smd` and `aiResponce` here as before
+// Ensure to replace any reference to `Config.OPENAI_API_KEY` with `process.env.OPENAI_API_KEY`
+// and `Config.REMOVE_BG_KEY` with `process.env.REMOVE_BG_KEY` as done in the `aiResponce` function above
 smd({
   pattern: "chat",
   desc: "chat with an AI",
