@@ -1542,7 +1542,7 @@ smd(
      try {
        if (!url) {
          return await message.reply(
-           `*Uhh Please, Provide me tiktok Video Url*\n*_Ex ${prefix}tiktok https://www.tiktok.com/@dakwahmuezza/video/7150544062221749531_*`                                                                                                                                                                                                                                                                                                                          */ const giftedapikey = 'gifteddevskk'; /*
+           `*Uhh Please, Provide me tiktok Video Url*\n*_Ex ${prefix}tiktok https://www.tiktok.com/@dakwahmuezza/video/7150544062221749531_*`                                                                                                                                                                                                                                                                                                                          
          );
        }
  
@@ -2427,12 +2427,13 @@ smd(
       return _0x5dab40.error(_0xab1d64 + "\n\ncommand: video", _0xab1d64, "*_Video not Found_*");
     }
   }
-}); */
+}); */  
 
 
+const giftedapikey = 'giftedtechk'; 
 
-
-smd({
+smd(
+  {
     pattern: "play",
     desc: "Downloads yt audio.",
     category: "downloader",
@@ -2446,20 +2447,22 @@ smd({
       }
 
       // Perform YouTube search to get the video URL
-      const search = await yts(query); // Use 'query' instead of 'text'
+      const search = await yts(query);
+      console.log('Search results:', search); // Log search results
       const videos = search.videos;
 
       if (videos && videos.length > 0 && videos[0]) {
         const videoUrl = videos[0].url;
-        
-        // Call the API endpoint with the video URL
+
+         // Call the API endpoint with the video URL
         const apiResponse = await fetch(`${BaseUrl}/api/download/ytmp3?url=${encodeURIComponent(videoUrl)}&apikey=${giftedapikey}`);
         const apiResult = await apiResponse.json();
+        console.log('API Result:', apiResult); // Log the API response
 
-          if (apiResult.status === 200 && apiResult.success) {
+        if (apiResult.status === 200 && apiResult.success) {
           const audioUrl = apiResult.result.download_url;
 
-          fileInfo = {
+          const fileInfo = {
             title: apiResult.result.title,
             quality: apiResult.result.type
           };
@@ -2469,26 +2472,19 @@ smd({
             caption: `Downloaded: *${fileInfo.title}*`
           };
 
-          await message.send({ audio: audioUrl }, caption, { quoted: message });
+           await message.send({ audio: audioUrl }, caption, { quoted: message });
+        } else {
+          await message.reply('No audio found or API call failed.');
         }
       } else {
         await message.reply('No audios found.');
-        return;
       }
     } catch (error) {
-      console.error(error);
+      console.error('Error in play command:', error); // Log specific error
       await message.reply("*An error occurred while downloading the audio.*");
     }
-  });
-
-
-
-
-
-
-
-
-
+  }
+);
 
  /*
  cmd({
