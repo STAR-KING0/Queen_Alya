@@ -1,7 +1,24 @@
+const util = require("util");
+const fs = require("fs-extra");
+const {
+  cmd
+} = require("../lib/plugins");
+const {
+  formatp,
+  TelegraPh,
+  aitts,
+  smd,
+  prefix,
+  runtime,
+  Config,
+  parsedJid,
+  sleep,
+  createUrl
+} = require("../lib");
 const axios = require("axios");
 const fetch = require("node-fetch");
-const { Config } = require("../lib");
-
+const os = require("os");
+const speed = require("performance-now");
 async function aiResponse(query, type, extra = "") {
   let response = "";
   try {
