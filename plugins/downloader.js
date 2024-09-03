@@ -14,13 +14,12 @@ const {
    download
  } = require("aptoide-scraper");
  const googleTTS = require("google-tts-api");
- const ytdl = require("ytdl-core");
- const yts = require("yt-search");
+ const ytdl = require("sigma-md-ytdl");
+ const yts = require("sigma-md-yts");
  const fs = require("fs-extra");
  const axios = require("axios");
  const fetch = require("node-fetch");
  var videotime = 2000;
- const BaseUrl = 'https://api.eypz.c0m.in';
  const {
    cmd
  } = require("../lib/plugins");
@@ -1542,7 +1541,7 @@ smd(
      try {
        if (!url) {
          return await message.reply(
-           `*Uhh Please, Provide me tiktok Video Url*\n*_Ex ${prefix}tiktok https://www.tiktok.com/@dakwahmuezza/video/7150544062221749531_*`                                                                                                                                                                                                                                                                                                                          
+           `*Uhh Please, Provide me tiktok Video Url*\n*_Ex ${prefix}tiktok https://www.tiktok.com/@dakwahmuezza/video/7150544062221749531_*`
          );
        }
  
@@ -1588,7 +1587,7 @@ smd(
  }, async (_0x1da3da, _0x2f0451) => {
    try {
      if (!_0x2f0451) {
-       return _0x1da3da. reply("Example: " + prefix + "ringtone back in black");
+       return _0x1da3da.reply("Example: " + prefix + "ringtone back in black");
      }
      const {
        ringtone: _0x2ec04e
@@ -1714,8 +1713,7 @@ smd(
      }
    }
  );
-
-/* smd({
+ smd({
    pattern: "song",
    alias: ["audio"],
    desc: "Downloads audio from youtube.",
@@ -1743,8 +1741,7 @@ smd(
      return _0x2c2023.error(_0x86b411 + "\n\ncommand: song", _0x86b411, "*_File not found!!_*");
    }
  });
-
- smd({
+smd({
    pattern: "play",
    alias: ["music"],
    desc: "Downloads audio from youtube.",
@@ -1771,8 +1768,7 @@ smd(
    } catch (_0x86b411) {
      return _0x2c2023.error(_0x86b411 + "\n\ncommand: play", _0x86b411, "*_File not found!!_*");
    }
- }); */
-
+ });
  cmd({
    pattern: "yts",
    alias: ["yt", "ytsearch"],
@@ -1801,8 +1797,7 @@ smd(
      });
    } catch (_0x5089b0) {}
  });
-
-/* smd({
+ smd({
    pattern: "ytmp4",
    alias: ["ytv", "ytvid", "ytvideo"],
    desc: "Downloads video from youtube.",
@@ -1883,8 +1878,7 @@ smd(
        return _0x1d4717.error(_0x363775 + "\n\ncommand: ytmp4", _0x363775, "*_Uhh dear, Video not Found!!_*");
      }
    }
- }); */
-
+ });
  smd({ pattern: "threads", category: "downloader", filename: __filename, desc: "Download media from Threads." }, async (m, text) => {
    try {
      if (!text) return await m.send("*_Please provide a Threads link_*");
@@ -1934,8 +1928,7 @@ smd(
      await m.error(error + "\n\ncommand: instagram", error, "*_No responce from API, Sorry!!_*");
    }
  });
-
-/* smd({
+ smd({
    pattern: "ytmp3",
    alias: ["yta"],
    desc: "Downloads audio by yt link.",
@@ -2069,9 +2062,7 @@ smd(
    } catch (_0xbed50) {
      await _0x17c662.error(_0xbed50 + "\n\ncommand: ytdoc", _0xbed50, "*_audio file not Found!!_*");
    }
- }); */
-
-
+ });
  cmd({
    on: "text"
  }, async (_0xb75e78, _0x221e78, {
@@ -2335,8 +2326,7 @@ smd(
      console[_0x38a391(217)](_0x4bcd8f);
    }
  });
-
-/* smd({
+smd({
   'pattern': "video",
   'desc': "Downloads video from yt.",
   'category': 'downloader',
@@ -2427,65 +2417,7 @@ smd(
       return _0x5dab40.error(_0xab1d64 + "\n\ncommand: video", _0xab1d64, "*_Video not Found_*");
     }
   }
-}); */  
-
-
-const giftedapikey = 'giftedtechk'; 
-
-smd(
-  {
-    pattern: "play",
-    desc: "Downloads yt audio.",
-    category: "downloader",
-    filename: __filename,
-    use: "<play song name>",
-  },
-  async (message, query) => {
-    try {
-      if (!query) {
-        return await message.reply("*Please provide a song name.*");
-      }
-
-      // Perform YouTube search to get the video URL
-      const search = await yts(query);
-      console.log('Search results:', search); // Log search results
-      const videos = search.videos;
-
-      if (videos && videos.length > 0 && videos[0]) {
-        const videoUrl = videos[0].url;
-
-         // Call the API endpoint with the video URL
-        const apiResponse = await fetch(`${BaseUrl}/ytdl?url=${encodeURIComponent(videoUrl)}`);
-        const apiResult = await apiResponse.json();
-        console.log('API Result:', apiResult); // Log the API response
-
-        if (apiResult.status === 200 && apiResult.success) {
-          const audioUrl = apiResult.result.download_url;
-
-          const fileInfo = {
-            title: apiResult.result.title,
-            quality: apiResult.result.type
-          };
-
-          let caption = {
-            image: { url: videos[0].thumbnail },
-            caption: `Downloaded: *${fileInfo.title}*`
-          };
-
-           await message.send({ audio: audioUrl }, caption, { quoted: message });
-        } else {
-          await message.reply('No audio found or API call failed.');
-        }
-      } else {
-        await message.reply('No audios found.');
-      }
-    } catch (error) {
-      console.error('Error in play command:', error); // Log specific error
-      await message.reply("*An error occurred while downloading the audio.*");
-    }
-  }
-);
-
+});
  /*
  cmd({
     cmdname :"downloader",
