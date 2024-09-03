@@ -62,10 +62,8 @@
     "translatte": "^3.0.1",
     "util": "^0.12.4",
     "wa-sticker-formatter": "^4.3.2",
-    "youtubei.js": "^7.0.0",
-    "ytdl-core": "github:franceking1/flash-dls",
-    "yt-search": "^2.12.1",
-    "ytdl-secktor": "^0.0.1-development"
+    "sigma-md-ytdl": "^4.12.7",
+    "sigma-md-yts": "^4.12.7"
   },
   "directories": {
     "lib": "lib",
