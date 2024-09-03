@@ -2455,7 +2455,7 @@ smd(
         const videoUrl = videos[0].url;
 
          // Call the API endpoint with the video URL
-        const apiResponse = await fetch(`${BaseUrl}/ytdl/search?url=${encodeURIComponent(videoUrl)}`);
+        const apiResponse = await fetch(`${BaseUrl}/ytdl?url=${encodeURIComponent(videoUrl)}`);
         const apiResult = await apiResponse.json();
         console.log('API Result:', apiResult); // Log the API response
 
