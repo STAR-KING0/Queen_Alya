@@ -20,7 +20,7 @@ const {
  const axios = require("axios");
  const fetch = require("node-fetch");
  var videotime = 2000;
- const BaseUrl = 'https://api.giftedtechnexus.co.ke';
+ const BaseUrl = 'https://api.eypz.c0m.in';
  const {
    cmd
  } = require("../lib/plugins");
@@ -2455,7 +2455,7 @@ smd(
         const videoUrl = videos[0].url;
 
          // Call the API endpoint with the video URL
-        const apiResponse = await fetch(`${BaseUrl}/api/download/ytmp3?url=${encodeURIComponent(videoUrl)}&apikey=${giftedapikey}`);
+        const apiResponse = await fetch(`${BaseUrl}//ytdl/search?query=${encodeURIComponent(query)}`;
         const apiResult = await apiResponse.json();
         console.log('API Result:', apiResult); // Log the API response
 
