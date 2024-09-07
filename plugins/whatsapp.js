@@ -1,613 +1,392 @@
-const moment = require("moment-timezone");
+const moment = require('moment-timezone');
 const Config = require("../config");
-let { smd, prefix, updateProfilePicture, parsedJid } = require("../lib");
-const { cmd } = require("../lib/plugins");
+let {
+  fancytext,
+  smd,
+  tlang,
+  tiny,
+  botpic,
+  prefix,
+  updateProfilePicture,
+  parsedJid
+} = require("../lib");
+const {
+  cmd
+} = require("../lib/plugins");
+cmd({
+  'pattern': "privacy",
+  'desc': "send ptv Message of video",
+  'category': "whatsapp",
+  'filename': __filename
+}, async (_0x1de00b, _0x3a059e, {
+  cmdName: _0x25ae6c
+}) => {
+  try {
+    const _0x5a7352 = await _0x1de00b.bot.fetchPrivacySettings();
+    txt = "*[WHATSAPP PRIVACY SETTINGS]*\n\n*PROFILE:* " + _0x5a7352.profile + "\n*STATUS:* " + _0x5a7352.status + "\n*ONLINE:* " + _0x5a7352.online + "\n*LASTSEEN:* " + _0x5a7352.last + "\n*MESSAGE READ:* " + _0x5a7352.readreceipts + "\n\n*Who can add in group:* " + _0x5a7352.groupadd + "\n*Who can call:* " + _0x5a7352.calladd + "\n    ";
+    await _0x1de00b.send(txt);
+  } catch (_0x450710) {
+    await _0x1de00b.error(_0x450710 + "\n\ncommand : privacy", _0x450710);
+  }
+});
 let mtypes = ["imageMessage"];
-smd(
-  {
-    pattern: "pp",
-    desc: "Set profile picture",
-    category: "whatsapp",
-    use: "<reply to image>",
-    fromMe: true,
-    filename: __filename,
-  },
-  async (_0x4f9f9f) => {
-    try {
-      let _0x3d8b6f = mtypes.includes(_0x4f9f9f.mtype)
-        ? _0x4f9f9f
-        : _0x4f9f9f.reply_message;
-      if (!_0x3d8b6f || !mtypes.includes(_0x3d8b6f?.mtype || "need_Media")) {
-        return await _0x4f9f9f.reply("*Reply to an image, dear*");
-      }
-      return await updateProfilePicture(
-        _0x4f9f9f,
-        _0x4f9f9f.user,
-        _0x3d8b6f,
-        "pp"
-      );
-    } catch (_0x18308f) {
-      await _0x4f9f9f.error(_0x18308f + "\n\ncommand : pp", _0x18308f);
+smd({
+  'pattern': "fullpp",
+  'desc': "Set full screen profile picture",
+  'category': 'whatsapp',
+  'use': "<reply to image>",
+  'fromMe': true,
+  'filename': __filename
+}, async _0x29e300 => {
+  try {
+    let _0x19d7fb = mtypes.includes(_0x29e300.mtype) ? _0x29e300 : _0x29e300.reply_message;
+    if (!_0x19d7fb || !mtypes.includes(_0x19d7fb?.["mtype"] || "need_Media")) {
+      return await _0x29e300.reply("*Reply to an image, dear*");
     }
+    return await updateProfilePicture(_0x29e300, _0x29e300.user, _0x19d7fb, "fullpp");
+  } catch (_0x24ab42) {
+    await _0x29e300.error(_0x24ab42 + "\n\ncommand : fullpp", _0x24ab42);
   }
-);
-smd(
-  {
-    pattern: "fullpp",
-    desc: "Set full screen profile picture",
-    category: "whatsapp",
-    use: "<reply to image>",
-    fromMe: true,
-    filename: __filename,
-  },
-  async (_0x36432c) => {
-    try {
-      let _0x312b1b = mtypes.includes(_0x36432c.mtype)
-        ? _0x36432c
-        : _0x36432c.reply_message;
-      if (!_0x312b1b || !mtypes.includes(_0x312b1b?.mtype || "need_Media")) {
-        return await _0x36432c.reply("*Reply to an image, dear*");
-      }
-      return await updateProfilePicture(
-        _0x36432c,
-        _0x36432c.user,
-        _0x312b1b,
-        "fullpp"
-      );
-    } catch (_0x8343ed) {
-      await _0x36432c.error(_0x8343ed + "\n\ncommand : fullpp", _0x8343ed);
-    }
-    {
-    }
+  {}
+});
+smd({
+  'pattern': "rpp",
+  'desc': "remove profile picture",
+  'category': "whatsapp",
+  'use': "<chat>",
+  'fromMe': true,
+  'filename': __filename
+}, async _0x576c66 => {
+  try {
+    await _0x576c66.removepp();
+    _0x576c66.send("*_Profile picture removed successfully!_*");
+  } catch (_0x5426bd) {
+    await _0x576c66.error(_0x5426bd + "\n\ncommand : rpp", _0x5426bd);
   }
-);
-smd(
-  {
-    pattern: "rpp",
-    desc: "remove profile picture",
-    category: "whatsapp",
-    use: "<chat>",
-    fromMe: true,
-    filename: __filename,
-  },
-  async (_0x1c9bb5) => {
-    try {
-      await _0x1c9bb5.removepp();
-      _0x1c9bb5.send("*_Profile picture removed successfully!_*");
-    } catch (_0x385cbc) {
-      await _0x1c9bb5.error(_0x385cbc + "\n\ncommand : rpp", _0x385cbc);
+});
+smd({
+  'pattern': "bio",
+  'desc': "update profile status of whatsapp",
+  'category': "whatsapp",
+  'use': "<text>",
+  'fromMe': true,
+  'filename': __filename
+}, async (_0x142a55, _0x46608a) => {
+  try {
+    if (!_0x46608a) {
+      return await _0x142a55.send("*_provide text to update profile status!_*\n*_Example: " + prefix + "bio Suhail Md_*");
     }
+    await _0x142a55.bot.updateProfileStatus(_0x46608a);
+    _0x142a55.send("*Profile status updated successfully!*");
+  } catch (_0x431ce8) {
+    await _0x142a55.error(_0x431ce8 + "\n\ncommand : bio", _0x431ce8);
   }
-);
-smd(
-  {
-    pattern: "bio",
-    desc: "update profile status of whatsapp",
-    category: "whatsapp",
-    use: "<text>",
-    fromMe: true,
-    filename: __filename,
-  },
-  async (_0xd700b1, _0xb45f41) => {
-    try {
-      if (!_0xb45f41) {
-        return await _0xd700b1.send(
-          "*_provide text to update profile status!_*\n*_Example: " +
-            prefix +
-            "bio Asta Md_*"
-        );
-      }
-      await _0xd700b1.bot.updateProfileStatus(_0xb45f41);
-      _0xd700b1.send("*Profile status updated successfully!*");
-    } catch (_0x365d42) {
-      await _0xd700b1.error(_0x365d42 + "\n\ncommand : bio", _0x365d42);
+});
+cmd({
+  'pattern': "ptv",
+  'desc': "send ptv Message of video",
+  'category': "whatsapp",
+  'filename': __filename
+}, async (_0x3c447b, _0x380c98, {
+  cmdName: _0x1cc2ce
+}) => {
+  try {
+    if (!_0x3c447b.quoted) {
+      return await _0x3c447b.send("*Uhh Please, reply to video*");
     }
-  }
-);
-cmd(
-  {
-    pattern: "ptv",
-    desc: "send ptv Message of video",
-    category: "whatsapp",
-    filename: __filename,
-  },
-  async (_0x235a20, _0x3f96d6, { cmdName: _0x31c746 }) => {
-    try {
-      if (!_0x235a20.quoted) {
-        return await _0x235a20.send("*Uhh Please, reply to video*");
-      }
-      let _0x109aee = _0x235a20.quoted.mtype;
-      if (_0x109aee !== "videoMessage") {
-        return await _0x235a20.send("*Uhh Dear, reply to a video message*");
-      }
-      return await _0x235a20.bot.forwardOrBroadCast(
-        _0x235a20.chat,
-        _0x235a20.quoted,
-        {},
-        "ptv"
-      );
-    } catch (_0x5ae8f7) {
-      await _0x235a20.error(_0x5ae8f7 + "\n\ncommand : ptv", _0x5ae8f7);
+    let _0x3e5787 = _0x3c447b.quoted.mtype;
+    if (_0x3e5787 !== "videoMessage") {
+      return await _0x3c447b.send("*Uhh Dear, reply to a video message*");
     }
+    return await _0x3c447b.bot.forwardOrBroadCast2(_0x3c447b.chat, _0x3c447b.quoted, {}, _0x1cc2ce);
+  } catch (_0xdce52f) {
+    await _0x3c447b.error(_0xdce52f + "\n\ncommand : ptv", _0xdce52f);
   }
-);
-cmd(
-  {
-    pattern: "slog",
-    desc: "Save Message to log number",
-    category: "whatsapp",
-    filename: __filename,
-  },
-  async (_0x23a729, _0x5ad999, { cmdName: _0x2cb44f }) => {
-    try {
-      let _0x48ef43 = _0x23a729.reply_message;
-      if (!_0x48ef43) {
-        return await _0x23a729.send("*Uhh Please, reply to to a Message*");
-      }
-      let _0x114513 = await _0x23a729.bot.forwardOrBroadCast(
-        _0x23a729.user,
-        _0x48ef43
-      );
-    } catch (_0x43530a) {
-      await _0x23a729.error(_0x43530a + "\n\ncommand : save", _0x43530a);
+});
+cmd({
+  'pattern': 'save',
+  'desc': "Save Message to log number",
+  'category': "whatsapp",
+  'filename': __filename
+}, async (_0x3516c9, _0x59b822, {
+  cmdName: _0xc432b
+}) => {
+  try {
+    let _0x575bb6 = _0x3516c9.reply_message;
+    if (!_0x575bb6) {
+      return await _0x3516c9.send("*Uhh Please, reply to to a Message*");
     }
+  } catch (_0x311f45) {
+    await _0x3516c9.error(_0x311f45 + "\n\ncommand : save", _0x311f45);
   }
-);
-cmd(
-  {
-    pattern: "quoted",
-    desc: "get reply Message from Replied Message",
-    category: "user",
-    filename: __filename,
-  },
-  async (_0x65da56) => {
-    try {
-      if (!_0x65da56.quoted) {
-        return await _0x65da56.send("*_Uhh Dear, Reply to a Message_*");
-      }
-      var _0xaab596 = await _0x65da56.bot.serializeM(
-        await _0x65da56.getQuotedObj()
-      );
-      if (!_0xaab596 || !_0xaab596.quoted) {
-        return await _0x65da56.replay(
-          "*Message you replied does not contain a reply Message*"
-        );
-      }
-      try {
-        await _0x65da56.react("✨", _0x65da56);
-        return await _0x65da56.bot.copyNForward(
-          _0x65da56.chat,
-          _0xaab596.quoted,
-          false
-        );
-      } catch (_0x669d0c) {
-        await _0x65da56.bot.forward(
-          _0x65da56.chat,
-          _0xaab596.quoted,
-          {},
-          _0x65da56
-        );
-        console.log(_0x669d0c);
-      }
-    } catch (_0x358ded) {
-      await _0x65da56.error(_0x358ded + "\n\ncommand : quoted", _0x358ded);
+});
+cmd({
+  'pattern': "quoted",
+  'desc': "get reply Message from Replied Message",
+  'category': 'user',
+  'filename': __filename
+}, async _0x362f3c => {
+  try {
+    if (!_0x362f3c.quoted) {
+      return await _0x362f3c.send("*_Uhh Dear, Reply to a Message_*");
     }
-  }
-);
-cmd(
-  {
-    pattern: "blocklist",
-    desc: "get list of all Blocked Numbers",
-    category: "whatsapp",
-    fromMe: true,
-    filename: __filename,
-    use: "<text>",
-  },
-  async (_0x48a6fc) => {
-    try {
-      const _0x2c7cd9 = await _0x48a6fc.bot.fetchBlocklist();
-      if (_0x2c7cd9.length === 0) {
-        return await _0x48a6fc.reply(
-          "Uhh Dear, You don't have any Blocked Numbers."
-        );
-      }
-      let _0x50c0a6 =
-        "\n*≡ List*\n\n*_Total Users:* " +
-        _0x2c7cd9.length +
-        "_\n\n┌─⊷ \t*BLOCKED USERS*\n";
-      for (let _0x261860 = 0; _0x261860 < _0x2c7cd9.length; _0x261860++) {
-        _0x50c0a6 +=
-          "▢ " +
-          (_0x261860 + 1) +
-          ":- wa.me/" +
-          _0x2c7cd9[_0x261860].split("@")[0] +
-          "\n";
-      }
-      _0x50c0a6 += "└───────────";
-      return await _0x48a6fc.bot.sendMessage(_0x48a6fc.chat, {
-        text: _0x50c0a6,
-      });
-    } catch (_0x526b95) {
-      await _0x48a6fc.error(_0x526b95 + "\n\ncommand : blocklist", _0x526b95);
+    var _0x42e5cf = await _0x362f3c.bot.serializeM(await _0x362f3c.getQuotedObj());
+    if (!_0x42e5cf || !_0x42e5cf.quoted) {
+      return await _0x362f3c.replay("*Message you replied does not contain a reply Message*");
     }
-  }
-);
-cmd(
-  {
-    pattern: "location",
-    desc: "Adds *readmore* in given text.",
-    category: "whatsapp",
-    filename: __filename,
-  },
-  async (_0x1de930, _0x4113fc) => {
     try {
-      if (!_0x4113fc) {
-        return await _0x1de930.reply(
-          "*Give Coordinates To Send Location!*\n *Ex: " +
-            prefix +
-            "location 24.121231,55.1121221*"
-        );
-      }
-      let _0x1622ee = parseFloat(_0x4113fc.split(",")[0]) || "";
-      let _0x4c75f7 = parseFloat(_0x4113fc.split(",")[1]) || "";
-      if (!_0x1622ee || isNaN(_0x1622ee) || !_0x4c75f7 || isNaN(_0x4c75f7)) {
-        return await _0x1de930.reply(
-          "*_Cordinates Not In Formate, Try Again_*"
-        );
-      }
-      await _0x1de930.reply(
-        "*----------LOCATION------------*\n```Sending Location Of Given Data:\n Latitude: " +
-          _0x1622ee +
-          "\n Longitude: " +
-          _0x4c75f7 +
-          "```\n\n" +
-          Config.caption
-      );
-      return await _0x1de930.sendMessage(
-        _0x1de930.jid,
-        {
-          location: {
-            degreesLatitude: _0x1622ee,
-            degreesLongitude: _0x4c75f7,
-          },
-        },
-        {
-          quoted: _0x1de930,
-        }
-      );
-    } catch (_0x399d05) {
-      await _0x1de930.error(_0x399d05 + "\n\ncommand : location", _0x399d05);
+      await _0x362f3c.react('✨', _0x362f3c);
+      let _0x1d5680 = await _0x362f3c.bot.serializeM(await _0x42e5cf.getQuotedObj());
+      return await _0x362f3c.bot.copyNForward(_0x362f3c.chat, _0x1d5680, false);
+    } catch (_0x34eaa6) {
+      await _0x362f3c.bot.forward(_0x362f3c.chat, _0x42e5cf.quoted, {}, _0x362f3c);
+      console.log(_0x34eaa6);
     }
+  } catch (_0x512af7) {
+    await _0x362f3c.error(_0x512af7 + "\n\ncommand : quoted", _0x512af7);
   }
-);
-smd(
-  {
-    pattern: "listpc",
-    category: "whatsapp",
-    desc: "Finds info about personal chats",
-    filename: __filename,
-  },
-  async (_0xc7dd0, _0x22efeb, { store: _0x1c364d }) => {
-    try {
-      _0xc7dd0.react("🫡");
-      let _0x5c8d61 = await _0x1c364d.chats
-        .all()
-        .filter((_0x3b06a8) => _0x3b06a8.id.endsWith(".net"))
-        .map((_0x21d01f) => _0x21d01f);
-      let _0x9ec34d =
-        " 「  " +
-        Config.botname +
-        "'s pm user list  」\n\nTotal " +
-        _0x5c8d61.length +
-        " users are text in personal chat.";
-      for (let _0x4d6030 of _0x5c8d61) {
-        _0x9ec34d +=
-          "\n\nUser: @" +
-          _0x4d6030.id.split("@")[0] +
-          "\nMessages : " +
-          _0x4d6030.unreadCount +
-          "\nLastchat : " +
-          moment(_0x4d6030.conversationTimestamp * 1000)
-            .tz(timezone)
-            .format("DD/MM/YYYY HH:mm:ss");
-      }
-      _0xc7dd0.bot.sendTextWithMentions(_0xc7dd0.chat, _0x9ec34d, _0xc7dd0);
-    } catch (_0x5752f9) {
-      return await _0xc7dd0.error(
-        _0x5752f9 + "\n\n command: listpc",
-        _0x5752f9,
-        "*_Didn't get any results, Sorry!_*"
-      );
+});
+cmd({
+  'pattern': "blocklist",
+  'desc': "get list of all Blocked Numbers",
+  'category': 'whatsapp',
+  'fromMe': true,
+  'filename': __filename,
+  'use': "<text>"
+}, async _0xfa0e7f => {
+  try {
+    const _0x4bd729 = await _0xfa0e7f.bot.fetchBlocklist();
+    if (_0x4bd729.length === 0x0) {
+      return await _0xfa0e7f.reply("Uhh Dear, You don't have any Blocked Numbers.");
     }
-  }
-);
-smd(
-  {
-    pattern: "listgc",
-    category: "whatsapp",
-    desc: "Finds info about all active groups",
-    filename: __filename,
-  },
-  async (_0x281fb2, _0x20e08d, { store: _0x7945b9, Void: _0x274b4e }) => {
-    try {
-      _0x281fb2.react("🫡");
-      let _0x2c5ea1 = await _0x7945b9.chats
-        .all()
-        .filter((_0x82e0b2) => _0x82e0b2.id.endsWith("@g.us"))
-        .map((_0xd85092) => _0xd85092);
-      let _0x21f6f4 =
-        " 「  " +
-        Config.botname +
-        "'s group user list  」\n\nTotal " +
-        _0x2c5ea1.length +
-        " active Groups found!";
-      for (let _0xd36fa of _0x2c5ea1) {
-        let _0x433157 = await _0x274b4e.groupMetadata(_0xd36fa.id);
-        _0x21f6f4 +=
-          "\n\nName : " +
-          _0x433157.subject +
-          " " +
-          (_0x433157.owner
-            ? "\nOwner : @" + _0x433157.owner.split("@")[0]
-            : "") +
-          "\nID : " +
-          _0xd36fa.id +
-          "\nMade : " +
-          (_0x433157.creation
-            ? moment(_0x433157.creation * 1000)
-                .tz("Asia/Kolkata")
-                .format("DD/MM/YYYY HH:mm:ss")
-            : _0x433157.creation) +
-          "\nMember : " +
-          (_0x433157.participants.length || 0) +
-          "\n\nMessages : " +
-          _0xd36fa.unreadCount +
-          "\nLastchat : " +
-          moment(_0xd36fa.conversationTimestamp * 1000)
-            .tz(timezone)
-            .format("DD/MM/YYYY HH:mm:ss");
-      }
-      _0x281fb2.send(_0x21f6f4, {}, "asta", _0x281fb2);
-    } catch (_0x5633d6) {
-      return await _0x281fb2.error(
-        _0x5633d6 + "\n\n command: listpc",
-        _0x5633d6,
-        "*_Didn't get any results, Sorry!_*"
-      );
+    let _0x5749d5 = "\n*≡ List*\n\n*_Total Users:* " + _0x4bd729.length + "_\n\n┌─⊷ \t*BLOCKED USERS*\n";
+    for (let _0x2cd015 = 0x0; _0x2cd015 < _0x4bd729.length; _0x2cd015++) {
+      _0x5749d5 += "▢ " + (_0x2cd015 + 0x1) + ":- wa.me/" + _0x4bd729[_0x2cd015].split('@')[0x0] + "\n";
     }
+    _0x5749d5 += "└───────────";
+    return await _0xfa0e7f.bot.sendMessage(_0xfa0e7f.chat, {
+      'text': _0x5749d5
+    });
+  } catch (_0x1ed9b4) {
+    await _0xfa0e7f.error(_0x1ed9b4 + "\n\ncommand : blocklist", _0x1ed9b4);
   }
-);
-cmd(
-  {
-    pattern: "vcard",
-    desc: "Create Contact by given name.",
-    category: "whatsapp",
-    filename: __filename,
-  },
-  async (_0xcffaeb, _0x4158fc) => {
-    try {
-      if (!_0xcffaeb.quoted) {
-        return _0xcffaeb.reply("*Please Reply to User With Name*");
-      }
-      if (!_0x4158fc) {
-        return _0xcffaeb.reply(
-          "Please Give Me User Name, \n *Example : " +
-            prefix +
-            "vcard Asta Tech Info* "
-        );
-      }
-      var _0x423556 = _0x4158fc.split(" ");
-      if (_0x423556.length > 3) {
-        _0x4158fc = _0x423556.slice(0, 3).join(" ");
-      }
-      const _0x11df4f =
-        "BEGIN:VCARD\nVERSION:3.0\nFN:" +
-        _0x4158fc +
-        "\nORG:;\nTEL;type=CELL;type=VOICE;waid=" +
-        _0xcffaeb.quoted.sender.split("@")[0] +
-        ":+" +
-        owner[0] +
-        "\nEND:VCARD";
-      let _0x50f316 = {
-        contacts: {
-          displayName: _0x4158fc,
-          contacts: [
-            {
-              vcard: _0x11df4f,
-            },
-          ],
-        },
-      };
-      return await _0xcffaeb.bot.sendMessage(_0xcffaeb.chat, _0x50f316, {
-        quoted: _0xcffaeb,
-      });
-    } catch (_0x429e69) {
-      await _0xcffaeb.error(_0x429e69 + "\n\ncommand : vcard", _0x429e69);
+});
+cmd({
+  'pattern': "location",
+  'desc': "Adds *readmore* in given text.",
+  'category': "whatsapp",
+  'filename': __filename
+}, async (_0x4ee956, _0x22e2dc) => {
+  try {
+    if (!_0x22e2dc) {
+      return await _0x4ee956.reply("*Give Coordinates To Send Location!*\n *Ex: " + prefix + "location 24.121231,55.1121221*");
     }
-  }
-);
-smd(
-  {
-    pattern: "edit",
-    fromMe: true,
-    desc: "edit message that sended by bot",
-    type: "whatsapp",
-  },
-  async (_0x1afa64, _0x539d95) => {
-    try {
-      let _0x329b9f =
-        _0x1afa64.reply_message && _0x1afa64.reply_message.fromMe
-          ? _0x1afa64.reply_message
-          : false;
-      if (!_0x329b9f) {
-        return await _0x1afa64.reply("_Reply to a message that sent by you!_");
-      }
-      if (!_0x539d95) {
-        return await _0x1afa64.reply("_Need text, Example: edit hi_");
-      }
-      return await _0x1afa64.edit(_0x539d95, {
-        edit: _0x329b9f,
-      });
-    } catch (_0x294464) {
-      await _0x1afa64.error(_0x294464 + "\n\ncommand : edit", _0x294464);
+    let _0x23101b = parseFloat(_0x22e2dc.split(',')[0x0]) || '';
+    let _0x4b8436 = parseFloat(_0x22e2dc.split(',')[0x1]) || '';
+    if (!_0x23101b || isNaN(_0x23101b) || !_0x4b8436 || isNaN(_0x4b8436)) {
+      return await _0x4ee956.reply("*_Cordinates Not In Formate, Try Again_*");
     }
+    await _0x4ee956.reply("*----------LOCATION------------*\n```Sending Location Of Given Data:\n Latitude: " + _0x23101b + "\n Longitude: " + _0x4b8436 + "```\n\n" + Config.caption);
+    return await _0x4ee956.sendMessage(_0x4ee956.jid, {
+      'location': {
+        'degreesLatitude': _0x23101b,
+        'degreesLongitude': _0x4b8436
+      }
+    }, {
+      'quoted': _0x4ee956
+    });
+  } catch (_0x4d92d0) {
+    await _0x4ee956.error(_0x4d92d0 + "\n\ncommand : location", _0x4d92d0);
   }
-);
-smd(
-  {
-    pattern: "forward",
-    alias: ["send"],
-    desc: "forward your messages in jid",
-    type: "whatsapp",
-  },
-  async (_0x402cfa, _0x122b17) => {
-    try {
-      if (!_0x402cfa.reply_message) {
-        return _0x402cfa.reply("*_Reply to something!_*");
-      }
-      let _0x363cd7 = await parsedJid(_0x122b17);
-      if (!_0x363cd7 || !_0x363cd7[0]) {
-        return await _0x402cfa.send(
-          "*Provide jid to forward message*\n*use _" +
-            prefix +
-            "jid,_ to get jid of users!*"
-        );
-      }
-      for (let _0x4a5ab9 = 0; _0x4a5ab9 < _0x363cd7.length; _0x4a5ab9++) {
-        _0x402cfa.bot.forwardOrBroadCast(
-          _0x363cd7[_0x4a5ab9],
-          _0x402cfa.reply_message
-        );
-      }
-    } catch (_0x3721ac) {
-      await _0x402cfa.error(_0x3721ac + "\n\ncommand : forward", _0x3721ac);
+});
+smd({
+  'pattern': "listpc",
+  'category': "whatsapp",
+  'desc': "Finds info about personal chats",
+  'filename': __filename
+}, async (_0x144fd0, _0x21857a, {
+  store: _0x563c73
+}) => {
+  try {
+    _0x144fd0.react('🫡');
+    let _0x196bf6 = await _0x563c73.chats.all().filter(_0x8b2b5 => _0x8b2b5.id.endsWith('.net')).map(_0x434198 => _0x434198);
+    let _0x4b7ff3 = " 「  " + Config.botname + "'s pm user list  」\n\nTotal " + _0x196bf6.length + " users are text in personal chat.";
+    for (let _0x15740d of _0x196bf6) {
+      _0x4b7ff3 += "\n\nUser: @" + _0x15740d.id.split('@')[0x0] + "\nMessages : " + _0x15740d.unreadCount + "\nLastchat : " + moment(_0x15740d.conversationTimestamp * 0x3e8).tz(timezone).format("DD/MM/YYYY HH:mm:ss");
     }
+    _0x144fd0.bot.sendTextWithMentions(_0x144fd0.chat, _0x4b7ff3, _0x144fd0);
+  } catch (_0x170045) {
+    return await _0x144fd0.error(_0x170045 + "\n\n command: listpc", _0x170045, "*_Didn't get any results, Sorry!_*");
   }
-);
-smd(
-  {
-    cmdname: "block",
-    info: "blocks a person",
-    fromMe: true,
-    type: "whatsapp",
-    filename: __filename,
-    use: "<quote/reply user.>",
-  },
-  async (_0x1ed3b3) => {
-    try {
-      let _0x3489cf = _0x1ed3b3.reply_message
-        ? _0x1ed3b3.reply_message.sender
-        : !_0x1ed3b3.isGroup
-        ? _0x1ed3b3.from
-        : _0x1ed3b3.mentionedJid[0]
-        ? _0x1ed3b3.mentionedJid[0]
-        : "";
-      if (!_0x3489cf && !_0x3489cf.includes("@s.whatsapp.net")) {
-        return await _0x1ed3b3.reply("*Uhh dear, reply/mention an User*");
-      }
-      if (_0x1ed3b3.checkBot(_0x3489cf)) {
-        return await _0x1ed3b3.reply("*Huh, I can't block my Creator!!*");
-      }
-      await _0x1ed3b3.bot
-        .updateBlockStatus(_0x3489cf, "block")
-        .then((_0x112d4d) => {
-          _0x1ed3b3.react("✨", _0x1ed3b3);
-        })
-        .catch((_0x4deb64) => _0x1ed3b3.reply("*_Can't block user, Sorry!!_*"));
-    } catch (_0x337f7a) {
-      await _0x1ed3b3.error(_0x337f7a + "\n\ncommand: block", _0x337f7a, false);
+});
+smd({
+  'pattern': 'listgc',
+  'category': 'whatsapp',
+  'desc': "Finds info about all active groups",
+  'filename': __filename
+}, async (_0xa220f, _0x123a92, {
+  store: _0x4ff3e9,
+  Void: _0x573654
+}) => {
+  try {
+    _0xa220f.react('🫡');
+    let _0x369bef = await _0x4ff3e9.chats.all().filter(_0x17a722 => _0x17a722.id.endsWith('@g.us')).map(_0x2555de => _0x2555de);
+    let _0x162811 = " 「  " + Config.botname + "'s group user list  」\n\nTotal " + _0x369bef.length + " active Groups found!";
+    for (let _0x37fd61 of _0x369bef) {
+      let _0x10ff83 = await _0x573654.groupMetadata(_0x37fd61.id);
+      _0x162811 += "\n\nName : " + _0x10ff83.subject + " " + (_0x10ff83.owner ? "\nOwner : @" + _0x10ff83.owner.split('@')[0x0] : '') + "\nID : " + _0x37fd61.id + "\nMade : " + (_0x10ff83.creation ? moment(_0x10ff83.creation * 0x3e8).tz("Asia/Kolkata").format("DD/MM/YYYY HH:mm:ss") : _0x10ff83.creation) + "\nMember : " + (_0x10ff83.participants.length || 0x0) + "\n\nMessages : " + _0x37fd61.unreadCount + "\nLastchat : " + moment(_0x37fd61.conversationTimestamp * 0x3e8).tz(timezone).format("DD/MM/YYYY HH:mm:ss");
     }
+    _0xa220f.send(_0x162811, {}, "suhail", _0xa220f);
+  } catch (_0x383d75) {
+    return await _0xa220f.error(_0x383d75 + "\n\n command: listpc", _0x383d75, "*_Didn't get any results, Sorry!_*");
   }
-);
-smd(
-  {
-    cmdname: "unblock",
-    info: "Unblocked user.",
-    type: "whatsapp",
-    fromMe: true,
-    filename: __filename,
-  },
-  async (_0xdd6403) => {
-    try {
-      let _0xe86e54 = _0xdd6403.reply_message
-        ? _0xdd6403.reply_message.sender
-        : !_0xdd6403.isGroup
-        ? _0xdd6403.from
-        : _0xdd6403.mentionedJid[0]
-        ? _0xdd6403.mentionedJid[0]
-        : "";
-      if (!_0xe86e54 && !_0xe86e54.includes("@s.whatsapp.net")) {
-        return await _0xdd6403.reply("*Uhh dear, reply/mention an User*");
-      }
-      await _0xdd6403.bot
-        .updateBlockStatus(_0xe86e54, "unblock")
-        .then((_0x4f3a25) =>
-          _0xdd6403.send(
-            "*@" + _0xe86e54.split("@")[0] + " Unblocked Successfully..!*",
-            {
-              mentions: [users],
-            }
-          )
-        )
-        .catch((_0x2f7e88) =>
-          _0xdd6403.reply("*_Can't Unblock user, Make sure user blocked!!_*")
-        );
-    } catch (_0x5ae50f) {
-      await _0xdd6403.error(_0x5ae50f + "\n\ncommand: unblock", _0x5ae50f);
+});
+cmd({
+  'pattern': 'vcard',
+  'desc': "Create Contact by given name.",
+  'category': "whatsapp",
+  'filename': __filename
+}, async (_0x2721c0, _0x4a39c4) => {
+  try {
+    if (!_0x2721c0.quoted) {
+      return _0x2721c0.reply("*Please Reply to User With Name*");
     }
-  }
-);
-cmd(
-  {
-    pattern: "vv",
-    alias: ["viewonce", "retrive"],
-    desc: "download viewOnce Message.",
-    category: "whatsapp",
-    use: "<query>",
-    react: "🫦",
-    filename: __filename,
-  },
-  async (_0x5e331d, _0x237d8a) => {
-    try {
-      var _0x17ffa2 = false;
-      if (_0x5e331d.reply_message) {
-        if (
-          _0x5e331d.reply_message.viewOnce ||
-          (_0x5e331d.device === "ios" &&
-            /audioMessage|videoMessage|imageMessage/g.test(
-              _0x5e331d.reply_message.mtype
-            ))
-        ) {
-          _0x17ffa2 = _0x5e331d.reply_message;
-        }
-      }
-      _0x17ffa2.mtype = _0x17ffa2.mtype2;
-      if (!_0x17ffa2) {
-        return _0x5e331d.reply("```Please Reply A ViewOnce Message```");
-      }
-      let _0x86453 = {
-        key: _0x17ffa2.key,
-        message: {
-          conversation: "```[VIEWONCE FOUND DOWNLOAD 100%]```",
-        },
-      };
-      let _0x22f0a2 = await _0x5e331d.bot.downloadAndSaveMediaMessage(
-        _0x17ffa2.msg
-      );
-      await _0x5e331d.bot.sendMessage(
-        _0x5e331d.jid,
-        {
-          [_0x17ffa2.mtype2.split("Mess")[0]]: {
-            url: _0x22f0a2,
-          },
-          caption: _0x17ffa2.body,
-        },
-        {
-          quoted: _0x86453,
-        }
-      );
-    } catch (_0x23316d) {
-      await _0x5e331d.error(_0x23316d + "\n\ncommand: vv", _0x23316d);
+    if (!_0x4a39c4) {
+      return _0x2721c0.reply("Please Give Me User Name, \n *Example : " + prefix + "vcard Suhail Tech Info* ");
     }
+    var _0x96de1e = _0x4a39c4.split(" ");
+    if (_0x96de1e.length > 0x3) {
+      _0x4a39c4 = _0x96de1e.slice(0x0, 0x3).join(" ");
+    }
+    const _0x4ef0e2 = "BEGIN:VCARD\nVERSION:3.0\nFN:" + _0x4a39c4 + "\n" + "ORG:;\n" + 'TEL;type=CELL;type=VOICE;waid=' + _0x2721c0.quoted.sender.split('@')[0x0] + ':+' + owner[0x0] + "\n" + 'END:VCARD';
+    let _0x2438e1 = {
+      'contacts': {
+        'displayName': _0x4a39c4,
+        'contacts': [{
+          'vcard': _0x4ef0e2
+        }]
+      }
+    };
+    return await _0x2721c0.bot.sendMessage(_0x2721c0.chat, _0x2438e1, {
+      'quoted': _0x2721c0
+    });
+  } catch (_0x4812de) {
+    await _0x2721c0.error(_0x4812de + "\n\ncommand : vcard", _0x4812de);
   }
-);
+});
+smd({
+  'pattern': "edit",
+  'fromMe': true,
+  'desc': "edit message that sended by bot",
+  'type': "whatsapp"
+}, async (_0x248e32, _0x36d92f) => {
+  try {
+    let _0x38f991 = _0x248e32.reply_message && _0x248e32.reply_message.fromMe ? _0x248e32.reply_message : false;
+    if (!_0x38f991) {
+      return await _0x248e32.reply("_Reply to a message that sent by you!_");
+    }
+    if (!_0x36d92f) {
+      return await _0x248e32.reply("_Need text, Example: edit hi_");
+    }
+    return await _0x248e32.edit(_0x36d92f, {
+      'edit': _0x38f991
+    });
+  } catch (_0x1ebf78) {
+    await _0x248e32.error(_0x1ebf78 + "\n\ncommand : edit", _0x1ebf78);
+  }
+});
+smd({
+  'pattern': 'forward',
+  'alias': ["send"],
+  'desc': "forward your messages in your jid",
+  'type': "whatsapp"
+}, async (_0x33c3ba, _0xc4c33d) => {
+  try {
+    if (!_0x33c3ba.reply_message) {
+      return _0x33c3ba.reply("*_Reply to something!_*");
+    }
+    let _0x336179 = await parsedJid(_0xc4c33d);
+    if (!_0xc4c33d || !_0x336179 || !_0x336179[0x0]) {
+      return await _0x33c3ba.send("*Provide jid to forward message*\n*use _" + prefix + "jid,_ to get jid of users!*");
+    }
+    for (let _0xcd7afa = 0x0; _0xcd7afa < _0x336179.length; _0xcd7afa++) {
+      _0x33c3ba.bot.forwardOrBroadCast(_0x336179[_0xcd7afa], _0x33c3ba.reply_message);
+    }
+  } catch (_0x5c2093) {
+    await _0x33c3ba.error(_0x5c2093 + "\n\ncommand : forward", _0x5c2093);
+  }
+});
+smd({
+  'cmdname': "block",
+  'info': "blocks a person",
+  'fromMe': true,
+  'type': 'whatsapp',
+  'filename': __filename,
+  'use': "<quote/reply user.>"
+}, async _0x51ddfa => {
+  try {
+    let _0x237c49 = _0x51ddfa.reply_message ? _0x51ddfa.reply_message.sender : !_0x51ddfa.isGroup ? _0x51ddfa.from : _0x51ddfa.mentionedJid[0x0] ? _0x51ddfa.mentionedJid[0x0] : '';
+    if (!_0x237c49 && !_0x237c49.includes('@s.whatsapp.net')) {
+      return await _0x51ddfa.reply("*Uhh dear, reply/mention an User*");
+    }
+    if (_0x51ddfa.checkBot(_0x237c49)) {
+      return await _0x51ddfa.reply("*Huh, I can't block my Creator!!*");
+    }
+    await _0x51ddfa.bot.updateBlockStatus(_0x237c49, "block").then(_0x3646b4 => {
+      _0x51ddfa.react('✨', _0x51ddfa);
+    })["catch"](_0x347137 => _0x51ddfa.reply("*_Can't block user, Sorry!!_*"));
+  } catch (_0x37166b) {
+    await _0x51ddfa.error(_0x37166b + "\n\ncommand: block", _0x37166b, false);
+  }
+});
+smd({
+  'cmdname': 'unblock',
+  'info': "Unblocked user.",
+  'type': 'whatsapp',
+  'fromMe': true,
+  'filename': __filename
+}, async _0x372598 => {
+  try {
+    let _0x4f0daf = _0x372598.reply_message ? _0x372598.reply_message.sender : !_0x372598.isGroup ? _0x372598.from : _0x372598.mentionedJid[0x0] ? _0x372598.mentionedJid[0x0] : '';
+    if (!_0x4f0daf && !_0x4f0daf.includes("@s.whatsapp.net")) {
+      return await _0x372598.reply("*Uhh dear, reply/mention an User*");
+    }
+    await _0x372598.bot.updateBlockStatus(_0x4f0daf, "unblock").then(_0xc1e4ca => _0x372598.send('*@' + _0x4f0daf.split('@')[0x0] + " Unblocked Successfully..!*", {
+      'mentions': [users]
+    }))['catch'](_0x1b7358 => _0x372598.reply("*_Can't Unblock user, Make sure user blocked!!_*"));
+  } catch (_0x181f50) {
+    await _0x372598.error(_0x181f50 + "\n\ncommand: unblock", _0x181f50);
+  }
+});
+cmd({
+  'pattern': 'vv',
+  'alias': ["viewonce", 'retrive'],
+  'desc': "download viewOnce Message.",
+  'category': "whatsapp",
+  'use': "<query>",
+  'filename': __filename
+}, async (_0x9034b9, _0x25fb23) => {
+  try {
+    var _0x1fd65b = _0x9034b9.reply_message && _0x9034b9.reply_message.viewOnce ? _0x9034b9.reply_message : false;
+    if (!_0x1fd65b) {
+      return _0x9034b9.reply("```Please Reply A ViewOnce Message```");
+    }
+    let _0x1bc847 = {
+      'key': _0x1fd65b.key,
+      'message': {
+        'conversation': "```[VIEWONCE FOUND DOWNLOAD 100%]```"
+      }
+    };
+    let _0x201e84 = await _0x9034b9.bot.downloadAndSaveMediaMessage(_0x1fd65b.msg);
+    await _0x9034b9.bot.sendMessage(_0x9034b9.jid, {
+      [_0x1fd65b.mtype2.split('Mes')[0x0]]: {
+        'url': _0x201e84
+      },
+      'caption': _0x1fd65b.body
+    }, {
+      'quoted': _0x1bc847
+    });
+  } catch (_0x1a1295) {
+    await message.error(_0x1a1295 + "\n\ncommand: vv", _0x1a1295);
+  }
+});
