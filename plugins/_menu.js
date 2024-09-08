@@ -8,7 +8,7 @@ const readmore = long.repeat(0xfa1);
 const astro_patch = require("../lib/plugins");
 
 // Path to the calm anime audio folder
-const audioFolderPath = path.join(__dirname, '../lib/alya.mp3');
+const audioFolderPath = path.join(__dirname, '../lib');
 
 // Function to send smooth anime background audio
 async function sendAnimeBackgroundAudio(context, fileName) {
@@ -63,7 +63,7 @@ astro_patch.smd({
     });
 
     // Calm, clean menu design
-    const header = `🌸━━⟪ *" + Config.botname + "* ⟫━━🌸\n`;
+    const header = "┏━━⟪ *" + Config.botname + "* ⟫━━⦿\n";
     const lineSeparator = "┃ ";
     const commandPrefix = "✨ ";
     const footer = "━━━━━━━━━━━━━━━";
@@ -91,7 +91,7 @@ astro_patch.smd({
     await context.sendUi(context.chat, { 'caption': menuContent, 'ephemeralExpiration': 3000 }, context);
 
     // Play soft background audio
-    await sendAnimeBackgroundAudio(context, 'soft_anime_tune.mp3');
+    await sendAnimeBackgroundAudio(context, 'alya.mp3');
 
   } catch (error) {
     await context.error(`Error: ${error.message}`, error);
