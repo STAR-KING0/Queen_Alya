@@ -1,6 +1,6 @@
-const { command, mode, toAudio, IronMan } = require("../lib");
+const { smd, mode, toAudio, IronMan } = require("../lib");
 const ScrapeDl = require("../lib/scraper");
-command(
+smd(
   {
     pattern: "fb",
     fromMe: mode,
@@ -15,7 +15,7 @@ command(
   },
 );
 
-command(
+smd(
   {
     pattern: "insta",
     fromMe: mode,
@@ -30,7 +30,7 @@ command(
   },
 );
 
-command(
+smd(
   {
     pattern: "twitter",
     fromMe: mode,
@@ -45,7 +45,7 @@ command(
   },
 );
 
-command(
+smd(
   {
     pattern: "tiktok",
     fromMe: mode,
@@ -60,7 +60,7 @@ command(
   },
 );
 
-command(
+smd(
   {
     pattern: "pinterest",
     fromMe: mode,
@@ -75,7 +75,7 @@ command(
   },
 );
 
-command(
+smd(
   {
     pattern: "spotify",
     fromMe: mode,
@@ -91,7 +91,7 @@ command(
   },
 );
 
-command(
+smd(
   {
     pattern: "ytv",
     fromeMe: mode,
@@ -106,7 +106,7 @@ command(
   },
 );
 
-command(
+smd(
   {
     pattern: "yta",
     fromMe: mode,
@@ -121,7 +121,7 @@ command(
   },
 );
 
-command(
+smd(
   {
     pattern: "story",
     fromMe: mode,
