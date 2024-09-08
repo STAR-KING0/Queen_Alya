@@ -15,7 +15,13 @@ async function sendAnimeBackgroundAudio(context, fileName) {
   try {
     const filePath = path.join(audioFolderPath, fileName);
     if (fs.existsSync(filePath)) {
-      await context.sendFile(context.chat, filePath, fileName, '', context);
+      const audio = fs.readFileSync(filePath);  // Read the audio file
+      const messageOptions = {
+        audio: audio, 
+        mimetype: 'audio/mp3'
+      };
+      // Send audio message using the correct sendMessage function
+      await context.sendMessage(context.chat, messageOptions);
     } else {
       throw new Error('File not found.');
     }
@@ -33,6 +39,10 @@ astro_patch.smd({
   'filename': __filename
 }, async (context, message) => {
   try {
+    // Play soft background audio first
+    await sendAnimeBackgroundAudio(context, 'alya.mp3');
+
+    // Then display the menu
     const { commands } = require("../lib");
     const currentTime = new Date();
     const hours = currentTime.getHours();
@@ -88,9 +98,6 @@ astro_patch.smd({
 
     // Send the calm anime-styled menu
     await context.sendUi(context.chat, { 'caption': menuContent, 'ephemeralExpiration': 3000 }, context);
-
-    // Play soft background audio
-    await sendAnimeBackgroundAudio(context, 'alya.mp3');
 
   } catch (error) {
     await context.error(`Error: ${error.message}`, error);
