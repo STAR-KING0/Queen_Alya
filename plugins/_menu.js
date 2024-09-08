@@ -1,62 +1,57 @@
-function hi() {
-  console.log("Hello World!");
-}
-hi();
+const fs = require('fs');
+const path = require('path');
 const os = require('os');
 const Config = require('../config');
-let {
-  fancytext,
-  tiny,
-  runtime,
-  formatp,
-  prefix
-} = require("../lib");
+const { fancytext, tiny, runtime, formatp, prefix } = require("../lib");
 const long = String.fromCharCode(0x200e);
 const readmore = long.repeat(0xfa1);
 const astro_patch = require("../lib/plugins");
-const trend_usage = (() => {
-  const _0x54290b = ((_0x9a7b0b, _0x10a9a3) => {
-    const _0x9a9fa = Math.random() * (_0x10a9a3 - (_0x9a7b0b + 0x1));
-    const _0x1f8b97 = Math.floor(_0x9a9fa) + _0x9a7b0b;
-    return _0x1f8b97;
-  })(0x1, 0x63);
-  return _0x54290b;
-})();
-const database_info = (() => {
-  const _0x30de08 = ((_0x4f7dda, _0x38a504) => {
-    const _0x1e00ac = Math.random() * (_0x38a504 - (_0x4f7dda + 0x1));
-    const _0x3ce5ab = Math.floor(_0x1e00ac) + _0x4f7dda;
-    return _0x3ce5ab;
-  })(0x1, 0x1f3);
-  return _0x30de08;
-})();
+
+// Path to the calm anime audio folder
+const audioFolderPath = path.join(__dirname, '../lib/alya.mp3');
+
+// Function to send smooth anime background audio
+async function sendAnimeBackgroundAudio(context, fileName) {
+  try {
+    const filePath = path.join(audioFolderPath, fileName);
+    if (fs.existsSync(filePath)) {
+      await context.sendFile(context.chat, filePath, fileName, '', context);
+    } else {
+      throw new Error('File not found.');
+    }
+  } catch (error) {
+    await context.error(`Error sending background audio: ${error.message}`, error);
+  }
+}
+
+// Command handler with subtle anime theme
 astro_patch.smd({
   'cmdname': "menu",
-  'desc': "Help list",
-  'react': '💓',
-  'desc': "To show all available commands.",
+  'desc': "Displays a calm, readable command list",
+  'react': '🌸',
+  'desc': "Shows all available commands in a smooth anime style.",
   'type': 'user',
   'filename': __filename
 }, async (context, message) => {
-  try { 
+  try {
     const { commands } = require("../lib");
-    const os = require('os');
-    const { formatp, runtime, fancytext, tiny, readmore } = require('../lib');
     const currentTime = new Date();
     const hours = currentTime.getHours();
     const currentDate = currentTime.toLocaleDateString();
     let greeting = "";
 
+    // Calm anime-style greetings based on time of day
     if (hours >= 5 && hours < 12) {
-      greeting = "🌅 Good Morning!";
+      greeting = "🌸 *Good Morning* 🌸 - Time for a fresh start!";
     } else if (hours >= 12 && hours < 18) {
-      greeting = "☀️ Good Afternoon!";
+      greeting = "🌞 *Good Afternoon* 🌞 - Keep up the great work!";
     } else if (hours >= 18 && hours < 22) {
-      greeting = "🌇 Good Evening!";
+      greeting = "🌆 *Good Evening* 🌆 - Unwind and relax!";
     } else {
-      greeting = "🌙 Good Night!";
+      greeting = "🌙 *Good Night* 🌙 - Rest and recharge!";
     }
 
+    // Organize commands by category
     const commandCategories = {};
     commands.forEach(cmd => {
       if (!cmd.dontAddCommandList && cmd.pattern) {
@@ -67,38 +62,38 @@ astro_patch.smd({
       }
     });
 
-    // Set the desired menu design
-    const header = "┏━━⟪ *" + Config.botname + "* ⟫━━⦿\n";
+    // Calm, clean menu design
+    const header = `🌸━━⟪ *" + Config.botname + "* ⟫━━🌸\n`;
     const lineSeparator = "┃ ";
-    const commandPrefix = "┏━━⟪";
-    const commandSuffix = "⟫━━⦿";
-    const footer = "┗━━━━━━━━━━━━━━⦿";
+    const commandPrefix = "✨ ";
+    const footer = "━━━━━━━━━━━━━━━";
 
     let menuContent = header;
-    menuContent += lineSeparator + "👤 *Owner:* " + Config.ownername + "\n";
-    menuContent += lineSeparator + "🕒 *Uptime:* " + runtime(process.uptime()) + "\n";
-    menuContent += lineSeparator + "💻 *RAM Usage:* " + formatp(os.totalmem() - os.freemem()) + "\n";
-    menuContent += lineSeparator + "📅 *Date:* " + currentDate + "\n";
-    menuContent += lineSeparator + "📊 *Commands:* " + commands.length + "\n";
-    menuContent += lineSeparator + greeting + "\n";
+    menuContent += `${lineSeparator}👑 *Owner:* ${Config.ownername}\n`;
+    menuContent += `${lineSeparator}🕒 *Uptime:* ${runtime(process.uptime())}\n`;
+    menuContent += `${lineSeparator}💻 *RAM Usage:* ${formatp(os.totalmem() - os.freemem())}\n`;
+    menuContent += `${lineSeparator}📅 *Date:* ${currentDate}\n`;
+    menuContent += `${lineSeparator}📊 *Total Commands:* ${commands.length}\n`;
+    menuContent += `${lineSeparator}${greeting}\n\n`;
 
-    // List commands by category
+    // List commands by category in an organized manner
     for (const category in commandCategories) {
-      menuContent += commandPrefix + " *" + tiny(category) + "* " + commandSuffix + "\n";
+      menuContent += `🌿 *${tiny(category)}* 🌿\n`;
       commandCategories[category].forEach(cmd => {
-        menuContent += "┃   🌸 " + fancytext(cmd, 1) + "\n";
+        menuContent += `┃   ✨ ${fancytext(cmd, 1)}\n`;
       });
     }
-    
-    menuContent += footer + "\n\nThanks for using *" + Config.botname + "*!\n©2024 STAR KING\n" + readmore;
 
-    const response = {
-      'caption': menuContent,
-      'ephemeralExpiration': 3000
-    };
+    menuContent += `${footer}\n\n🌸 *${Config.botname}* - Your calm assistant\n`;
+    menuContent += `©2024 *STAR KING*\n${readmore}`;
 
-    return await context.sendUi(context.chat, response, context);
+    // Send the calm anime-styled menu
+    await context.sendUi(context.chat, { 'caption': menuContent, 'ephemeralExpiration': 3000 }, context);
+
+    // Play soft background audio
+    await sendAnimeBackgroundAudio(context, 'soft_anime_tune.mp3');
+
   } catch (error) {
-    await context.error(error + "\nCommand: menu", error);
+    await context.error(`Error: ${error.message}`, error);
   }
 });
