@@ -7,8 +7,8 @@ const long = String.fromCharCode(0x200e);
 const readmore = long.repeat(0xfa1);
 const astro_patch = require("../lib/plugins");
 
-// Path to the calm anime audio folder
-const audioFolderPath = path.join('../lib');
+// Path to the anime audio folder
+const audioFolderPath = path.join(__dirname, '../lib');
 
 // Function to send smooth anime background audio
 async function sendAnimeBackgroundAudio(context, fileName) {
@@ -29,7 +29,6 @@ astro_patch.smd({
   'cmdname': "menu",
   'desc': "Displays a calm, readable command list",
   'react': '🌸',
-  'desc': "Shows all available commands in a smooth anime style.",
   'type': 'user',
   'filename': __filename
 }, async (context, message) => {
