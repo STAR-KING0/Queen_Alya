@@ -8,7 +8,7 @@ const readmore = long.repeat(0xfa1);
 const astro_patch = require("../lib/plugins");
 
 // Path to the calm anime audio folder
-const audioFolderPath = path.join(__dirname, '../lib');
+const audioFolderPath = path.join('../lib');
 
 // Function to send smooth anime background audio
 async function sendAnimeBackgroundAudio(context, fileName) {
