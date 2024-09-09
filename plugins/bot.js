@@ -230,6 +230,9 @@ smd({
     console.log("ERROR IN AFK MAIN\n", _0x4f282f);
   }
 });
+const path = require('path');
+const { runtime } = require("../lib"); // Assuming runtime calculates uptime
+
 smd(
   {
     pattern: "alive",
@@ -242,9 +245,9 @@ smd(
     try {
       const start = new Date().getTime();
 
-      // Load GIF from local path
-      const gifPath = path.join(__dirname, '../lib/alya.gif');
-      const gifBuffer = fs.readFileSync(gifPath);
+      // Load image from local path
+      const imagePath = path.join(__dirname, '../lib/alya.jpg');
+      const imageBuffer = fs.readFileSync(imagePath);
 
       // Fetch random quote from an API
       const quoteResponse = await axios.get("https://api.quotable.io/random");
@@ -264,7 +267,7 @@ smd(
       const captionText = `QUEEN_ALYA \n\n*ʀᴇsᴘᴏɴsᴇ ʀᴀᴛᴇ:* ${pingSeconds} seconds\n*Uptime:* ${uptime}${quoteText}\n\nQUEEN_ALYA`;
 
       const messageData = {
-        gif: gifBuffer,  // Send GIF instead of image
+        image: imageBuffer, 
         caption: captionText
       };
 
