@@ -230,7 +230,6 @@ smd({
     console.log("ERROR IN AFK MAIN\n", _0x4f282f);
   }
 });
-const path = require('path');
 const { runtime } = require("../lib"); // Assuming runtime calculates uptime
 
 smd(
