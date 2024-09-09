@@ -73,9 +73,9 @@ function getNextMenuDesign() {
 
 // Command handler with subtle anime theme
 astro_patch.smd({
-  'cmdname': "menhu",
+  'cmdname': "menu",
   'desc': "Displays a calm, readable command list",
-  'react': '🌸',
+  'react': '✨',
   'type': 'user',
   'filename': __filename
 }, async (context, message) => {
