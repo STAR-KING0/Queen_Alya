@@ -230,10 +230,15 @@ smd({
     console.log("ERROR IN AFK MAIN\n", _0x4f282f);
   }
 });
+const fs = require('fs');
+const path = require('path');
+const axios = require('axios');
+const { runtime } = require("../lib"); // Assuming runtime calculates uptime
+
 smd(
   {
     pattern: "alive",
-    desc: "Shows system status with different designs.",
+    desc: "Shows system status with uptime and a random quote.",
     category: "general",
     filename: __filename,
     use: "alive",
@@ -241,78 +246,32 @@ smd(
   async (message, input) => {
     try {
       const start = new Date().getTime();
-      const designs = [
-        async () => {
-          const imageBuffer = await axios.get(
-            "https://telegra.ph/file/b065f0f673cae5452c358.jpg",
-            {
-              responseType: "arraybuffer",
-            }
-          );
 
-          const quoteResponse = await axios.get(
-            "https://api.maher-zubair.tech/misc/quote"
-          );
-          const quote = quoteResponse.data;
-          if (!quote || quote.status !== 200) {
-            return await message.reply("*Failed to fetch a quote.*");
-          }
+      // Load GIF from local path
+      const gifPath = path.join(__dirname, '../lib/alya.gif');
+      const gifBuffer = fs.readFileSync(gifPath);
 
-          const quoteText = `\n\n*"${quote.result.body}"*\n_- ${quote.result.author}_`;
-          const end = new Date().getTime();
-          const pingSeconds = (end - start) / 1000;
-          const captionText = `QUEEN_ALYA \n\n*ʀᴇsᴘᴏɴsᴇ ʀᴀᴛᴇ:* ${pingSeconds} seconds${quoteText}\n\nQUEEN_ALYA`;
+      // Fetch random quote from an API
+      const quoteResponse = await axios.get("https://api.quotable.io/random");
+      const quote = quoteResponse.data;
 
-          return { image: imageBuffer.data, caption: captionText };
-        },
-        async () => {
-          const imageBuffer = await axios.get(
-            "https://i.imgur.com/lIo3cM2.jpeg",
-            {
-              responseType: "arraybuffer",
-            }
-          );
+      if (!quote || !quote.content) {
+        return await message.reply("*Failed to fetch a quote.*");
+      }
 
-          const factResponse = await axios.get(
-            "https://api.maher-zubair.tech/misc/fact"
-          );
-          const fact = factResponse.data;
-          if (!fact || fact.status !== 200) {
-            return await message.reply("*Failed to fetch a fact.*");
-          }
+      const quoteText = `\n\n*"${quote.content}"*\n_- ${quote.author}_`;
 
-          const end = new Date().getTime();
-          const pingSeconds = (end - start) / 1000;
-          const captionText = `QUEEN_ALYA\n\n*ʀᴇsᴘᴏɴsᴇ ʀᴀᴛᴇ:* ${pingSeconds} seconds\n\n*Fact:*\n${fact.result.fact}\n\nRIAS GREMORY BOT`;
+      // Calculate uptime and response rate
+      const end = new Date().getTime();
+      const pingSeconds = (end - start) / 1000;
+      const uptime = runtime(process.uptime()); // Use your own runtime function to calculate uptime
 
-          return { image: imageBuffer.data, caption: captionText };
-        },
-        async () => {
-          const imageBuffer = await axios.get(
-            "https://telegra.ph/file/b065f0f673cae5452c358.jpg",
-            {
-              responseType: "arraybuffer",
-            }
-          );
+      const captionText = `QUEEN_ALYA \n\n*ʀᴇsᴘᴏɴsᴇ ʀᴀᴛᴇ:* ${pingSeconds} seconds\n*Uptime:* ${uptime}${quoteText}\n\nQUEEN_ALYA`;
 
-          const lineResponse = await axios.get(
-            "https://api.maher-zubair.tech/misc/lines"
-          );
-          const line = lineResponse.data;
-          if (!line || line.status !== 200) {
-            return await message.reply("*Failed to fetch a line.*");
-          }
-
-          const end = new Date().getTime();
-          const pingSeconds = (end - start) / 1000;
-          const captionText = `QUEEN_ALYA\n\n*ʀᴇsᴘᴏɴsᴇ ʀᴀᴛᴇ:* ${pingSeconds} seconds\n\n*Line:*\n${line.result}\n\nQUEEN_ALYA`;
-
-          return { image: imageBuffer.data, caption: captionText };
-        },
-      ];
-
-      const randomDesign = designs[Math.floor(Math.random() * designs.length)];
-      const messageData = await randomDesign();
+      const messageData = {
+        gif: gifBuffer,  // Send GIF instead of image
+        caption: captionText
+      };
 
       const message_options = {
         quoted: message,
@@ -322,11 +281,7 @@ smd(
         },
       };
 
-      return await message.bot.sendMessage(
-        message.chat,
-        messageData,
-        message_options
-      );
+      return await message.bot.sendMessage(message.chat, messageData, message_options);
     } catch (error) {
       await message.error(
         error + "\n\nCommand: alive",
