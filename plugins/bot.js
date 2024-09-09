@@ -230,11 +230,6 @@ smd({
     console.log("ERROR IN AFK MAIN\n", _0x4f282f);
   }
 });
-const fs = require('fs');
-const path = require('path');
-const axios = require('axios');
-const { runtime } = require("../lib"); // Assuming runtime calculates uptime
-
 smd(
   {
     pattern: "alive",
