@@ -245,7 +245,7 @@ smd(
       const start = new Date().getTime();
 
       // Load image from local path
-      const imagePath = path.join(__dirname, '../lib/alya.jpg');
+      const imagePath = path.join(__dirname, '../lib/alya.gif');
       const imageBuffer = fs.readFileSync(imagePath);
 
       // Fetch random quote from an API
