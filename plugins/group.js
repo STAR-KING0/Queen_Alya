@@ -19,7 +19,7 @@ const {
   getBuffer,
   prefix
 } = require("../lib");
-const {<
+const {
   Sticker,
   createSticker,
   StickerTypes
