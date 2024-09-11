@@ -18,6 +18,7 @@
   "dependencies": {
     "@adiwajshing/keyed-db": "^0.2.4",
     "@hapi/boom": "^9.1.4",
+    "@whiskeysockets/baileys": "6.6.0",
     "acrcloud": "^1.4.0",
     "anime-character-random": "latest",
     "aptoide-scraper": "^1.0.1",
