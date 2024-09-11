@@ -16,7 +16,7 @@
    "author": "STAR-KING0",
    "license": "Apache-2.0",
    "dependencies": {
-      "alya": "npm:@distube/ytdl-core",
+      "alya": "ytdl-core@latest",
       "ytdl": "npm:@distube/ytdl-core",
       "@adiwajshing/keyed-db": "^0.2.4",
       "@hapi/boom": "^9.1.4",
