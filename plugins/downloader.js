@@ -1,28 +1,23 @@
 const {
-   smd,
-   fetchJson,
-   astroJson,
-   fancytext,
-   yt,
-   getBuffer,
-   smdBuffer,
-   prefix,
-   Config,
- } = require("../lib");
- const {
-   search,
-   download
- } = require("aptoide-scraper");
- const googleTTS = require("google-tts-api");
- const ytdl = require("sigma-md-ytdl");
- const yts = require("sigma-md-yts");
- const fs = require("fs-extra");
- const axios = require("axios");
- const fetch = require("node-fetch");
- var videotime = 2000;
- const {
-   cmd
- } = require("../lib/plugins");
+  smd,
+  fetchJson,
+  astroJson,
+  fancytext,
+  yt,
+  getBuffer,
+  smdBuffer,
+  prefix,
+  Config,
+} = require("../lib");
+const { search, download } = require("aptoide-scraper");
+const googleTTS = require("google-tts-api");
+const ytdl = require("alya");
+const yts = require("secktor-pack");
+const fs = require("fs-extra");
+const axios = require("axios");
+const fetch = require("node-fetch");
+var videotime = 2000;
+const { cmd } = require("../lib/plugins");
  smd(
   {
     pattern: "igstalk",
