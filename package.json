@@ -16,7 +16,7 @@
    "author": "STAR-KING0",
    "license": "Apache-2.0",
    "dependencies": {
-      "alya": "ytdl-core@latest",
+      "alya": "npm:@distube/ytdl-core@latest",
       "ytdl": "npm:@distube/ytdl-core",
       "@adiwajshing/keyed-db": "^0.2.4",
       "@hapi/boom": "^9.1.4",
@@ -65,7 +65,7 @@
       "util": "^0.12.4",
       "wa-sticker-formatter": "^4.3.2",
       "youtubei.js": "^7.0.0",
-      "ytdl-core": "npm:@distube/ytdl-core",
+      "ytdl-core": "npm:@distube/ytdl-core@latest",
       "ytdl-secktor": "^0.0.1-development"
    },
    "directories": {
