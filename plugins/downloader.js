@@ -32,10 +32,10 @@ const { cmd } = require("../lib/plugins");
         return await m.send("*_Please provide an Instagram username!_*");
       }
 
-      const apiUrl = `https://api.maher-zubair.tech/stalk/instagram?q=${encodeURIComponent(
+      const apiUrl = `https://api.maher-zubair.xyz/stalking/insta-user?apikey=41bbd073ab8e65526a&user=${encodeURIComponent(
         username
       )}`;
-      const response = await fetch(apiUrl);
+      const response = await axios.get(apiUrl);
 
       if (!response.ok) {
         return await m.send(
@@ -96,7 +96,7 @@ smd(
       const apiUrl = `https://api.maher-zubair.tech/stalk/ytchannel?q=${encodeURIComponent(
         channelName
       )}`;
-      const response = await fetch(apiUrl);
+      const response = await axios.get(apiUrl);
 
       if (!response.ok) {
         return await m.send(
@@ -167,10 +167,10 @@ smd(
         return await m.send("*_Please provide a GitHub username!_*");
       }
 
-      const apiUrl = `https://api.maher-zubair.tech/stalk/githubuser?q=${encodeURIComponent(
+      const apiUrl = `https://api.maher-zubair.xyz/stalking/github-user?apikey=41bbd073ab8e65526a&user=${encodeURIComponent(
         username
       )}`;
-      const response = await fetch(apiUrl);
+      const response = await axios.get(apiUrl);
 
       if (!response.ok) {
         return await m.send(
@@ -243,10 +243,10 @@ smd(
         return await m.send("*_Please provide an IP address!_*");
       }
 
-      const apiUrl = `https://api.maher-zubair.tech/stalk/ip?q=${encodeURIComponent(
+      const apiUrl = `https://api.maher-zubair.xyz/stalking/ip?apikey=41bbd073ab8e65526a&q=${encodeURIComponent(
         ipAddress
       )}`;
-      const response = await fetch(apiUrl);
+      const response = await axios.get(apiUrl);
 
       if (!response.ok) {
         return await m.send(
@@ -327,7 +327,7 @@ smd(
        const apiUrl = `https://api.maher-zubair.tech/download/alldownload2?url=${encodeURIComponent(
          url
        )}`;
-       const response = await fetch(apiUrl);
+       const response = await axios.get(apiUrl);
  
        if (!response.ok) {
          return await m.send(
@@ -370,7 +370,7 @@ smd(
      }
  
      const apiUrl = `https://api.maher-zubair.tech/download/gdrive?url=${encodeURIComponent(url)}`;
-     const response = await fetch(apiUrl);
+     const response = await axios.get(apiUrl);
  
      if (!response.ok) {
        return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
@@ -590,7 +590,7 @@ smd(
      let _0x27aa70 = _0x2a4fb1.split("/addstickers/")[1];
      let {
        result: _0x4a601d
-     } = await fetchJson("https://api.telegram.org/bot891038791:AAHWB1dQd-vi0IbH2NjKYUk-hqQ8rQuzPD4/getStickerSet?name=" + encodeURIComponent(_0x27aa70) + " ");
+     } = await axios.getJson("https://api.telegram.org/bot891038791:AAHWB1dQd-vi0IbH2NjKYUk-hqQ8rQuzPD4/getStickerSet?name=" + encodeURIComponent(_0x27aa70) + " ");
      let _0x54b45a = _0x155c01.split("|")[1] || "";
      let _0x56bec3 = "Total stickers: " + _0x4a601d.stickers.length + "\n*Estimated complete in:* " + _0x4a601d.stickers.length * 1.5 + " seconds\nKeep in mind that there is a chance of a ban if used frequently";
      if (_0x4a601d.is_animated) {
@@ -619,7 +619,7 @@ smd(
      }
      await _0x19df48.reply(_0x56bec3 + "\n\n_Downloading as " + _0x4cca92 + " From index *" + _0x33784b + "* to *" + _0x26c3a3 + "*._\nIf you wants more to download then use Like \n\n .tgs " + _0x2a4fb1 + " |  10 ,  20 ; photo");
      for (_0x33784b; _0x33784b < _0x26c3a3; _0x33784b++) {
-       let _0x4de16f = await fetchJson("https://api.telegram.org/bot891038791:AAHWB1dQd-vi0IbH2NjKYUk-hqQ8rQuzPD4/getFile?file_id=" + _0x4a601d.stickers[_0x33784b].file_id);
+       let _0x4de16f = await axios.getJson("https://api.telegram.org/bot891038791:AAHWB1dQd-vi0IbH2NjKYUk-hqQ8rQuzPD4/getFile?file_id=" + _0x4a601d.stickers[_0x33784b].file_id);
        let _0x3c2608 = "https://api.telegram.org/file/bot891038791:AAHWB1dQd-vi0IbH2NjKYUk-hqQ8rQuzPD4/" + _0x4de16f.result.file_path;
        if (_0x3a6ece) {
          let _0x13ee38 = await getBuffer(_0x3c2608);
@@ -657,7 +657,7 @@ smd(
          );
        }
        let video = await astroJson(
-         "https://api-smd.onrender.com/api/fbdown?url=" + query
+         "https://api.maher-zubair.xyz/downloader/facebook?apikey=41bbd073ab8e65526a&url=" + query
        );
        if (!video || !video.status) {
          return await message.reply("*Invalid Video URL!*");
@@ -697,8 +697,8 @@ smd(
        return await m.send("*_Please provide an Instagram URL!_*");
      }
  
-     const apiUrl = `https://api.maher-zubair.tech/download/instagram?url=${encodeURIComponent(url)}`;
-     const response = await fetch(apiUrl);
+     const apiUrl = `https://api.maher-zubair.xyz/downloader/insta?apikey=41bbd073ab8e65526a&url=${encodeURIComponent(url)}`;
+     const response = await axios.get(apiUrl);
  
      if (!response.ok) {
        return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
@@ -749,7 +749,7 @@ smd(
  
        const stickerUrl = url.split("|")[0];
        const stickerName = stickerUrl.split("/addstickers/")[1];
-       const { result: stickerSet } = await fetchJson(
+       const { result: stickerSet } = await axios.getJson(
          `https://api.telegram.org/bot891038791:AAHWB1dQd-vi0IbH2NjKYUk-hqQ8rQuzPD4/getStickerSet?name=${encodeURIComponent(
            stickerName
          )}`
@@ -789,7 +789,7 @@ smd(
        );
  
        for (let i = startIndex - 1; i < endIndex; i++) {
-         const { result: fileInfo } = await fetchJson(
+         const { result: fileInfo } = await axios.getJson(
            `https://api.telegram.org/bot891038791:AAHWB1dQd-vi0IbH2NjKYUk-hqQ8rQuzPD4/getFile?file_id=${stickerSet.stickers[i].file_id}`
          );
          const fileUrl = `https://api.telegram.org/file/bot891038791:AAHWB1dQd-vi0IbH2NjKYUk-hqQ8rQuzPD4/${fileInfo.file_path}`;
@@ -834,7 +834,7 @@ smd(
        const apiUrl = `https://api.maher-zubair.tech/download/snack?url=${encodeURIComponent(
          url
        )}`;
-       const response = await fetchJson(apiUrl);
+       const response = await axios.getJson(apiUrl);
  
        if (response.status !== 200) {
          return await message.reply(`*Error: ${response.result}*`);
@@ -913,7 +913,7 @@ smd(
          );
        }
        let video = await astroJson(
-         "https://api-smd.onrender.com/api/fbdown?url=" + query
+         "https://api.maher-zubair.xyz/downloader/facebook?apikey=41bbd073ab8e65526a&url=" + query
        );
        if (!video || !video.status) {
          return await message.reply("*Invalid Video URL!*");
@@ -959,7 +959,7 @@ smd(
          );
        }
        let video = await astroJson(
-         "https://api-smd.onrender.com/api/fbdown?url=" + query
+         "https://api.maher-zubair.xyz/downloader/facebook?apikey=41bbd073ab8e65526a&url=" + query
        );
        if (!video || !video.status) {
          return await message.reply("*Invalid Video URL!*");
@@ -1100,7 +1100,7 @@ smd(
        const apiUrl = `https://api.maher-zubair.tech/download/soundcloud?url=${encodeURIComponent(
          url
        )}`;
-       const response = await fetch(apiUrl).then((res) => res.json());
+       const response = await axios.get(apiUrl).then((res) => res.json());
  
        if (!response || response.status !== 200) {
          return await msg.reply(
@@ -1165,7 +1165,7 @@ smd(
          _0x83a6d7 +
          "/zipball";
        let _0x2cb6ba = (
-         await fetch(_0x3e5a6d, {
+         await axios.get(_0x3e5a6d, {
            method: "HEAD",
          })
        ).headers
@@ -1407,7 +1407,7 @@ smd(
        }
  
        const apiUrl = "https://aemt.me/download/tiktokdl?url=";
-       const response = await fetch(`${apiUrl}?url=${tiktokUrl}`);
+       const response = await axios.get(`${apiUrl}?url=${tiktokUrl}`);
        const data = await response.json();
  
        if (data && data.video && data.video.noWatermark) {
@@ -1451,7 +1451,7 @@ smd(
        const apiUrl = `https://aemt.me/download/tiktokdl?url=${encodeURIComponent(
          tiktokUrl
        )}`;
-       const response = await fetchJson(apiUrl);
+       const response = await axios.getJson(apiUrl);
  
        if (response.status !== 200) {
          return await message.reply(`*Error: ${response.result}*`);
@@ -1505,7 +1505,7 @@ smd(
        }
  
        const apiUrl = "https://aemt.me/download/tiktokdl?url=";
-       const response = await fetch(`${apiUrl}?url=${tiktokUrl}`);
+       const response = await axios.get(`${apiUrl}?url=${tiktokUrl}`);
        const data = await response.json();
  
        if (data && data.video && data.video.noWatermark) {
@@ -1550,7 +1550,7 @@ smd(
        const apiUrl = `https://aemt.me/download/tiktokdl?url=${encodeURIComponent(
          tiktokUrl
        )}`;
-       const response = await fetchJson(apiUrl);
+       const response = await axios.getJson(apiUrl);
  
        if (response.status !== 200) {
          return await message.reply(`*Error: ${response.result}*`);
@@ -1624,7 +1624,7 @@ smd(
        const apiUrl = `https://api.maher-zubair.tech/search/pinterest?q=${encodeURIComponent(
          query
        )}`;
-       const response = await fetch(apiUrl);
+       const response = await axios.get(apiUrl);
  
        if (!response.ok) {
          return m.reply(`*_Error: ${response.status} ${response.statusText}_*`);
@@ -1673,7 +1673,7 @@ smd(
        const apiUrl = `https://api.maher-zubair.tech/download/mediafire?url=${encodeURIComponent(
          url
        )}`;
-       const response = await fetch(apiUrl);
+       const response = await axios.get(apiUrl);
  
        if (!response.ok) {
          return m.reply(`*_Error: ${response.status} ${response.statusText}_*`);
@@ -1879,7 +1879,7 @@ smd({
      if (!text) return await m.send("*_Please provide a Threads link_*");
  
      let apiUrl = `https://api.maher-zubair.tech/download/threads?url=${text}`;
-     let response = await fetch(apiUrl);
+     let response = await axios.get(apiUrl);
      let jsonResponse = await response.json();
  
      if (jsonResponse.status === 200) {
@@ -1909,8 +1909,8 @@ smd({
    try {
      if (!text) return await m.send("*_Please provide an Instagram link_*");
  
-     let apiUrl = `https://api.maher-zubair.tech/download/instagram?url=${text}`;
-     let response = await fetch(apiUrl);
+     let apiUrl = `https://api.maher-zubair.xyz/downloader/insta?apikey=41bbd073ab8e65526a&url=${text}`;
+     let response = await axios.get(apiUrl);
      let jsonResponse = await response.json();
  
      if (jsonResponse.status === 200) {
