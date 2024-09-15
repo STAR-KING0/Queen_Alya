@@ -1193,7 +1193,7 @@ smd(
    desc: "text to speech.",
    category: "downloader",
    filename: __filename,
-   use: "<Hii,this is Asta>"
+   use: "<Hii,this is alya>"
  }, async (_0x55aba2, _0x56da6b) => {
    try {
      let _0x204f81 = _0x55aba2.reply_text ? _0x55aba2.reply_text : _0x56da6b;
@@ -1363,7 +1363,7 @@ smd(
      };
      let _0x4737bb = {
        audio: _0x2ba501,
-       fileName: "Asta-Md tiktok Sound" + _0x19c223 + ".m4a",
+       fileName: "alya-Md tiktok Sound" + _0x19c223 + ".m4a",
        mimetype: "audio/mpeg",
        ptt: true,
        contextInfo: _0x29fdd9
@@ -1713,100 +1713,6 @@ smd(
      }
    }
  );
- smd({
-   pattern: "song",
-   alias: ["audio"],
-   desc: "Downloads audio from youtube.",
-   category: "downloader",
-   filename: __filename,
-   use: "<give text>"
- }, async (_0x2c2023, _0x4ec99f) => {
-   try {
-     if (!_0x4ec99f) {
-       return await _0x2c2023.reply("*_Give Me Search Query_*");
-     }
-     let _0x3b2ca6 = await yts(_0x4ec99f);
-     let _0x4123ae = _0x3b2ca6.all[0];
-     let _0x5883a9 = "\t *Queen_Alya • sᴏɴɢ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ*   \n\n*Title :* " + _0x4123ae.title + "\nUrl : " + _0x4123ae.url + "\n*Description :* " + _0x4123ae.timestamp + "\n*Views :* " + _0x4123ae.views + "\n*Uploaded :* " + _0x4123ae.ago + "\n*Author :* " + _0x4123ae.author.name + "\n\n\n_Reply 1 for Video_ Or _1 document_\n_Reply 2 for Audio_ Or _2 document_";
-     let _0x3885cc = await smdBuffer(_0x4123ae.thumbnail);
-     var _0x44a363 = {
-       ...(await _0x2c2023.bot.contextInfo(Config.botname, "ʏᴏᴜᴛᴜʙᴇ ꜱᴏɴɢ", _0x3885cc))
-     };
-     await _0x2c2023.bot.sendMessage(_0x2c2023.jid, {
-       image: _0x3885cc,
-       caption: _0x5883a9,
-       contextInfo: _0x44a363
-     });
-   } catch (_0x86b411) {
-     return _0x2c2023.error(_0x86b411 + "\n\ncommand: song", _0x86b411, "*_File not found!!_*");
-   }
- });
-smd({
-  pattern: "play",
-  alias: ["music"],
-  desc: "Downloads audio from YouTube.",
-  category: "downloader",
-  filename: __filename,
-  use: "<search text>"
-}, async (_0x2c2023, _0x4ec99f) => {
-  try {
-    if (!_0x4ec99f) {
-      return await _0x2c2023.reply("*_Give Me a Search Query_*");
-    }
-    
-    // Search for the song on YouTube
-    let _0x3b2ca6 = await yts(_0x4ec99f);
-    let _0x4123ae = _0x3b2ca6.all[0]; // First search result
-    
-    if (!_0x4123ae) {
-      return await _0x2c2023.reply("*_No results found for your search_*");
-    }
-    
-    // Construct the message with the search result details
-    let _0x5883a9 = `
-\t *Queen_Alya • ᴍᴜꜱɪᴄ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ*   \n\n
-*Title :* ${_0x4123ae.title}\n
-*Url :* ${_0x4123ae.url}\n
-*Description :* ${_0x4123ae.timestamp}\n
-*Views :* ${_0x4123ae.views}\n
-*Uploaded :* ${_0x4123ae.ago}\n
-*Author :* ${_0x4123ae.author.name}\n\n
-_Downloading the audio for you..._
-    `;
-    
-    let _0x3885cc = await smdBuffer(_0x4123ae.thumbnail);
-    
-    // Send the search result as a message
-    await _0x2c2023.bot.sendMessage(_0x2c2023.jid, {
-      image: _0x3885cc,
-      caption: _0x5883a9
-    });
-    
-    // Download the audio from the first search result using the YouTube MP3 API
-    const apiUrl = `https://api.giftedtechnexus.co.ke/api/download/ytmp3?url=${_0x4123ae.url}&apikey=gifted`;
-    const response = await axios.get(apiUrl);
-    const data = response.data;
-    
-    if (data.status === 200 && data.audio) {
-      const audioLink = data.audio;
-      const audioTitle = data.title;
-      
-      // Send the downloaded audio to the user
-      await _0x2c2023.bot.sendMessage(_0x2c2023.jid, {
-        audio: { url: audioLink },
-        fileName: `${audioTitle}.mp3`,
-        mimetype: "audio/mpeg",
-        caption: `Here's your audio\n${Config.caption}`,
-      }, { quoted: _0x2c2023 });
-      
-    } else {
-      await _0x2c2023.reply("*_Error: Could not download the audio. Please try again later!_*");
-    }
-
-  } catch (_0x86b411) {
-    return _0x2c2023.error(_0x86b411 + "\n\ncommand: play", _0x86b411, "*_File not found!!_*");
-  }
-});
  cmd({
    pattern: "yts",
    alias: ["yt", "ytsearch"],
@@ -1875,44 +1781,6 @@ _Downloading the audio for you..._
   }
 });
  smd({
-  pattern: "ytmp3",
-  alias: ["yta"],
-  desc: "Downloads audio by YouTube link.",
-  category: "downloader",
-  use: "<yt video url>"
-}, async (_0x3f8930, _0x5834bb) => {
-  let videoUrl = _0x5834bb ? _0x5834bb : _0x3f8930.reply_text;
-  const fileType = videoUrl.toLowerCase().includes("doc") ? "document" : "audio";
-  const ytIdMatch = ytIdRegex.exec(videoUrl) || [];
-
-  if (!videoUrl || !ytIdMatch[0]) {
-    return await _0x3f8930.reply("*_Please provide a valid YouTube video URL!_*");
-  }
-
-  try {
-    const apiUrl = `https://api.giftedtechnexus.co.ke/api/download/ytmp3?url=${ytIdMatch[0]}&apikey=gifted`;
-    const response = await axios.get(apiUrl);
-    const data = response.data;
-
-    if (data.status === 200 && data.audio) {
-      const audioLink = data.audio;
-      const audioTitle = data.title;
-
-      await _0x3f8930.bot.sendMessage(_0x3f8930.jid, {
-        [fileType]: { url: audioLink },
-        fileName: `${audioTitle}.mp3`,
-        mimetype: "audio/mpeg",
-        caption: `Here's your audio\n${Config.caption}`,
-      }, { quoted: _0x3f8930 });
-
-    } else {
-      await _0x3f8930.reply("*_Error: Could not download the audio. Please try again later!_*");
-    }
-  } catch (error) {
-    return _0x3f8930.error(`Error: ${error.message}\n\ncommand: ytmp3`, error);
-  }
-});
- smd({
    pattern: "ytdoc",
    alias: ["ytd"],
    desc: "Downloads audio by yt link as document.",
@@ -1930,7 +1798,7 @@ _Downloading the audio for you..._
      try {
        let _0x32b31a = await ytdl.getInfo(_0x1d542b[0]);
        _0x43c5ac = _0x32b31a.videoDetails.title;
-       let _0x4b47c3 = "./temp/Asta-Md " + _0x1d542b[1] + ".mp3";
+       let _0x4b47c3 = "./temp/alya-Md " + _0x1d542b[1] + ".mp3";
        const _0x212389 = ytdl(_0x1d542b[0], {
          filter: _0xd2371a => _0xd2371a.audioBitrate == 160 || _0xd2371a.audioBitrate == 128
        }).pipe(fs.createWriteStream(_0x4b47c3));
@@ -1961,7 +1829,7 @@ _Downloading the audio for you..._
          url: _0x59bbaa
        },
        mimetype: "audio/mpeg",
-       fileName: "Asta-Md--" + _0x1d542b[1] + ".mp3",
+       fileName: "alya-Md--" + _0x1d542b[1] + ".mp3",
        caption: Config.caption,
        contextInfo: _0x10e2fa
      };

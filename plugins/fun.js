@@ -63,47 +63,97 @@ smd(
   }
 );
 smd({
-  cmdname: "question",
-  info: "Random Question.",
-  type: "fun",
-  filename: __filename
-}, async (_0x526dda, _0x570e21, {
-  smd: _0x59940a
-}) => {
-  try {
-    await _0x526dda.reply(await randomeFunfacts(_0x59940a));
-  } catch (_0x2763aa) {
-    await _0x526dda.error(_0x2763aa + "\n\ncommand: " + _0x59940a, _0x2763aa);
-  }
+   pattern: 'question',
+   fromMe: false,
+   desc: 'Get a random question',
+   type: 'fun'
+}, async (message, match) => {
+   try {
+       const response = await fetch('https://opentdb.com/api.php?amount=1&type=multiple');
+       const data = await response.json();
+       const question = data.results[0].question;
+       
+       await message.send(`*Random Question:* ${question}`, { quoted: message.data });
+   } catch (error) {
+       console.error('Error fetching random question:', error);
+       await message.send('_Failed to fetch a random question._', { quoted: message.data });
+   }
 });
 smd({
-  cmdname: "truth",
-  info: "truth and dare(truth game.).",
-  type: "fun",
-  filename: __filename
-}, async (_0xc2b276, _0x3b493e, {
-  smd: _0x52be61
-}) => {
-  try {
-    await _0xc2b276.reply(await randomeFunfacts(_0x52be61));
-  } catch (_0x28b284) {
-    await _0xc2b276.error(_0x28b284 + "\n\ncommand: " + _0x52be61, _0x28b284);
-  }
+   pattern: 'truth',
+   fromMe: false,
+   desc: 'Get a truth question',
+   type: 'fun'
+}, async (message, match) => {
+   try {
+       const response = await fetch('https://api.truthordarebot.xyz/v1/truth');
+       const data = await response.json();
+       const truthQuestion = data.question;
+       
+       await message.send(`*Truth:* ${truthQuestion}`, { quoted: message.data });
+   } catch (error) {
+       console.error('Error fetching truth:', error);
+       await message.send('_Failed to fetch a truth question._', { quoted: message.data });
+   }
 });
 smd({
-  cmdname: "dare",
-  info: "truth and dare(dare game.).",
-  type: "fun",
-  filename: __filename
-}, async (_0x330b72, _0x34d36a, {
-  smd: _0x2a0858
-}) => {
-  try {
-    await _0x330b72.reply(await randomeFunfacts(_0x2a0858));
-  } catch (_0x27a0b8) {
-    await _0x330b72.error(_0x27a0b8 + "\n\ncommand: " + _0x2a0858, _0x27a0b8);
-  }
+   pattern: 'dare',
+   fromMe: false,
+   desc: 'Get a dare challenge',
+   type: 'fun'
+}, async (message, match) => {
+   try {
+       const response = await fetch('https://api.truthordarebot.xyz/v1/dare');
+       const data = await response.json();
+       const dareChallenge = data.question;
+       
+       await message.send(`*Dare:* ${dareChallenge}`, { quoted: message.data });
+   } catch (error) {
+       console.error('Error fetching dare:', error);
+       await message.send('_Failed to fetch a dare challenge._', { quoted: message.data });
+   }
 });
+smd(
+  {
+    pattern: "bible",
+    desc: "Get a specific Bible verse based on user query.",
+    category: "fun",
+    filename: __filename,
+  },
+  async (m) => {
+    try {
+      // Extract the query from the message
+      const query = m.text.split(' ').slice(1).join(' ');
+      if (!query) {
+        return await m.send("Please provide a Bible verse reference, e.g., `.bible3 psalm 37:4`.");
+      }
+
+      const apiUrl = `https://bible-api.com/${encodeURIComponent(query)}`;
+      const response = await fetch(apiUrl);
+
+      if (!response.ok) {
+        return await m.send(
+          `*_Error: ${response.status} ${response.statusText}_*`
+        );
+      }
+
+      const data = await response.json();
+      const verse = data.text;
+      const reference = `${query}`; // This will be used as the subtitle (chapter/verse)
+      
+      // Structuring the message with reduced space
+      const message = `╔════════════════◇\n` +
+                      `║ *🛐Content:* ${verse.trim()}\n` +  // trim() removes any unnecessary whitespace
+                      `║ *✨Reference:* ${reference}\n` +
+                      `║ *✨Author:* > Made By Queen alya\n` +
+                      `╚════════════════◇`;
+
+      await m.send(message);
+    } catch (e) {
+      await m.error(`${e}\n\ncommand: bible3`, e);
+    }
+  }
+);
 smd({
   cmdname: "joke",
   info: "Sends Joke in chat.",
@@ -187,8 +237,9 @@ smd({
    type: 'fun'
 }, async (message, match) => {
    try {
-       const response = await axios.get('https://api.maher-zubair.tech/misc/fakeinfo');
-       const data = response.data.result.results[0];
+       const response = await fetch('https://randomuser.me/api/');
+       const json = await response.json();
+       const data = json.results[0];
        
        const info = `
 👤 *Name:* ${data.name.title} ${data.name.first} ${data.name.last}
@@ -207,14 +258,15 @@ smd({
    }
 });
 smd({
-   pattern: 'insult',
+   pattern: 'insult2',
    fromMe: false,
    desc: 'Get insulted',
    type: 'fun'
 }, async (message, match) => {
    try {
-       const response = await axios.get('https://api.maher-zubair.tech/misc/insult');
-       const insult = response.data.result;
+       const response = await fetch('https://evilinsult.com/generate_insult.php?lang=en&type=json');
+       const json = await response.json();
+       const insult = json.insult;
        
        await message.send(insult, { quoted: message.data });
    } catch (error) {
@@ -229,8 +281,9 @@ smd({
    type: 'fun'
 }, async (message, match) => {
    try {
-       const response = await axios.get('https://api.maher-zubair.tech/misc/lines');
-       const messageText = response.data.result;
+       const response = await fetch('https://zenquotes.io/api/random');
+       const data = await response.json();
+       const messageText = `${data[0].q} — ${data[0].a}`;
        
        await message.send(messageText, { quoted: message.data });
    } catch (error) {

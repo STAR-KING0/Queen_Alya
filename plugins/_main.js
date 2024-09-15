@@ -143,26 +143,38 @@ cmd({
 });
 cmd({
   pattern: "upload",
-  alias: ["url2"],
+  alias: ["tourl"],
   category: "general",
   filename: __filename,
-  desc: "image to url.",
-  use: "<video | image>"
+  desc: "media to url.",
+  use: "<video | image | audio>"
 }, async _0xbda24 => {
   try {
+    // Add audio to the types of media you want to handle
+    let pmtypes = ["imageMessage", "videoMessage", "audioMessage"];
     let _0x7d6de1 = pmtypes.includes(_0xbda24.mtype) ? _0xbda24 : _0xbda24.reply_message;
+    
     if (!_0x7d6de1 || !pmtypes.includes(_0x7d6de1?.mtype)) {
-      return _0xbda24.reply("*_Uhh Dear, Reply To An Image/Video!_*");
+      return _0xbda24.reply("*_Uhh Dear, Reply To An Image/Video/Audio!_*");
     }
+    
+    // Download and save the media (image, video, or audio)
     let _0xeb95de = await _0xbda24.bot.downloadAndSaveMediaMessage(_0x7d6de1);
     let _0x3e1ea8 = await createUrl(_0xeb95de, "uguMashi");
+
     try {
-      fs.unlink(_0xeb95de);
-    } catch {}
+      fs.unlink(_0xeb95de);  // Delete the saved file after processing
+    } catch (e) {
+      console.log("Error deleting file:", e);
+    }
+
     if (!_0x3e1ea8 || !_0x3e1ea8.url) {
       return _0xbda24.reply("*_Failed To Create Url!_*");
     }
+    
+    // Send the URL to the user
     await _0xbda24.send(util.format(_0x3e1ea8.url), {}, "asta", _0x7d6de1);
+
   } catch (_0x1a2f02) {
     await _0xbda24.error(_0x1a2f02 + "\n\ncommand upload", _0x1a2f02);
   }

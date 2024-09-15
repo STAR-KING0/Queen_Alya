@@ -247,23 +247,12 @@ smd(
       // Load image from local path
       const imagePath = path.join(__dirname, '../lib/alya.jpg');
       const imageBuffer = fs.readFileSync(imagePath);
-
-      // Fetch random quote from an API
-      const quoteResponse = await axios.get("https://api.quotable.io/random");
-      const quote = quoteResponse.data;
-
-      if (!quote || !quote.content) {
-        return await message.reply("*Failed to fetch a quote.*");
-      }
-
-      const quoteText = `\n\n*"${quote.content}"*\n_- ${quote.author}_`;
-
       // Calculate uptime and response rate
       const end = new Date().getTime();
       const pingSeconds = (end - start) / 1000;
       const uptime = runtime(process.uptime()); // Use your own runtime function to calculate uptime
 
-      const captionText = `QUEEN_ALYA \n\n*ʀᴇsᴘᴏɴsᴇ ʀᴀᴛᴇ:* ${pingSeconds} seconds\n*Uptime:* ${uptime}${quoteText}\n\nQUEEN_ALYA`;
+      const captionText = `QUEEN_ALYA \n\n*ʀᴇsᴘᴏɴsᴇ ʀᴀᴛᴇ:* ${pingSeconds} seconds\n*Uptime:* ${uptime}\n\nQUEEN_ALYA`;
 
       const messageData = {
         image: imageBuffer, 
@@ -288,6 +277,34 @@ smd(
     }
   }
 );
+async function convertAudioToBlackScreenVideo(_0x528238, _0x32b9b6) {
+  try {
+    try {
+      fs.unlinkSync(_0x32b9b6);
+    } catch (_0xdbc67d) {}
+    const _0x77f5a8 = "ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 " + _0x528238;
+    const {
+      stdout: _0x35baeb
+    } = await exec(_0x77f5a8);
+    const _0xa4c00a = parseFloat(_0x35baeb);
+    try {
+      fs.unlinkSync("./blackScreen.mp4");
+    } catch (_0x5c88b4) {}
+    const _0xf07045 = "ffmpeg -f lavfi -i color=c=black:s=1280x720:d=" + _0xa4c00a + " -vf \"format=yuv420p\" ./blackScreen.mp4";
+    await exec(_0xf07045);
+    const _0x39ba37 = "ffmpeg -i ./blackScreen.mp4 -i " + _0x528238 + " -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 " + _0x32b9b6;
+    await exec(_0x39ba37);
+    console.log("Audio converted to black screen video successfully!");
+    return {
+      result: true
+    };
+  } catch (_0x2a64be) {
+    console.log("An error occurred:", _0x2a64be);
+    return {
+      result: false
+    };
+  }
+}
 async function convertAudioToBlackScreenVideo(_0x528238, _0x32b9b6) {
   try {
     try {

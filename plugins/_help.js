@@ -193,7 +193,7 @@ smd(
     filename: __filename,
   },
   async (message) => {
-    const text = "I am Queen Alya and my speed is: ";
+    const text = "Hey am Queen Alya ❤️ and my speed is: ";
     let typedMessage = "";
 
     // Measure start time for the ping calculation

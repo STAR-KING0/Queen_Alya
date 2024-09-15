@@ -1,4 +1,4 @@
-//asta de los campos de la
+//alya de los campos de la
 let {
   runtime,
   formatp,
@@ -37,7 +37,7 @@ smd({
       contextInfo: {
         ...(await _0x1cec94.bot.contextInfo("ACTIVE USERS", _0x1cec94.senderName))
       }
-    }, "asta", _0x1cec94);
+    }, "alya", _0x1cec94);
   } catch (_0x225db9) {
     console.log({
       e: _0x225db9
@@ -99,7 +99,7 @@ smd({
       return await _0x7587f6.reply("_Reply to an image/video message!_");
     }
     if (!_0x11eeb1) {
-      return await _0x7587f6.reply("_Need fileName, Example: document asta | caption_");
+      return await _0x7587f6.reply("_Need fileName, Example: document alya | caption_");
     }
     let _0x1bfcf5 = await _0x7587f6.bot.downloadAndSaveMediaMessage(_0x49db20);
     let _0x3f6d77 = _0x11eeb1.includes(":") ? ":" : _0x11eeb1.includes(";") ? ";" : "|";
@@ -157,7 +157,7 @@ smd({
 });
 smd({
   cmdname: "feature",
-  alias: ["totalfeature", "features", "asta"],
+  alias: ["totalfeature", "features", "alya"],
   category: "tools",
   filename: __filename,
   info: "get counting for total features!"
@@ -168,21 +168,21 @@ smd({
     try {
       let {
         key: _0x2d7cf6
-      } = await _0x4e7c63.send("Counting... 0", {}, "asta", _0x4e7c63);
+      } = await _0x4e7c63.send("Counting... 0", {}, "alya", _0x4e7c63);
       for (let _0x16a10f = 0; _0x16a10f <= _0x4cf8ed; _0x16a10f++) {
         if (_0x16a10f % 15 === 0) {
           await _0x4e7c63.send("Counting... " + _0x16a10f, {
             edit: _0x2d7cf6
-          }, "asta", _0x4e7c63);
+          }, "alya", _0x4e7c63);
         } else if (_0x4cf8ed - _0x16a10f < 10) {
           await _0x4e7c63.send("Counting... " + _0x16a10f, {
             edit: _0x2d7cf6
-          }, "asta", _0x4e7c63);
+          }, "alya", _0x4e7c63);
         }
       }
       await _0x4e7c63.send("*Feature Counting Done!*", {
         edit: _0x2d7cf6
-      }, "asta", _0x4e7c63);
+      }, "alya", _0x4e7c63);
     } catch (_0x28ce7e) {}
     let _0x50f17a = " *乂 Queen_Alya - ＢＯＴ ＦＥＡＴＵＲＥ*\n\n\n  ◦ _Total Features ➪ " + _0x4cf8ed + "_\n  \n*◦ BOT FEATURES*\n\n      Plugins ➪ " + Object.values(_0x4de967.commands).filter(_0x54d4bf => _0x54d4bf.pattern).length + "_\n      _Msg Listener ➪ " + Object.values(_0x4de967.commands).filter(_0x2376a3 => _0x2376a3.on).length + "_\n      _Call Listener ➪ " + Object.values(_0x4de967.commands).filter(_0x54a19b => _0x54a19b.call).length + "_\n      _Group Listener ➪ " + Object.values(_0x4de967.commands).filter(_0x35381c => _0x35381c.group).length + "_\n  \n\n" + Config.caption;
     await _0x4e7c63.bot.relayMessage(_0x4e7c63.chat, {
@@ -207,6 +207,52 @@ smd({
     await _0x4e7c63.error(_0x979e23 + "\n\ncommand : feature", _0x979e23, false);
   }
 });
+smd(
+  {
+    pattern: "encode",
+    desc: "Obfuscate JavaScript code using the encryption API.",
+    category: "tools",
+    filename: __filename,
+  },
+  async (m) => {
+    try {
+      // Extract the code from the message
+      const code = m.text.split(' ').slice(1).join(' ');
+      if (!code) {
+        return await m.send("Please provide JavaScript code to obfuscate, e.g., `.encode console.log('Hello World');`.");
+      }
+
+      // Send loading message
+      await m.send("🌀 _Obfuscating your code... Please wait._ 🌀");
+
+      const apiUrl = `https://api.giftedtechnexus.co.ke/api/tools/encrypt?code=${encodeURIComponent(code)}&apikey=gifteddevskk`;
+      const response = await fetch(apiUrl);
+
+      if (!response.ok) {
+        return await m.send(
+          `*_Error: ${response.status} ${response.statusText}_*`
+        );
+      }
+
+      const data = await response.json();
+      const encryptedCode = data.encrypted_code;
+      
+      if (!encryptedCode) {
+        return await m.send("Error: Unable to obfuscate the code.");
+      }
+
+      // Remove backticks from the beginning and end of the code
+      const cleanedCode = encryptedCode.replace(/^\`\`\`|\`\`\`$/g, '').trim();
+
+      // Send the obfuscated code as a message
+      const message = `${cleanedCode}`;
+
+      await m.send(message);
+    } catch (e) {
+      await m.error(`${e}\n\ncommand: encode`, e);
+    }
+  }
+);
 smd({
   cmdname: "character",
   category: "pastime",
@@ -223,7 +269,7 @@ smd({
   let _0x3b31ed = "Character of @" + _0x32c078.split("@")[0] + "  is *" + _0x2f5d93 + "* 🔥⚡";
   _0x2a677e.send(_0x3b31ed, {
     mentions: [_0x32c078]
-  }, "asta", _0x2a677e);
+  }, "alya", _0x2a677e);
 });
 smd({
   cmdname: "poetry",
