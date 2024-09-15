@@ -1,4 +1,4 @@
-FROM quay.io/sampandey001/secktor
+FROM node:20
 
 RUN git clone https://github.com/STAR-KING0/Queen_Alya.git /root/STAR-KING0
 
