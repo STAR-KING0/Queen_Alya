@@ -1,7 +1,6 @@
 const {
   aitts,
   smd,
-  cmd,
   prefix,
   Config,
   parsedJid,
@@ -53,7 +52,7 @@ smd(
     }
   }
 );
-cmd({
+smd({
   pattern: "rmbg",
   desc: "Upload an image, remove background, and send the processed image back.",
   category: "general",
