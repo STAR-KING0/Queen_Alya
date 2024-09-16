@@ -1,6 +1,7 @@
 const {
   aitts,
   smd,
+  cmd,
   prefix,
   Config,
   parsedJid,
