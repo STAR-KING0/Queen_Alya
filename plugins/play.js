@@ -463,3 +463,184 @@ function _0xcbd0() {
     };
     return _0xcbd0();
 }
+smd({
+  pattern: "ytmp4", // Changed command name to 'fiy'
+  alias: ["ytdl"],
+  desc: "Downloads video from a YouTube link.",
+  category: "downloader",
+  filename: __filename,
+  use: "<YouTube video URL>"
+}, async (_0x2c2023, _0x4ec99f) => {
+  try {
+    if (!_0x4ec99f) {
+      return await _0x2c2023.reply("*_Provide a YouTube video URL_*");
+    }
+
+    const videoUrl = _0x4ec99f.trim(); // Trim to remove any extra spaces
+
+    // Call the YouTube downloader API
+    const apiUrl = `https://api.giftedtechnexus.co.ke/api/download/ytdl?url=${videoUrl}&apikey=gifteddevskk`;
+
+    // Log the API URL being called for debugging
+    console.log(`API URL: ${apiUrl}`);
+
+    const response = await axios.get(apiUrl);
+    const data = response.data;
+
+    // Log the entire response to inspect its structure
+    console.log("Full API Response:", JSON.stringify(data, null, 2));
+
+    // Handle the response and extract the video URL
+    if (data && data.success && data.result && data.result.video_url) {
+      const videoDownloadUrl = data.result.video_url; // Extract the video URL from the 'video_url' response
+      const videoTitle = data.result.tittle || "Downloaded Video"; // Use the title or a default name
+
+      console.log(`Download URL: ${videoDownloadUrl}`);
+
+      // Download the video file
+      const videoResponse = await axios({
+        url: videoDownloadUrl,
+        method: 'GET',
+        responseType: 'stream'
+      });
+
+      // Create a temporary file path for the video
+      const tempFilePath = path.join(__dirname, `${Date.now()}.mp4`);
+      const writer = fs.createWriteStream(tempFilePath);
+
+      // Pipe the video stream to the file
+      videoResponse.data.pipe(writer);
+
+      // Handle completion of file writing
+      await new Promise((resolve, reject) => {
+        writer.on('finish', resolve);
+        writer.on('error', reject);
+      });
+
+      console.log(`Video saved to ${tempFilePath}`);
+
+      // Send the video file to the user in normal quality
+      await _0x2c2023.bot.sendMessage(_0x2c2023.jid, {
+        video: { url: tempFilePath },
+        caption: `Here is your downloaded video: *${videoTitle}*`,
+        fileName: `${Date.now()}.mp4`,
+        mimetype: "video/mp4"
+      }, { quoted: _0x2c2023 });
+
+      // Optionally, delete the temporary file after sending
+      fs.unlinkSync(tempFilePath);
+      
+    } else {
+      console.log("Error: Could not retrieve the video download URL, API response:", data);
+      await _0x2c2023.reply("*_Error: Could not retrieve the video download URL. Please try again later!_*");
+    }
+  } catch (_0x86b411) {
+    console.error("Caught Error:", _0x86b411); // Log any caught errors
+    return _0x2c2023.error(_0x86b411 + "\n\ncommand: fiy", _0x86b411, "*_Error occurred while processing the command!!_*");
+  }
+});
+smd({
+  pattern: "ytsv",
+  alias: ["video"],
+  desc: "Downloads video from YouTube.",
+  category: "downloader",
+  filename: __filename,
+  use: "<search text>"
+}, async (_0x2c2023, _0x4ec99f) => {
+  try {
+    if (!_0x4ec99f) {
+      return await _0x2c2023.reply("*_Give Me a Search Query_*");
+    }
+    
+    // Search for the video on YouTube
+    let _0x3b2ca6 = await yts(_0x4ec99f);
+    let _0x4123ae = _0x3b2ca6.all[0]; // First search result
+    
+    if (!_0x4123ae) {
+      return await _0x2c2023.reply("*_No results found for your search_*");
+    }
+    
+    // Send search result details to the user
+    let _0x3885cc = await smdBuffer(_0x4123ae.thumbnail);
+    await _0x2c2023.bot.sendMessage(_0x2c2023.jid, {
+      image: _0x3885cc,
+      caption: `
+*Queen_Alya • ᴠɪᴅᴇᴏ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ*
+
+*Title :* ${_0x4123ae.title}
+*Url :* ${_0x4123ae.url}
+*Description :* ${_0x4123ae.timestamp}
+*Views :* ${_0x4123ae.views}
+*Uploaded :* ${_0x4123ae.ago}
+*Author :* ${_0x4123ae.author.name}
+
+_Alya is downloading the video..._
+`
+    });
+    
+    // Fetch the video download link using the API
+    const apiUrl = `https://api.giftedtechnexus.co.ke/api/download/ytdl?url=${_0x4123ae.url}&apikey=gifteddevskk`;
+    
+    let retries = 3;
+    while (retries > 0) {
+      try {
+        const response = await axios.get(apiUrl);
+        const data = response.data;
+
+        console.log("API Response:", data); // Log the API response for debugging
+        
+        // Check if the API call was successful and contains the video_url
+        if (data.success && data.result && data.result.video_url) {
+          const videoUrl = data.result.video_url; // This is the video URL to be downloaded
+
+          // Fetch the video file from the video_url
+          const videoResponse = await axios({
+            url: videoUrl,
+            method: 'GET',
+            responseType: 'stream'
+          });
+
+          // Save the video to a temporary file
+          const tempFilePath = path.join(__dirname, `${_0x4123ae.title}.mp4`);
+          const writer = fs.createWriteStream(tempFilePath);
+
+          videoResponse.data.pipe(writer);
+
+          // Handle completion of file write
+          await new Promise((resolve, reject) => {
+            writer.on('finish', resolve);
+            writer.on('error', reject);
+          });
+
+          console.log(`Video saved to ${tempFilePath}`);
+
+          // Send the video file to the user
+          await _0x2c2023.bot.sendMessage(_0x2c2023.jid, {
+            video: { url: tempFilePath },
+            fileName: `${_0x4123ae.title}.mp4`,
+            mimetype: "video/mp4"
+          }, { quoted: _0x2c2023 });
+
+          // Optionally, delete the temporary file after sending
+          fs.unlinkSync(tempFilePath);
+          
+          return; // Exit after successful send
+        } else {
+          console.log("Error: Could not fetch video, API response:", data);
+          await _0x2c2023.reply("*_Error: Could not download the video. Please try again later!_*");
+          return;
+        }
+      } catch (error) {
+        console.error("Retry Error:", error); // Log retry errors
+        retries--;
+        if (retries === 0) {
+          await _0x2c2023.reply("*_Error: Could not download the video after multiple attempts. Please try again later!_*");
+        }
+      }
+    }
+
+  } catch (_0x86b411) {
+    console.error("Caught Error:", _0x86b411); // Log any caught errors
+    return _0x2c2023.error(_0x86b411 + "\n\ncommand: ytsv", _0x86b411, "*_File not found!!_*");
+  }
+});

@@ -18,6 +18,7 @@ const axios = require("axios");
 const fetch = require("node-fetch");
 var videotime = 2000;
 const { cmd } = require("../lib/plugins");
+const path = require ("path");
  smd(
   {
     pattern: "igstalk",
