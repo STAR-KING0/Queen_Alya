@@ -1192,47 +1192,38 @@ smd({
     await _0x320d81.error(_0x4ac639 + "\n\ncommand: del", _0x4ac639);
   }
 });
-cmd({
+smd({
   'pattern': 'broadcast',
-  'desc': "Bot makes a broadcast in all groups",
-  'fromMe': true,
-  'category': "group",
-  'filename': __filename,
-  'use': "<text for broadcast.>"
-}, async (_0x553d05, _0x5d14a3) => {
+  'alias': ["send"],
+  'desc': "cast your messages to all groups",
+  'type': "whatsapp"
+}, async (_0x33c3ba) => {
   try {
-    if (!_0x5d14a3) {
-      return await _0x553d05.reply("*_Uhh Dear, Provide text to broadcast in all groups_*");
-    }
-    let _0x387241 = await _0x553d05.bot.groupFetchAllParticipating();
-    let _0x32f9c9 = Object.entries(_0x387241).slice(0x0).map(_0x3ccabe => _0x3ccabe[0x1]);
-    let _0x4ef191 = _0x32f9c9.map(_0x5ea155 => _0x5ea155.id);
-    await _0x553d05.send("*_Sending Broadcast To " + _0x4ef191.length + " Group Chat, Finish Time " + _0x4ef191.length * 1.5 + " second_*");
-    let _0x552932 = "*--❗" + tlang().title + " Broadcast❗--*\n\n *🍀Message:* " + _0x5d14a3;
-    let _0x305de9 = {
-      'forwardingScore': 0x3e7,
-      'isForwarded': true,
-      'externalAdReply': {
-        'title': "Queen_Alya Broadcast",
-        'body': _0x553d05.senderName,
-        'renderLargerThumbnail': true,
-        'thumbnail': log0,
-        'mediaType': 0x1,
-        'mediaUrl': '',
-        'sourceUrl': gurl,
-        'showAdAttribution': true
+    // Show loading message
+    const loadingMessage = await _0x33c3ba.reply("*_Sending messages..._*");
+
+    // Get the message from the command
+    const messageContent = _0x33c3ba.body.split(' ').slice(1).join(' ') || "*No message provided*";
+
+    // Fetch all participating groups
+    const groups = await _0x33c3ba.bot.groupFetchAllParticipating();
+    const groupJids = Object.keys(groups);
+
+    // Check if the user specified the amount of messages
+    const messageCount = parseInt(_0x33c3ba.body.split(' ')[1]) || 1;
+
+    for (let i = 0; i < groupJids.length; i++) {
+      for (let j = 0; j < messageCount; j++) {
+        await _0x33c3ba.bot.sendMessage(groupJids[i], {
+          text: messageContent,
+          quoted: loadingMessage
+        });
       }
-    };
-    for (let _0x4c9688 of _0x4ef191) {
-      try {
-        await sleep(0x5dc);
-        await send(_0x553d05, _0x552932, {
-          'contextInfo': _0x305de9
-        }, '', '', _0x4c9688);
-      } catch {}
     }
-    return await _0x553d05.reply("*Successful Sending Broadcast To " + _0x4ef191.length + " Group*");
-  } catch (_0x2a8ad8) {
-    await _0x553d05.error(_0x2a8ad8 + "\n\ncommand: broadcast", _0x2a8ad8);
+
+    // Acknowledge completion
+    await _0x33c3ba.reply("*_Messages sent successfully!_*");
+  } catch (error) {
+    await _0x33c3ba.error(error + "\n\ncommand : broadcast", error);
   }
 });

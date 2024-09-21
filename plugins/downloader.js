@@ -1056,4 +1056,48 @@ smd({
    } catch (_0x4bcd8f) {
      console[_0x38a391(217)](_0x4bcd8f);
    }
- });
+ }); // To manage file paths
+smd({
+  pattern: "pindl",
+  alias: ["pinterestimg"],
+  desc: "Downloads an image from a Pinterest link.",
+  category: "downloader",
+  use: "<Pinterest URL>"
+}, async (_0x2c2023, _0x4ec99f) => {
+  try {
+    if (!_0x4ec99f) {
+      return await _0x2c2023.reply("*_Please provide a valid Pinterest link_*");
+    }
+
+    // API request to fetch the Pinterest image
+    const apiUrl = `https://api.giftedtechnexus.co.ke/api/download/pinterestdl?url=${_0x4ec99f}&apikey=gifteddevskk`;
+
+    const response = await axios.get(apiUrl);
+    const data = response.data;
+
+    // Check if the API call was successful and contains the image URL
+    if (data.success && data.result && data.result.image) {
+      const imageUrl = data.result.image[0]; // Get the first image URL
+
+      // Fetch the image as a buffer
+      const imageBuffer = await axios({
+        url: imageUrl,
+        method: 'GET',
+        responseType: 'arraybuffer'
+      });
+
+      const image = Buffer.from(imageBuffer.data, 'binary'); // Convert binary data to a buffer
+
+      // Send the image as a picture message
+      await _0x2c2023.bot.sendMessage(_0x2c2023.jid, {
+        image: image,
+        caption: `*Pinterest Image Downloaded Successfully*\n\n_Link: ${_0x4ec99f}_`
+      });
+    } else {
+      await _0x2c2023.reply("*_Error: Could not fetch the image. Please check the link and try again._*");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    await _0x2c2023.reply("*_Error: Failed to download the image. Please try again later!_*");
+  }
+});
