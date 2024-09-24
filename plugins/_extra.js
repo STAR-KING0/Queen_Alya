@@ -225,7 +225,7 @@ smd(
       // Send loading message
       await m.send("🌀 _Obfuscating your code... Please wait._ 🌀");
 
-      const apiUrl = `https://api.giftedtechnexus.co.ke/api/tools/encrypt?code=${encodeURIComponent(code)}&apikey=gifteddevskk`;
+      const apiUrl = `https://api-gifted-tech.onrender.com/api/tools/encrypt?code=${encodeURIComponent(code)}&apikey=gifteddevskk`;
       const response = await fetch(apiUrl);
 
       if (!response.ok) {

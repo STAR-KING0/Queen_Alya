@@ -33,7 +33,7 @@ const path = require ("path");
         return await m.send("*_Please provide an Instagram username!_*");
       }
 
-      const apiUrl = `https://api.giftedtechnexus.co.ke/api/stalk/igstalk?username=${encodeURIComponent(
+      const apiUrl = `https://api-gifted-tech.onrender.com/api/stalk/igstalk?username=${encodeURIComponent(
         username
       )}&apikey=gifteddevskk`;
       const response = await axios.get(apiUrl);
@@ -94,7 +94,7 @@ smd(
         return await m.send("*_Please provide a WhatsApp channel URL!_*");
       }
 
-      const apiUrl = `https://api.giftedtechnexus.co.ke/api/stalk/wachannel?url=${encodeURIComponent(
+      const apiUrl = `https://api-gifted-tech.onrender.com/api/stalk/wachannel?url=${encodeURIComponent(
         channelUrl
       )}&apikey=gifteddevskk`;
       
@@ -154,7 +154,7 @@ smd(
         return await m.send("*_Please provide a GitHub username!_*");
       }
 
-      const apiUrl = `https://api.giftedtechnexus.co.ke/api/stalk/gitstalk?username=${encodeURIComponent(
+      const apiUrl = `https://api-gifted-tech.onrender.com/api/stalk/gitstalk?username=${encodeURIComponent(
         username
       )}&apikey=gifteddevskk`;
       const response = await axios.get(apiUrl);
@@ -230,7 +230,7 @@ smd(
         return await m.send("*_Please provide an IP address!_*");
       }
 
-      const apiUrl = `https://api.giftedtechnexus.co.ke/api/stalk/ipstalk?address=${encodeURIComponent(
+      const apiUrl = `https://api-gifted-tech.onrender.com/api/stalk/ipstalk?address=${encodeURIComponent(
         address
       )}&apikey=gifteddevskk`;
       const response = await axios.get(apiUrl);
@@ -467,7 +467,7 @@ smd({
     const videoUrl = _0x4ec99f; // Facebook video URL
 
     // Call the Facebook downloader API
-    const apiUrl = `https://api.giftedtechnexus.co.ke/api/download/facebook?url=${videoUrl}&apikey=gifteddevskk`;
+    const apiUrl = `https://api-gifted-tech.onrender.com/api/download/facebook?url=${videoUrl}&apikey=gifteddevskk`;
 
     const response = await axios.get(apiUrl);
     const data = response.data;
@@ -684,7 +684,7 @@ smd({
     const videoUrl = _0x4ec99f; // TikTok video URL
 
     // Call the TikTok downloader API
-    const apiUrl = `https://api.giftedtechnexus.co.ke/api/download/tiktok?url=${videoUrl}&apikey=gifteddevskk`;
+    const apiUrl = `https://api-gifted-tech.onrender.com/api/download/tiktok?url=${videoUrl}&apikey=gifteddevskk`;
 
     const response = await axios.get(apiUrl);
     const data = response.data;
@@ -1070,7 +1070,7 @@ smd({
     }
 
     // API request to fetch the Pinterest image
-    const apiUrl = `https://api.giftedtechnexus.co.ke/api/download/pinterestdl?url=${_0x4ec99f}&apikey=gifteddevskk`;
+    const apiUrl = `https://api-gifted-tech.onrender.com/api/download/pinterestdl?url=${_0x4ec99f}&apikey=gifteddevskk`;
 
     const response = await axios.get(apiUrl);
     const data = response.data;

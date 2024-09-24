@@ -28,7 +28,7 @@ smd(
       await m.send("Alya is thinking 🤔");
 
       // Define the API URL
-      const apiUrl = `https://api.giftedtechnexus.co.ke/api/ai/gpt4?q=${encodeURIComponent(query)}&apikey=gifteddevskk`;
+      const apiUrl = `https://api-gifted-tech.onrender.com/api/ai/gpt4?q=${encodeURIComponent(query)}&apikey=gifteddevskk`;
       const response = await fetch(apiUrl);
 
       if (!response.ok) {
@@ -83,7 +83,7 @@ smd({
     }
 
     // Construct the API URL for removebg
-    const apiUrl = `https://api.giftedtechnexus.co.ke/api/tools/removebg?url=${encodeURIComponent(mediaUrl.url)}&apikey=gifteddevskk`;
+    const apiUrl = `https://api-gifted-tech.onrender.com/api/tools/removebg?url=${encodeURIComponent(mediaUrl.url)}&apikey=gifteddevskk`;
 
     // Fetch the response from the API
     const response = await fetch(apiUrl);
@@ -155,7 +155,7 @@ smd(
       }
 
       // Construct the API URL with the provided query
-      const apiUrl = `https://api.giftedtechnexus.co.ke/api/ai/sd?prompt=${encodeURIComponent(query)}&apikey=gifteddevskk`;
+      const apiUrl = `https://api-gifted-tech.onrender.com/api/ai/sd?prompt=${encodeURIComponent(query)}&apikey=gifteddevskk`;
       
       // Fetch the response from the API
       const response = await fetch(apiUrl);
@@ -232,7 +232,7 @@ smd(
       await m.send("Alya is thinking 🤔");
 
       // Define the API URL
-      const apiUrl = `https://api.giftedtechnexus.co.ke/api/ai/luminai?query=${encodeURIComponent(query)}&apikey=gifteddevskk`;
+      const apiUrl = `https://api-gifted-tech.onrender.com/api/ai/luminai?query=${encodeURIComponent(query)}&apikey=gifteddevskk`;
       const response = await fetch(apiUrl);
 
       if (!response.ok) {
@@ -275,7 +275,7 @@ smd(
       await m.send("Alya is thinking 🤔");
 
       // Define the new API URL
-      const apiUrl = `https://api.giftedtechnexus.co.ke/api/ai/geminiai?q=${encodeURIComponent(query)}&apikey=gifteddevskk`;
+      const apiUrl = `https://api-gifted-tech.onrender.com/api/ai/geminiai?q=${encodeURIComponent(query)}&apikey=gifteddevskk`;
       const response = await fetch(apiUrl);
 
       if (!response.ok) {
@@ -318,7 +318,7 @@ smd(
       await m.send("Alya is thinking 🤔");
 
       // Define the new API URL
-      const apiUrl = `https://api.giftedtechnexus.co.ke/api/ai/davinci?q=${encodeURIComponent(query)}&apikey=gifteddevskk`;
+      const apiUrl = `https://api-gifted-tech.onrender.com/api/ai/davinci?q=${encodeURIComponent(query)}&apikey=gifteddevskk`;
       const response = await fetch(apiUrl);
 
       if (!response.ok) {
@@ -361,7 +361,7 @@ smd(
       await m.send("Alya is thinking 🤔");
 
       // Define the new API URL
-      const apiUrl = `https://api.giftedtechnexus.co.ke/api/ai/simsimi?query=${encodeURIComponent(query)}&apikey=gifteddevskk`;
+      const apiUrl = `https://api-gifted-tech.onrender.com/api/ai/simsimi?query=${encodeURIComponent(query)}&apikey=gifteddevskk`;
       const response = await fetch(apiUrl);
 
       if (!response.ok) {
@@ -401,7 +401,7 @@ smd(
       }
 
       // Construct the API URL with the provided query
-      const apiUrl = `https://api.giftedtechnexus.co.ke/api/ai/text2img?prompt=${encodeURIComponent(query)}&apikey=gifteddevskk`;
+      const apiUrl = `https://api-gifted-tech.onrender.com/api/ai/text2img?prompt=${encodeURIComponent(query)}&apikey=gifteddevskk`;
       
       // Fetch the response from the API
       const response = await fetch(apiUrl);
@@ -881,7 +881,7 @@ smd(
       await m.send("Alya is thinking 🤔");
 
       // Define the API URL
-      const apiUrl = `https://api.giftedtechnexus.co.ke/api/ai/blackbox?q=${encodeURIComponent(query)}&apikey=gifteddevskk`;
+      const apiUrl = `https://api-gifted-tech.onrender.com/api/ai/blackbox?q=${encodeURIComponent(query)}&apikey=gifteddevskk`;
       const response = await fetch(apiUrl);
 
       if (!response.ok) {

@@ -22,7 +22,7 @@ smd(
       await m.send("Alya is fetching the lyrics 🎵");
 
       // Define the API URL for fetching lyrics
-      const apiUrl = `https://api.giftedtechnexus.co.ke/api/search/lyrics?query=${encodeURIComponent(query)}&apikey=gifteddevskk`;
+      const apiUrl = `https://api-gifted-tech.onrender.com/api/search/lyrics?query=${encodeURIComponent(query)}&apikey=gifteddevskk`;
       const response = await fetch(apiUrl);
 
       if (!response.ok) {
