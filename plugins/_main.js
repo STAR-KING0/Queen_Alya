@@ -179,6 +179,90 @@ cmd({
     await _0xbda24.error(_0x1a2f02 + "\n\ncommand upload", _0x1a2f02);
   }
 });
+smd(
+  {
+    pattern: "toanime",
+    desc: "Generate an anime version of a replied image.",
+    category: "ai",
+    filename: __filename,
+    use: "<image | image_url>",
+  },
+  async (m, imageUrl) => {
+    try {
+      let pmtypes = ["imageMessage"];
+
+      // Check if the user replied with an image
+      let replyImage = pmtypes.includes(m.mtype) ? m : m.reply_message;
+
+      // If no URL and no reply, ask the user to provide an image
+      if (!imageUrl && (!replyImage || !pmtypes.includes(replyImage?.mtype))) {
+        return await m.send("*_Please provide a valid image or reply to an image for the anime generator!_*");
+      }
+
+      // If the user replied to an image, convert it to a URL
+      if (replyImage && pmtypes.includes(replyImage.mtype)) {
+        // Download and save the media (image)
+        let downloadedImagePath = await m.bot.downloadAndSaveMediaMessage(replyImage);
+        
+        // Convert the image to a URL
+        let createdUrl = await createUrl(downloadedImagePath, "uguMashi");
+
+        // Clean up the file after processing
+        try {
+          fs.unlink(downloadedImagePath);
+        } catch (e) {
+          console.log("Error deleting file:", e);
+        }
+
+        if (!createdUrl || !createdUrl.url) {
+          return await m.send("*_Failed to create URL from the image!_*");
+        }
+
+        // Use the generated URL from the image conversion
+        imageUrl = createdUrl.url;
+      }
+
+      // Send a loading message
+      await m.send("*_Generating anime image... Please wait!_*");
+
+      // Construct the API URL with the image URL
+      const apiUrl = `https://itzpire.com/tools/photo2anime?url=${encodeURIComponent(imageUrl)}&type=version%202%20(%F0%9F%94%BA%20robustness,%F0%9F%94%BB%20stylization)`;
+
+      // Fetch the response from the API
+      const response = await fetch(apiUrl);
+
+      // Check if the response is not OK
+      if (!response.ok) {
+        return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+      }
+
+      // Parse the JSON response
+      const data = await response.json();
+
+      // Check if the status in the response data is not "success"
+      if (data.status !== "success") {
+        return await m.send("*_An error occurred while fetching the anime image._*");
+      }
+
+      // Get the anime photo URL from the response data
+      const animePhotoUrl = data.result.img;
+
+      // Send the anime photo to the user
+      await m.bot.sendFromUrl(
+        m.from,
+        animePhotoUrl,
+        "*Queen_Alya generated this anime version of your image:*",
+        m,
+        {},
+        "image"
+      );
+    } catch (e) {
+      // Log the error and send an error message to the user
+      console.error(e);
+      await m.error(`${e}\n\ncommand: toanime`, e);
+    }
+  }
+);
 smd({
   pattern: "calc",
   desc: "calculate an equation.",

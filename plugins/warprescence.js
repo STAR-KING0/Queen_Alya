@@ -1,7 +1,7 @@
 const {fetchJson,smd, tlang,send, shazam, getBuffer, prefix, Config ,groupdb } = require("../lib")
 smd(
   {
-    pattern: "state", // Change the command name to 'fref'
+    pattern: "change", // Change the command name to 'fref'
     desc: "Manage presence status based on user input.",
     category: "utility",
     filename: __filename,

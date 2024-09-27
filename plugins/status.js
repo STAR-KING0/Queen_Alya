@@ -1,55 +1,53 @@
-const fs = require('fs');
-const path = require('path');
++$ // Command to handle presence updates based on user input
+smd(
+  {
+    pattern: "sta", // Change the command name to 'fref'
+    desc: "Manage presence status based on user input.",
+    category: "utility",
+    filename: __filename,
+  },
+  async (message) => {
+    try {
+      // Default presence based on environment variable
+      global.read_status = process.env.AUTO_READ_STATUS && process.env.AUTO_READ_STATUS === "on"
+          ? "true"
+          : process.env.AUTO_READ_STATUS || "";
 
-// Import smd from the ../lib directory
-const { smd } = require('../lib');
+      // Normalize the command and split it
+      const command = message.text.trim().toLowerCase(); // Normalize the command
+      const prefix = global.prefix || '.'; // Use a default prefix if global.prefix is not set
 
-// Correct path to the config.js file based on the repo structure
-const configPath = path.join(__dirname, '../config.js');
+      // Check if the message starts with the defined prefix
+      if (command.startsWith(prefix)) {
+        // Extract the command and the presence status
+        const args = command.substring(prefix.length).split(" "); // Remove the prefix and split by space
+        const presenceCommand = args[0]; // First part after prefix
 
-// Load the configuration
-let config = require(configPath);
+        // Check if the command is for presence update
+        if (presenceCommand === "sta" && args.length > 1) {
+          const desiredPresence = args[1]; // Second part is the desired presence status
 
-// Command handler
-smd({
-  pattern: "status",
-  desc: "Toggle Auto-Read Status On or Off",
-  category: "tools",
-  fromMe: true,
-  filename: __filename
-}, async (message, inputText, { smd: commandName }) => {
-  try {
-    // Fetch the current state of the AUTO_READ_STATUS variable from the config
-    let currentStatus = config.AUTO_READ_STATUS;
-
-    // Determine the new state based on the input or toggle if no input is given
-    let newStatus;
-    if (inputText) {
-      // Check if the input is 'on' or 'off'
-      newStatus = inputText.toLowerCase().trim() === 'on' ? 'true' : 'false';
-    } else {
-      // Toggle the value if no inputText is given
-      newStatus = currentStatus === 'true' ? 'false' : 'true';
-    }
-
-    // Update the AUTO_READ_STATUS in the config object
-    config.AUTO_READ_STATUS = newStatus;
-
-    // Convert the updated config object back to a string format for saving
-    const updatedConfigContent = `module.exports = ${JSON.stringify(config, null, 4)};`;
-
-    // Write the updated config back to the config.js file
-    fs.writeFile(configPath, updatedConfigContent, 'utf8', (writeError) => {
-      if (writeError) {
-        throw writeError;
+          // Set the waPresence based on the provided status
+          if (["on"].includes(desiredPresence)) {
+            global.read_status = "true"; // Set to composing if "typing" or "composing" is given
+          } else if (["off"].includes(desiredPresence)) {
+            global.read_status = "false"; // Set to available
+          } else {
+            return await message.send("Invalid Status please use off / on");
+          }
+          
+          // Send presence update
+          message.bot.sendPresenceUpdate(global.waPresence, message.from);
+          return await message.send(`Presence updated to: ${global.read_status}`);
+        }
       }
 
-      // Notify the user of the status change
-      const statusMessage = newStatus === 'true' ? "enabled" : "disabled";
-      message.reply(`*Auto-Read Status has been ${statusMessage}.*`);
-    });
-  } catch (error) {
-    // Send an error message to the user
-    await message.error(`An error occurred: ${error.message}\n\nCommand: ${commandName}`, error);
+      // Optional: React to the message
+      if (message.isAstro && !message.fromMe && !message.text.startsWith("$")) {
+        message.react(""); // Add your reaction here
+      }
+    } catch (e) {
+      console.log(e);
+    }
   }
-});
+);
