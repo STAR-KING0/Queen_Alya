@@ -220,25 +220,72 @@ async function getDateTime() {
     time: _0x144a84
   };
 }
+const Config = {
+  ownername: "STAR KING",
+  caption: "`QUEEN ALYA™`"
+};
+const scan = "https://alya-pair.onrender.com/";
+
 smd({
   pattern: "repo",
+  react: "🗃️",
   alias: ["git", "sc", "script"],
   desc: "Sends info about repo",
   category: "general",
   filename: __filename
 }, async _0x45da98 => {
   try {
-    let {
-      data: _0x44f98c
-    } = await axios.get("https://github.com/STAR-KING0/Queen_Alya");
-    let _0x1c73f9 = ("\nQUEEN_ALYA ᴀ sɪᴍᴘʟᴇ ᴡʜᴀᴛsᴀᴘᴘ ʙᴏᴛ, ᴍᴀᴅᴇ ʙʏ STAR KING ᴀɴᴅ ᴅᴇᴘʟᴏʏᴇᴅ ʙʏ *" + Config.ownername + "*.\n\n  *❲❒❳ Stars:* " + (_0x44f98c?.stargazers_count || "120+") + " stars\n  *❲❒❳ Forks:* " + (_0x44f98c?.forks_count || "1000+") + " forks\n  *❲❒❳ Authors:* Star King\n  *❲❒❳ Created On:* " + (_0x44f98c?.created_at || "undefined") + "\n  *❲❒❳ Repo:* _https://github.com/STAR-KING0/Queen_Alya_\n  *❲❒❳ Scan:* _" + scan + "_" + (Config.caption ? "\n\n" + Config.caption : "")).trim();
-    return await _0x45da98.sendUi(_0x45da98.jid, {
-      caption: _0x1c73f9
-    });
-  } catch (_0x5816fe) {
-    await _0x45da98.error(_0x5816fe + "\n\ncommand: repo", _0x5816fe);
+    // GitHub API request to get repository info
+    let { data: _0x44f98c } = await axios.get("https://api.github.com/repos/STAR-KING0/Queen_Alya");
+    
+    let _0x1c73f9 = (`
+QUEEN_ALYA ᴀ sɪᴍᴘʟᴇ ᴡʜᴀᴛsᴀᴘᴘ ʙᴏᴛ, ᴍᴀᴅᴇ ʙʏ STAR KING ᴀɴᴅ ᴅᴇᴘʟᴏʏᴇᴅ ʙʏ *${Config.ownername}*.
+
+  *❲❒❳ Stars:* ${_0x44f98c.stargazers_count} stars
+  *❲❒❳ Forks:* ${_0x44f98c.forks_count} forks
+  *❲❒❳ Authors:* Star King
+  *❲❒❳ Created On:* ${new Date(_0x44f98c.created_at).toLocaleDateString()}
+  *❲❒❳ Repo:* _https://github.com/STAR-KING0/Queen_Alya_
+  *❲❒❳ Scan:* _${scan}_ ${Config.caption ? `\n\n${Config.caption}` : ""}
+    `).trim();
+
+    return await _0x45da98.sendUi(_0x45da98.jid, { caption: _0x1c73f9 });
+    
+  } catch (error) {
+    await _0x45da98.error("Error fetching repo data: " + error.message + "\n\ncommand: repo", error);
   }
 });
+smd(
+  {
+    pattern: "code",
+    react: "💻",
+    desc: "Fetch code from the site using a number.",
+    category: "misc",
+    filename: __filename,
+  },
+  async (message, match) => {
+    if (!match) {
+      return message.reply("Please provide a number like `.code <number>`.");
+    }
+
+    const number = match.trim();
+    const queryUrl = `https://alya-pair.onrender.com/code?number=${number}`;
+    
+    try {
+      // Send the request to fetch the code based on the number.
+      const response = await axios.get(queryUrl);
+
+      // Extract the code from the response.
+      const code = response.data.code || "Service Unavailable";
+
+      // Send the fetched code back.
+      await message.reply(`Code for number ${number}: ${code}`);
+    } catch (error) {
+      console.error(error);
+      await message.reply("Failed to fetch the code. Please try again later.");
+    }
+  }
+);
 smd({
   pattern: "cpu",
   desc: "To check bot status",
