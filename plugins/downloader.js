@@ -21,67 +21,6 @@ const { cmd } = require("../lib/plugins");
 const path = require ("path");
  smd(
   {
-    pattern: "igstalk",
-    desc: "Get information about an Instagram user.",
-    category: "stalker",
-    filename: __filename,
-    use: "<username>",
-  },
-  async (m, username) => {
-    try {
-      if (!username) {
-        return await m.send("*_Please provide an Instagram username!_*");
-      }
-
-      const apiUrl = `https://api-gifted-tech.onrender.com/api/stalk/igstalk?username=${encodeURIComponent(
-        username
-      )}&apikey=gifteddevskk`;
-      const response = await axios.get(apiUrl);
-
-      if (!response.ok) {
-        return await m.send(
-          `*_Error: ${response.status} ${response.statusText}_*`
-        );
-      }
-
-      const data = await response.json();
-
-      if (data.status !== 200) {
-        return await m.send("*_An error occurred while fetching the data._*");
-      }
-
-      const {
-        photo_profile,
-        username: igUsername,
-        fullname,
-        posts,
-        followers,
-        following,
-        bio,
-      } = data.result;
-
-      const caption = `
-*Instagram User Information*
-
-*Username:* ${igUsername}
-*Full Name:* ${fullname}
-*Bio:* ${bio || "NO BIO"}
-
-*Posts:* ${posts}
-*Followers:* ${followers}
-*Following:* ${following}
-
-\t*Queen_Alya IG STALKER*
-`;
-
-      await m.bot.sendFromUrl(m.from, photo_profile, caption, m, {}, "image");
-    } catch (e) {
-      await m.error(`${e}\n\ncommand: igstalk`, e);
-    }
-  }
-);
-smd(
-  {
     pattern: "wastalk",
     desc: "Get information about a WhatsApp channel.",
     category: "stalker",
@@ -94,22 +33,15 @@ smd(
         return await m.send("*_Please provide a WhatsApp channel URL!_*");
       }
 
-      const apiUrl = `https://api-gifted-tech.onrender.com/api/stalk/wachannel?url=${encodeURIComponent(
+      const apiUrl = `https://itzpire.com/stalk/whatsapp-channel?url=${encodeURIComponent(
         channelUrl
-      )}&apikey=gifteddevskk`;
-      
+      )}`;
       const response = await axios.get(apiUrl);
 
-      if (response.status !== 200 || !response.data.success) {
+      if (response.data.status !== "success") {
         return await m.send(
-          `*_Error: ${response.status} ${response.statusText}_*`
+          `*_Error: ${response.data.code} ${response.data.message || "Unknown error"}_*`
         );
-      }
-
-      const data = response.data.result;
-
-      if (!data) {
-        return await m.send("*_No channel information found!_*");
       }
 
       const {
@@ -117,32 +49,81 @@ smd(
         title,
         followers,
         description,
-      } = data;
+      } = response.data.data;
 
       const caption = `
 *WhatsApp Channel Information*
 
-*Channel Name:* ${title}
+*Title:* ${title}
 *Followers:* ${followers}
-*Description:* ${description}
+*Description:* ${description || "No description provided"}
+
+\t*Queen_Alya WA STALKER*
 `;
 
-      await m.bot.sendFromUrl(
-        m.from,
-        img,
-        caption,
-        m,
-        {},
-        "image"
-      );
+      await m.bot.sendFromUrl(m.from, img, caption, m, {}, "image");
     } catch (e) {
-      await m.error(`${e}\n\ncommand: wachannelstalk`, e);
+      await m.error(`${e}\n\ncommand: wastalk`, e);
     }
   }
 );
 smd(
   {
-    pattern: "gitstalk",
+    pattern: "igstalk",
+    desc: "Get information about an Instagram user.",
+    category: "stalker",
+    filename: __filename,
+    use: "<username>",
+  },
+  async (m, username) => {
+    try {
+      if (!username) {
+        return await m.send("*_Please provide an Instagram username!_*");
+      }
+
+      const apiUrl = `https://itzpire.com/stalk/instagram?username=${encodeURIComponent(
+        username
+      )}`;
+      const response = await axios.get(apiUrl);
+
+      if (response.data.status !== "success") {
+        return await m.send(
+          `*_Error: ${response.data.code} ${response.data.message || "Unknown error"}_*`
+        );
+      }
+
+      const {
+        username: igUsername,
+        fullName,
+        bio,
+        posts,
+        followers,
+        following,
+      } = response.data.data;
+
+      const caption = `
+*Instagram User Information*
+
+*Username:* ${igUsername}
+*Full Name:* ${fullName}
+*Bio:* ${bio || "NO BIO"}
+
+*Posts:* ${posts}
+*Followers:* ${followers}
+*Following:* ${following}
+
+\t*Queen_Alya IG STALKER*
+`;
+
+      await m.send(caption);
+    } catch (e) {
+      await m.error(`${e}\n\ncommand: igstalk`, e);
+    }
+  }
+);
+smd(
+  {
+    pattern: "ghstalk",
     desc: "Get information about a GitHub user.",
     category: "stalker",
     filename: __filename,
@@ -154,145 +135,48 @@ smd(
         return await m.send("*_Please provide a GitHub username!_*");
       }
 
-      const apiUrl = `https://api-gifted-tech.onrender.com/api/stalk/gitstalk?username=${encodeURIComponent(
+      const apiUrl = `https://itzpire.com/stalk/github-user?username=${encodeURIComponent(
         username
-      )}&apikey=gifteddevskk`;
+      )}`;
       const response = await axios.get(apiUrl);
 
-      if (response.status !== 200) {
+      if (response.data.status !== "success") {
         return await m.send(
-          `*_Error: ${response.status} ${response.statusText}_*`
+          `*_Error: ${response.data.code} ${response.data.message || "Unknown error"}_*`
         );
       }
 
-      const data = response.data;
-
-      if (data.status !== 200) {
-        return await m.send("*_An error occurred while fetching the data._*");
-      }
-
       const {
-        login,
-        id,
-        avatar_url,
-        name,
-        company,
-        blog,
-        location,
+        username: ghUsername,
         bio,
-        public_repos,
+        profile_pic,
+        url,
+        public_repo,
         public_gists,
         followers,
         following,
         created_at,
         updated_at,
-      } = data.result;
+      } = response.data.data;
 
       const caption = `
 *GitHub User Information*
 
-*Username:* ${login}
-*Name:* ${name || "N/A"}
-*ID:* ${id}
-*Bio:* ${bio || "N/A"}
-*Company:* ${company || "N/A"}
-*Blog:* ${blog || "N/A"}
-*Location:* ${location || "N/A"}
-
-*Public Repositories:* ${public_repos}
+*Username:* [${ghUsername}](${url})
+*Bio:* ${bio || "No bio provided"}
+*Public Repositories:* ${public_repo}
 *Public Gists:* ${public_gists}
 *Followers:* ${followers}
 *Following:* ${following}
+*Account Created:* ${created_at}
+*Last Updated:* ${updated_at}
 
-*Account Created:* ${new Date(created_at).toLocaleString()}
-*Last Updated:* ${new Date(updated_at).toLocaleString()}
-
-*Avatar:*
+\t*Queen_Alya GitHub STALKER*
 `;
 
-      await m.bot.sendFromUrl(m.from, avatar_url, caption, m, {}, "image");
+      await m.bot.sendFromUrl(m.from, profile_pic, caption, m, {}, "image");
     } catch (e) {
-      await m.error(`${e}\n\ncommand: gitstalk`, e);
-    }
-  }
-);
-smd(
-  {
-    pattern: "ipstalk",
-    desc: "Get information about an IP address.",
-    category: "misc",
-    filename: __filename,
-    use: "<ip_address>",
-  },
-  async (m, ipAddress) => {
-    try {
-      if (!ipAddress) {
-        return await m.send("*_Please provide an IP address!_*");
-      }
-
-      const apiUrl = `https://api-gifted-tech.onrender.com/api/stalk/ipstalk?address=${encodeURIComponent(
-        address
-      )}&apikey=gifteddevskk`;
-      const response = await axios.get(apiUrl);
-
-      if (!response.ok) {
-        return await m.send(
-          `*_Error: ${response.status} ${response.statusText}_*`
-        );
-      }
-
-      const data = await response.json();
-
-      if (data.status !== 200) {
-        return await m.send("*_An error occurred while fetching the data._*");
-      }
-
-      const {
-        continent,
-        country,
-        countryCode,
-        regionName,
-        city,
-        zip,
-        lat,
-        lon,
-        timezone,
-        currency,
-        isp,
-        org,
-        as,
-        reverse,
-        mobile,
-        proxy,
-        hosting,
-        ip,
-      } = data.result;
-
-      const caption = `
-*IP Address Information*
-
-*IP Address:* ${ip}
-*Reverse DNS:* ${reverse}
-*Continent:* ${continent}
-*Country:* ${country} (${countryCode})
-*Region:* ${regionName}
-*City:* ${city}
-*ZIP Code:* ${zip}
-*Latitude:* ${lat}
-*Longitude:* ${lon}
-*Timezone:* ${timezone}
-*Currency:* ${currency}
-*ISP:* ${isp}
-*Organization:* ${org}
-*AS:* ${as}
-*Mobile:* ${mobile ? "Yes" : "No"}
-*Proxy:* ${proxy ? "Yes" : "No"}
-*Hosting:* ${hosting ? "Yes" : "No"}
-`;
-
-      await m.send(caption);
-    } catch (e) {
-      await m.error(`${e}\n\ncommand: ipstalk`, e);
+      await m.error(`${e}\n\ncommand: ghstalk`, e);
     }
   }
 );
@@ -452,7 +336,7 @@ smd(
    }
  );
 smd({
-  pattern: "fb", // Command name remains 'tyu'
+  pattern: "fbsd", // Command name remains 'fb'
   alias: ["fbdl"],
   desc: "Downloads video from a Facebook link.",
   category: "downloader",
@@ -467,15 +351,15 @@ smd({
     const videoUrl = _0x4ec99f; // Facebook video URL
 
     // Call the Facebook downloader API
-    const apiUrl = `https://api-gifted-tech.onrender.com/api/download/facebook?url=${videoUrl}&apikey=gifteddevskk`;
+    const apiUrl = `https://itzpire.com/download/facebook?url=${encodeURIComponent(videoUrl)}`;
 
     const response = await axios.get(apiUrl);
     const data = response.data;
 
     console.log("API Response:", data); // Log the API response for debugging
 
-    if (data.success && data.download_url) {
-      const videoDownloadUrl = data.download_url; // Extract the video URL from the 'download_url' response
+    if (data.status === "success" && data.data.video_sd) {
+      const videoDownloadUrl = data.data.video_sd; // Extract the video URL from the 'video_sd' field
 
       // Download the video file
       const videoResponse = await axios({
@@ -516,7 +400,143 @@ smd({
     }
   } catch (_0x86b411) {
     console.error("Caught Error:", _0x86b411); // Log any caught errors
-    return _0x2c2023.error(_0x86b411 + "\n\ncommand: tyu", _0x86b411, "*_Error occurred while processing the command!!_*");
+    return _0x2c2023.error(_0x86b411 + "\n\ncommand: fb", _0x86b411, "*_Error occurred while processing the command!!_*");
+  }
+});
+smd({
+  pattern: "fbhd", // New command name for HD videos
+  alias: ["fbhdl"],
+  desc: "Downloads HD video from a Facebook link.",
+  category: "downloader",
+  filename: __filename,
+  use: "<Facebook video URL>"
+}, async (_0x2c2023, _0x4ec99f) => {
+  try {
+    if (!_0x4ec99f) {
+      return await _0x2c2023.reply("*_Provide a Facebook video URL_*");
+    }
+
+    const videoUrl = _0x4ec99f; // Facebook video URL
+
+    // Call the Facebook downloader API
+    const apiUrl = `https://itzpire.com/download/facebook?url=${encodeURIComponent(videoUrl)}`;
+
+    const response = await axios.get(apiUrl);
+    const data = response.data;
+
+    console.log("API Response:", data); // Log the API response for debugging
+
+    if (data.status === "success" && data.data.video_hd) {
+      const videoDownloadUrl = data.data.video_hd; // Extract the video URL from the 'video_hd' field
+
+      // Download the video file
+      const videoResponse = await axios({
+        url: videoDownloadUrl,
+        method: 'GET',
+        responseType: 'stream'
+      });
+
+      // Create a temporary file path for the video
+      const tempFilePath = path.join(__dirname, `${Date.now()}_hd.mp4`);
+      const writer = fs.createWriteStream(tempFilePath);
+
+      // Pipe the video stream to the file
+      videoResponse.data.pipe(writer);
+
+      // Handle completion of file writing
+      await new Promise((resolve, reject) => {
+        writer.on('finish', resolve);
+        writer.on('error', reject);
+      });
+
+      console.log(`HD Video saved to ${tempFilePath}`);
+
+      // Send the video file to the user in HD quality
+      await _0x2c2023.bot.sendMessage(_0x2c2023.jid, {
+        video: { url: tempFilePath },
+        caption: 'Here is your downloaded HD video',
+        fileName: `${Date.now()}_hd.mp4`,
+        mimetype: "video/mp4"
+      }, { quoted: _0x2c2023 });
+
+      // Optionally, delete the temporary file after sending
+      fs.unlinkSync(tempFilePath);
+      
+    } else {
+      console.log("Error: Could not retrieve the HD video download URL, API response:", data);
+      await _0x2c2023.reply("*_Error: Could not retrieve the HD video download URL. Please try again later!_*");
+    }
+  } catch (_0x86b411) {
+    console.error("Caught Error:", _0x86b411); // Log any caught errors
+    return _0x2c2023.error(_0x86b411 + "\n\ncommand: fbhd", _0x86b411, "*_Error occurred while processing the command!!_*");
+  }
+});
+smd({
+  pattern: "fbaudio", // New command name for audio
+  alias: ["fbaud"],
+  desc: "Downloads audio from a Facebook link.",
+  category: "downloader",
+  filename: __filename,
+  use: "<Facebook video URL>"
+}, async (_0x2c2023, _0x4ec99f) => {
+  try {
+    if (!_0x4ec99f) {
+      return await _0x2c2023.reply("*_Provide a Facebook video URL_*");
+    }
+
+    const videoUrl = _0x4ec99f; // Facebook video URL
+
+    // Call the Facebook downloader API
+    const apiUrl = `https://itzpire.com/download/facebook?url=${encodeURIComponent(videoUrl)}`;
+
+    const response = await axios.get(apiUrl);
+    const data = response.data;
+
+    console.log("API Response:", data); // Log the API response for debugging
+
+    if (data.status === "success" && data.data.audio) {
+      const audioDownloadUrl = data.data.audio; // Extract the audio URL from the 'audio' field
+
+      // Download the audio file
+      const audioResponse = await axios({
+        url: audioDownloadUrl,
+        method: 'GET',
+        responseType: 'stream'
+      });
+
+      // Create a temporary file path for the audio
+      const tempFilePath = path.join(__dirname, `${Date.now()}.mp3`);
+      const writer = fs.createWriteStream(tempFilePath);
+
+      // Pipe the audio stream to the file
+      audioResponse.data.pipe(writer);
+
+      // Handle completion of file writing
+      await new Promise((resolve, reject) => {
+        writer.on('finish', resolve);
+        writer.on('error', reject);
+      });
+
+      console.log(`Audio saved to ${tempFilePath}`);
+
+      // Send the audio file to the user
+      await _0x2c2023.bot.sendMessage(_0x2c2023.jid, {
+        audio: { url: tempFilePath },
+        caption: 'Here is your downloaded audio',
+        fileName: `${Date.now()}.mp3`,
+        mimetype: "audio/mpeg"
+      }, { quoted: _0x2c2023 });
+
+      // Optionally, delete the temporary file after sending
+      fs.unlinkSync(tempFilePath);
+      
+    } else {
+      console.log("Error: Could not retrieve the audio download URL, API response:", data);
+      await _0x2c2023.reply("*_Error: Could not retrieve the audio download URL. Please try again later!_*");
+    }
+  } catch (_0x86b411) {
+    console.error("Caught Error:", _0x86b411); // Log any caught errors
+    return _0x2c2023.error(_0x86b411 + "\n\ncommand: fbaudio", _0x86b411, "*_Error occurred while processing the command!!_*");
   }
 });
 smd(
@@ -669,30 +689,30 @@ smd(
    }
  });
 smd({
-  pattern: "tkdl", // Command name
-  alias: ["tiktokdl"],
-  desc: "Downloads video from a TikTok link.",
+  pattern: "tiktokvid", // Command name remains 'fb'
+  alias: ["tkdlvid"],
+  desc: "Downloads video from a Facebook link.",
   category: "downloader",
   filename: __filename,
-  use: "<TikTok video URL>"
+  use: "<Facebook video URL>"
 }, async (_0x2c2023, _0x4ec99f) => {
   try {
     if (!_0x4ec99f) {
       return await _0x2c2023.reply("*_Provide a TikTok video URL_*");
     }
 
-    const videoUrl = _0x4ec99f; // TikTok video URL
+    const videoUrl = _0x4ec99f; // Facebook video URL
 
-    // Call the TikTok downloader API
-    const apiUrl = `https://api-gifted-tech.onrender.com/api/download/tiktok?url=${videoUrl}&apikey=gifteddevskk`;
+    // Call the Facebook downloader API
+    const apiUrl = `https://itzpire.com/download/tiktok?url=${encodeURIComponent(videoUrl)}`;
 
     const response = await axios.get(apiUrl);
     const data = response.data;
 
     console.log("API Response:", data); // Log the API response for debugging
 
-    if (data.success && data.url) {
-      const videoDownloadUrl = data.url; // Extract the video URL from the 'url' response
+    if (data.status === "success" && data.data.video) {
+      const videoDownloadUrl = data.data.video; // Extract the video URL from the 'video_sd' field
 
       // Download the video file
       const videoResponse = await axios({
@@ -716,10 +736,10 @@ smd({
 
       console.log(`Video saved to ${tempFilePath}`);
 
-      // Send the video file to the user
+      // Send the video file to the user in normal quality
       await _0x2c2023.bot.sendMessage(_0x2c2023.jid, {
         video: { url: tempFilePath },
-        caption: 'Here is your downloaded TikTok video',
+        caption: 'Here is your downloaded video',
         fileName: `${Date.now()}.mp4`,
         mimetype: "video/mp4"
       }, { quoted: _0x2c2023 });
@@ -733,142 +753,9 @@ smd({
     }
   } catch (_0x86b411) {
     console.error("Caught Error:", _0x86b411); // Log any caught errors
-    return _0x2c2023.error(_0x86b411 + "\n\ncommand: ju", _0x86b411, "*_Error occurred while processing the command!!_*");
+    return _0x2c2023.error(_0x86b411 + "\n\ncommand: fb", _0x86b411, "*_Error occurred while processing the command!!_*");
   }
 });
-   /**{
-     pattern: "tiktok",
-     alias: ["tt", "ttdl"],
-     desc: "Downloads Tiktok Videos Via Url.",
-     category: "downloader",
-     filename: __filename,
-     use: "<add tiktok url.>",
-   },
-   async (message, url) => {
-     try {
-       const fileType = url.toLowerCase().includes("doc")
-         ? "document"
-         : url.toLowerCase().includes("mp3")
-         ? "audio"
-         : "video";
- 
-       if (!url) {
-         return await message.reply(
-           `*Uhh Please, Provide me tiktok Video Url*\n*_Ex ${prefix}tiktok https://www.tiktok.com/@dakwahmuezza/video/7150544062221749531_*`
-         );
-       }
- 
-       const tiktokUrl = url ? url.split(" ")[0] : "";
- 
-       if (!/tiktok/.test(tiktokUrl)) {
-         return await message.reply(
-           "*Uhh Please, Give me Valid Tiktok Video Url!*"
-         );
-       }
- 
-       const apiUrl = "https://aemt.me/download/tiktokdl?url=";
-       const response = await axios.get(`${apiUrl}?url=${tiktokUrl}`);
-       const data = await response.json();
- 
-       if (data && data.video && data.video.noWatermark) {
-         return await message.send(
-           data.video.noWatermark,
-           { caption: Config.caption },
-           fileType,
-           message
-         );
-       } else {
-         return await message.reply("sᴏʀʀʏ ʙᴜᴅᴅʏ ɪ ᴀᴍ ғᴀᴄɪɴɢ ɪɴᴛᴇʀɴᴀʟ sᴇʀᴠᴇʀ ᴇʀʀᴏʀ");
-       }
-     } catch (error) {
-       return message.error(`${error}\n\ncommand: tiktok`, error);
-     }
-   }
- );
- smd(
-   {
-     pattern: "tiktok2",
-      alias: ["kt", "tl","tk"],
-     desc: "Downloads Tiktok Videos Via Url.",
-     category: "downloader",
-     filename: __filename,
-     use: "<add tiktok url.>",
-   },
-   async (message, url) => {
-     try {
-       if (!url) {
-         return await message.reply(
-           `*Uhh Please, Provide me tiktok Video Url*\n*_Ex ${prefix}tiktok https://www.tiktok.com/@dakwahmuezza/video/7150544062221749531_*`
-         );
-       }
- 
-       const tiktokUrl = url.split(" ")[0];
-       if (!/tiktok/.test(tiktokUrl)) {
-         return await message.reply(
-           "*Uhh Please, Give me Valid Tiktok Video Url!*"
-         );
-       }
- 
-       const apiUrl = `https://aemt.me/download/tiktokdl?url=${encodeURIComponent(
-         tiktokUrl
-       )}`;
-       const response = await axios.getJson(apiUrl);
- 
-       if (response.status !== 200) {
-         return await message.reply(`*Error: ${response.result}*`);
-       }
- 
-       const videoUrl = response.result;
-       const fileType = videoUrl.toLowerCase().includes("mp4")
-         ? "video"
-         : "document";
- 
-       await message.send(
-         videoUrl,
-         { caption: Config.caption },
-         fileType,
-         message
-       );
-     } catch (error) {
-       console.error(error);
-       return message.error(`${error}\n\ncommand: tiktok`, error);
-     }
-   }
- );
- smd({
-   pattern: "ringtone",
-   desc: "Downloads ringtone.",
-   category: "downloader",
-   filename: __filename,
-   use: "<ringtone name>"
- }, async (_0x1da3da, _0x2f0451) => {
-   try {
-     if (!_0x2f0451) {
-       return _0x1da3da.reply("Example: " + prefix + "ringtone back in black");
-     }
-     const {
-       ringtone: _0x2ec04e
-     } = require("../lib/scraper");
-     let _0x5f35d4 = await _0x2ec04e(_0x2f0451);
-     var _0x2e165b = {
-       ...(await _0x1da3da.bot.contextInfo(Config.botname, "ʀɪɴɢᴛᴏɴᴇ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ"))
-     };
-     let _0x5c9751 = {
-       audio: {
-         url: _0x5f35d4[0].audio
-       },
-       caption: "*" + _0x5f35d4[0].title + "*",
-       fileName: _0x5f35d4[0].title + ".mp3",
-       mimetype: "audio/mpeg",
-       contextInfo: _0x2e165b
-     };
-     return _0x1da3da.bot.sendMessage(_0x1da3da.jid, _0x5c9751, {
-       quoted: _0x1da3da
-     });
-   } catch (_0x430a86) {
-     return _0x1da3da.error(_0x430a86 + "\n\ncommand: ringtone", _0x430a86, "*_Ringtone not found with given name!!_*");
-   }
- });**/
  smd({
    pattern: "ytdoc",
    alias: ["ytd"],
@@ -1058,46 +945,148 @@ smd({
    }
  }); // To manage file paths
 smd({
-  pattern: "pindl",
-  alias: ["pinterestimg"],
-  desc: "Downloads an image from a Pinterest link.",
+  pattern: "pinimage",
+  react: "🖼️", // Command name for Pinterest download
+  alias: ["pinimagedl"],
+  desc: "Downloads image from a Pinterest link.",
   category: "downloader",
-  use: "<Pinterest URL>"
+  filename: __filename,
+  use: "<Pinterest image URL>"
 }, async (_0x2c2023, _0x4ec99f) => {
   try {
     if (!_0x4ec99f) {
-      return await _0x2c2023.reply("*_Please provide a valid Pinterest link_*");
+      return await _0x2c2023.reply("*_Provide a Pinterest image URL_*");
     }
 
-    // API request to fetch the Pinterest image
-    const apiUrl = `https://api-gifted-tech.onrender.com/api/download/pinterestdl?url=${_0x4ec99f}&apikey=gifteddevskk`;
+    const pinterestUrl = _0x4ec99f; // Pinterest URL
 
+    // Call the Pinterest downloader API
+    const apiUrl = `https://itzpire.com/download/pinterest?url=${encodeURIComponent(pinterestUrl)}`;
+    
     const response = await axios.get(apiUrl);
     const data = response.data;
 
-    // Check if the API call was successful and contains the image URL
-    if (data.success && data.result && data.result.image) {
-      const imageUrl = data.result.image[0]; // Get the first image URL
+    console.log("API Response:", data); // Log the API response for debugging
 
-      // Fetch the image as a buffer
-      const imageBuffer = await axios({
+    if (data.status === "success" && data.data.image && data.data.image.length > 0) {
+      const imageUrl = data.data.image[0]; // Extract the first image URL
+
+      // Download the image file
+      const imageResponse = await axios({
         url: imageUrl,
         method: 'GET',
-        responseType: 'arraybuffer'
+        responseType: 'stream'
       });
 
-      const image = Buffer.from(imageBuffer.data, 'binary'); // Convert binary data to a buffer
+      // Create a temporary file path for the image
+      const tempFilePath = path.join(__dirname, `${Date.now()}.jpg`);
+      const writer = fs.createWriteStream(tempFilePath);
 
-      // Send the image as a picture message
+      // Pipe the image stream to the file
+      imageResponse.data.pipe(writer);
+
+      // Handle completion of file writing
+      await new Promise((resolve, reject) => {
+        writer.on('finish', resolve);
+        writer.on('error', reject);
+      });
+
+      console.log(`Image saved to ${tempFilePath}`);
+
+      // Send the image file to the user
       await _0x2c2023.bot.sendMessage(_0x2c2023.jid, {
-        image: image,
-        caption: `*Pinterest Image Downloaded Successfully*\n\n_Link: ${_0x4ec99f}_`
-      });
+        image: { url: tempFilePath },
+        caption: 'Here is your downloaded Pinterest image',
+        fileName: `${Date.now()}.jpg`,
+        mimetype: "image/jpeg"
+      }, { quoted: _0x2c2023 });
+
+      // Optionally, delete the temporary file after sending
+      fs.unlinkSync(tempFilePath);
+
     } else {
-      await _0x2c2023.reply("*_Error: Could not fetch the image. Please check the link and try again._*");
+      console.log("Error: Could not retrieve the image download URL, API response:", data);
+      await _0x2c2023.reply("*_Error: Could not retrieve the image download URL. Please try again later!_*");
     }
-  } catch (error) {
-    console.error("Error:", error);
-    await _0x2c2023.reply("*_Error: Failed to download the image. Please try again later!_*");
+  } catch (_0x86b411) {
+    console.error("Caught Error:", _0x86b411); // Log any caught errors
+    return _0x2c2023.error(_0x86b411 + "\n\ncommand: pindl", _0x86b411, "*_Error occurred while processing the command!!_*");
+  }
+});
+smd({
+  'pattern': "pinvid",
+  'react': "🎥",
+  'alias': ["pindownload"],
+  'desc': "Downloads video from a Pinterest URL.",
+  'category': "downloader",
+  'filename': __filename,
+  'use': "<Pinterest URL>"
+}, async (_0x213b75, _0x13be17) => {
+  try {
+    if (!_0x13be17) {
+      return await _0x213b75.reply("*_Please provide a valid Pinterest URL_*");
+    }
+
+    const pinterestUrl = _0x13be17.trim();
+
+    // Use the new API to get download links
+    const downloadApiUrl = "https://widipe.com/download/pindl?url=" + encodeURIComponent(pinterestUrl);
+    
+    let _0x4acf6c = 3; // Retry logic
+    while (_0x4acf6c > 0) {
+      try {
+        const _0x2cc463 = await axios.get(downloadApiUrl);
+        const _0x509920 = _0x2cc463.data;
+        console.log("API Response:", _0x509920);
+
+        if (_0x509920.status && _0x509920.result.success) {
+          const videoUrl = _0x509920.result.data.image;
+          
+          // Download the video file
+          const _0x3ce5d2 = await axios({
+            'url': videoUrl,
+            'method': "GET",
+            'responseType': "stream"
+          });
+          const _0x239ef4 = path.join(__dirname, _0x509920.result.data.title + ".mp4");
+          const _0x49450f = fs.createWriteStream(_0x239ef4);
+          _0x3ce5d2.data.pipe(_0x49450f);
+
+          await new Promise((_0x46fbcf, _0x176108) => {
+            _0x49450f.on("finish", _0x46fbcf);
+            _0x49450f.on("error", _0x176108);
+          });
+          
+          console.log("Video saved to " + _0x239ef4);
+
+          // Send the video file
+          await _0x213b75.bot.sendMessage(_0x213b75.jid, {
+            'video': {
+              'url': _0x239ef4
+            },
+            'fileName': _0x509920.result.data.title + ".mp4",
+            'mimetype': _0x509920.result.data.media_type
+          }, {
+            'quoted': _0x213b75
+          });
+          
+          fs.unlinkSync(_0x239ef4); // Delete the file after sending
+          return;
+        } else {
+          console.log("Error: Could not download video, API response:", _0x509920);
+          await _0x213b75.reply("*_Error: Could not download the video. Please try again later!_*");
+          return;
+        }
+      } catch (_0x2b8c59) {
+        console.error("Retry Error:", _0x2b8c59);
+        _0x4acf6c--;
+        if (_0x4acf6c === 0) {
+          await _0x213b75.reply("*_Error: Could not download the video after multiple attempts. Please try again later!_*");
+        }
+      }
+    }
+  } catch (_0x3c9fcf) {
+    console.error("Caught Error:", _0x3c9fcf);
+    return _0x213b75.error(_0x3c9fcf + "\n\ncommand: pindl", _0x3c9fcf, "*_File not found!!_*");
   }
 });

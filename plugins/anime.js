@@ -179,3 +179,151 @@ smd({
     return await sendAnime(_0x5ded99, _0x5ded99, "naruto");
   } catch {}
 });
+smd({
+  pattern: "pokepic",
+  category: "anime",
+  filename: __filename,
+  desc: "Sends image of pokemon."
+}, async (_0x583a8f, _0x26e084) => {
+  try {
+    return await sendGImages(_0x583a8f, _0x26e084 + "Pokemon Pics only HD ", "*---「 Poke Pic 」---*", _0x26e084);
+  } catch {}
+});
+smd({
+  pattern: "animewall",
+  category: "anime",
+  desc: "Anime Wallpaper Random",
+  filename: __filename
+}, async (_0x1be31e, _0x45a934) => {
+  try {
+    return await sendGImages(_0x1be31e, _0x45a934 + "anime wallpaper for desktop full hd", "*---「 Anime Wallpaper 」---*", _0x45a934);
+  } catch {}
+});
+smd({
+  pattern: "pokemon",
+  category: "anime",
+  filename: __filename,
+  desc: "Sends info of pokemon in current chat."
+}, async (_0x127028, _0x60d63) => {
+  try {
+    if (!_0x60d63) {
+      return _0x127028.reply("*Uhh Please Give Me Poki Name/num*");
+    }
+    try {
+      let {
+        data: _0x4e5976
+      } = await axios.get("https://pokeapi.co/api/v2/pokemon/" + _0x60d63);
+      if (!_0x4e5976.name) {
+        return _0x127028.reply("❌ Could not found any pokemon with that name");
+      }
+      let _0x8d1690 = "*•Name: " + _0x4e5976.name + "*\n*•Pokedex ID: " + _0x4e5976.id + "*\n*•Height: " + _0x4e5976.height + "*\n*•Weight: " + _0x4e5976.weight + "*\n*•Abilities: " + _0x4e5976.abilities[0].ability.name + ", " + _0x4e5976.abilities[1].ability.name + "*\n*•Base Experience: " + _0x4e5976.base_experience + "*\n*•Type: " + _0x4e5976.types[0].type.name + "*\n*•Base Stat: " + _0x4e5976.stats[0].base_stat + "*\n*•Attack: " + _0x4e5976.stats[1].base_stat + "*\n*•Defense: " + _0x4e5976.stats[2].base_stat + "*\n*•Special Attack: " + _0x4e5976.stats[3].base_stat + "*\n*•Special Defense:" + _0x4e5976.stats[4].base_stat + "*\n*•Speed: " + _0x4e5976.stats[5].base_stat + "*\n";
+      return await Suhail.bot.sendMessage(_0x127028.jid, {
+        image: {
+          url: _0x4e5976.sprites.front_default
+        },
+        caption: _0x8d1690
+      }, {
+        quoted: _0x127028
+      });
+    } catch (_0x2fa93f) {
+      _0x127028.reply("*_Ahh,Couldn't found any pokemon._*");
+    }
+  } catch {}
+});
+// Helper function to handle API requests
+async function sendImage(apiUrl, commandName, m) {
+  try {
+    let response = await axios.get(apiUrl);
+    let jsonResponse = response.data;
+
+    if (jsonResponse) {
+      await m.send(jsonResponse.url, { caption: Config.caption }, "image", m);
+    } else {
+      await m.send(`*_Request not processed for ${commandName}!_*`);
+    }
+  } catch (error) {
+    await m.error(
+      error + `\n\ncommand: ${commandName}`,
+      error,
+      `*_No response from API for ${commandName}, Sorry!!_*`
+    );
+  }
+}
+
+const apiUrl = "https://api.maher-zubair.xyz/wallpapers/anime"; // Base API URL
+
+// Define multiple commands as cmdname, which will be the endpoint
+const cmdnames = [
+  "kaneki",
+  "akira",
+  "anna",
+  "asuna",
+  "boruto",
+  "chiho",
+  "eba",
+  "elaina",
+  "ezra",
+  "inori",
+  "hinata",
+  "isuzu",
+  "itachi",
+  "kaga",
+  "kaori",
+  "kotori",
+  "kurumi",
+  "lisa",
+  "megumin",
+  "mikasa",
+  "miku",
+  "nezuko",
+  "rize",
+  "sagiri",
+  "sakura",
+  "sasuke",
+  "shina",
+  "shiina",
+  "shinka",
+  "shot",
+  "taiga",
+  "tanjirou",
+  "touka",
+  "tsunade",
+  "yotsuba",
+  "yuki",
+  "zero",
+  "rem",
+  "rimuru",
+  "saber",
+  "senku",
+  "yoriichi",
+  "giyuu",
+  "uzui",
+  "akaza",
+  "husbu"
+]; // Each cmdname is also the endpoint
+
+// Loop through cmdnames and create handlers for each
+cmdnames.forEach(cmdname => {
+   smd({
+      cmdname: cmdname, // Command name, which will be the endpoint
+      desc: `Send pictures of random ${cmdname}s!`,
+      type: "nsfw",
+      filename: __filename,
+   },
+   async (m) => {
+      try {
+         const fetch = require("node-fetch");
+         // Fetch from the dynamic endpoint based on command name
+         let res = await fetch(`${apiUrl}/${cmdname}?apikey=RnJlZV9rZXlAc2FsbWFu`);
+         let json = await res.json();
+
+         if (!json.url) return await m.reply(`*Request Denied for ${cmdname}!*`);
+         
+         const caption = `Here's a pic of ${cmdname}`; // Dynamic caption with cmdname
+         m.bot.sendFileUrl(m.jid, json.url, caption, m, { author: "Queen_Alya" }, "image");
+
+      } catch (e) { 
+         m.error(`${e}\n\nCommand: ${cmdname}`, e, false);
+      }
+   });
+});
