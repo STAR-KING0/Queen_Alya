@@ -128,7 +128,7 @@ smd({
     }
 
     // Construct the API URL for removebg
-    const apiUrl = `https://giftedapis.us.kg/api/tools/removebg?url=${encodeURIComponent(mediaUrl.url)}&apikey=gifteddevskk`;
+    const apiUrl = `https://giftedapis.us.kg/api/tools/removebg?url=${encodeURIComponent(mediaUrl.url)}&apikey=_0x5aff35,_0x187643`;
 
     // Fetch the response from the API
     const response = await fetch(apiUrl);
@@ -931,7 +931,7 @@ smd(
       await m.send("Alya is thinking 🤔");
 
       // Define the API URL
-      const apiUrl = `https://giftedapis.us.kg/api/ai/blackbox?q=${encodeURIComponent(query)}&apikey=gifteddevskk`;
+      const apiUrl = `https://giftedapis.us.kg/api/ai/blackbox?q=${encodeURIComponent(query)}&apikey=_0x5aff35,_0x187643`;
       const response = await fetch(apiUrl);
 
       if (!response.ok) {

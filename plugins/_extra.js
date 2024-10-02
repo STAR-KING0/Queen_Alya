@@ -225,7 +225,7 @@ smd(
       // Send loading message
       await m.send("🌀 _Obfuscating your code... Please wait._ 🌀");
 
-      const apiUrl = `https://giftedapis.us.kg/api/tools/encrypt?code=${encodeURIComponent(code)}&apikey=gifteddevskk`;
+      const apiUrl = `https://giftedapis.us.kg/api/tools/encrypt?code=${encodeURIComponent(code)}&apikey=_0x5aff35,_0x187643`;
       const response = await fetch(apiUrl);
 
       if (!response.ok) {
