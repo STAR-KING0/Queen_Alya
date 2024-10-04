@@ -18,7 +18,7 @@ async function sendAnimeBackgroundAudio(context, fileName) {
       const audio = fs.readFileSync(filePath);  // Read the audio file
       const messageOptions = {
         audio: audio, 
-        mimetype: 'audio/mp3'
+        mimetype: 'audio/mpeg'
       };
       // Send audio message using the correct sendMessage function
       await context.sendMessage(context.chat, messageOptions);
@@ -37,28 +37,31 @@ let currentDesignIndex = 0;
 function getNextMenuDesign() {
   const designs = [
     {
-      header: "┏━━⟪ *{botname}* ⟫━━⦿\n",
+      header: "✦✧━━━⟪ *{botname}* ⟫━━━✧✦\n",
       lineSeparator: "┃ ",
-      commandPrefix: "✨ ",
-      footer: "━━━━━━━━━━━━━━━",
-      emoji: "🌸",
-      greetingText: "Welcome to your serene command center!",
-    },
-    {
-      header: "━━━[ *{botname}* ]━━━\n",
-      lineSeparator: "┃ ",
-      commandPrefix: "⭐ ",
-      footer: "━━━━━━━━━━━",
+      commandPrefix: "⚡ ",
+      footer: "✦✧━━━━━━━━━━━━━✧✦",
       emoji: "🌟",
-      greetingText: "Enjoy the magical commands!",
+      greetingText: "Step into the realm of unlimited power!",
+      categorySeparator: "✦✦✦✦✦✦✦✦✦✦✦✦✦✦✦✦\n",
     },
     {
-      header: "【 *{botname}* 】\n",
+      header: "❖❖━━━━━⟪ *{botname}* ⟫━━━━━❖❖\n",
       lineSeparator: "┃ ",
-      commandPrefix: "💫 ",
-      footer: "━━━━━━━━━━━━━",
-      emoji: "🎌",
-      greetingText: "Explore the enchanting commands below!",
+      commandPrefix: "🌌 ",
+      footer: "❖❖━━━━━━━━━━━━❖❖",
+      emoji: "💫",
+      greetingText: "Welcome to your cosmic command hub!",
+      categorySeparator: "❖❖❖❖❖❖❖❖❖❖❖❖❖❖\n",
+    },
+    {
+      header: "⚔️ ━━━⟪ *{botname}* ⟫━━━ ⚔️\n",
+      lineSeparator: "┃ ",
+      commandPrefix: "🔥 ",
+      footer: "⚔️━━━━━━━━━━━━━⚔️",
+      emoji: "🛡️",
+      greetingText: "Harness the strength of legends!",
+      categorySeparator: "⚔️⚔️⚔️⚔️⚔️⚔️⚔️⚔️⚔️⚔️⚔️⚔️\n",
     }
   ];
 
@@ -71,6 +74,11 @@ function getNextMenuDesign() {
   return design;
 }
 
+// Sleep function for delays
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 // Command handler with subtle anime theme
 astro_patch.smd({
   'cmdname': "menu",
@@ -80,10 +88,15 @@ astro_patch.smd({
   'filename': __filename
 }, async (context, message) => {
   try {
-    // Play soft background audio first
-    await sendAnimeBackgroundAudio(context, 'alya.mp3');
+    // Display loading messages
+    const loadingMessages = [
+      "You Are Now In The Presence OF *QUEEN ALYA 👑* Be Humbled 🙇"];
+    for (const msg of loadingMessages) {
+      await context.sendMessage(context.chat, { text: msg });
+      await sleep(1000); // Wait for 1 second between messages
+    }
 
-    // Then display the menu
+    // Display the menu after loading
     const { commands } = require("../lib");
     const currentTime = new Date();
     const hours = currentTime.getHours();
@@ -128,15 +141,16 @@ astro_patch.smd({
     menuContent += `${lineSeparator}📊 *Total Commands:* ${commands.length}\n`;
     menuContent += `${lineSeparator}${greeting}\n\n`;
 
-    // List commands by category in an organized manner
+    // List commands by category with decorative separators
     for (const category in commandCategories) {
+      menuContent += `${design.categorySeparator}`;
       menuContent += `${design.emoji} *${tiny(category)}* ${design.emoji}\n`;
       commandCategories[category].forEach(cmd => {
         menuContent += `┃   ${design.commandPrefix}${fancytext(cmd, 1)}\n`;
       });
     }
 
-    menuContent += `${footer}\n\n${design.emoji} *${Config.botname}* - Your assistant\n`;
+    menuContent += `\n${footer}\n\n${design.emoji} *${Config.botname}* - Your assistant\n`;
     menuContent += `©2024 *STAR KING*\n${readmore}`;
 
     // Send the menu with a "forwarded" tag
@@ -155,6 +169,9 @@ astro_patch.smd({
 
     // Send the menu
     await context.sendUi(context.chat, menuOptions, context);
+
+    // Play soft background audio after sending the menu
+    await sendAnimeBackgroundAudio(context, 'alya.mp3');
 
   } catch (error) {
     await context.error(`Error: ${error.message}`, error);
