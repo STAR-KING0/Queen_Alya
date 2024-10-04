@@ -3,6 +3,7 @@ const {
   smd,
   prefix,
   Config,
+  createUrl,
   parsedJid,
   sleep,
 } = require("../lib");
@@ -12,7 +13,8 @@ const fetch = require("node-fetch");
 smd(
   {
     pattern: "gpt",
-    desc: "Get a response from GPT-4 based on user query.",
+    react: "🤖",
+    desc: "Get a response from Bing AI based on user query.",
     category: "ai",
     filename: __filename,
   },
@@ -21,14 +23,14 @@ smd(
       // Extract the query from the message
       const query = m.text.split(' ').slice(1).join(' ');
       if (!query) {
-        return await m.send("Please provide a query, e.g., `.hpt What is the weather today?`.");
+        return await m.send("Please provide a query, e.g., `.gpt What is life?`.");
       }
 
       // Send a loading message
       await m.send("Alya is thinking 🤔");
 
       // Define the API URL
-      const apiUrl = `https://api.giftedtechnexus.co.ke/api/ai/gpt4?q=${encodeURIComponent(query)}&apikey=gifteddevskk`;
+      const apiUrl = `https://widipe.com/gpt4?text=${encodeURIComponent(query)}`;
       const response = await fetch(apiUrl);
 
       if (!response.ok) {
@@ -48,7 +50,50 @@ smd(
       // Send the final response
       await m.send(message);
     } catch (e) {
-      await m.error(`${e}\n\ncommand: hpt`, e);
+      await m.error(`${e}\n\ncommand: gpt`, e);
+    }
+  }
+);
+smd(
+  {
+    pattern: "bing",
+    desc: "Get a response from Bing AI based on user query.",
+    category: "ai",
+    filename: __filename,
+  },
+  async (m) => {
+    try {
+      // Extract the query from the message
+      const query = m.text.split(' ').slice(1).join(' ');
+      if (!query) {
+        return await m.send("Please provide a query, e.g., `.gpt What is life?`.");
+      }
+
+      // Send a loading message
+      await m.send("Alya is thinking 🤔");
+
+      // Define the API URL
+      const apiUrl = `https://itzpire.com/ai/bing-ai?model=Precise&q=${encodeURIComponent(query)}`;
+      const response = await fetch(apiUrl);
+
+      if (!response.ok) {
+        return await m.send(
+          `*_Error: ${response.status} ${response.statusText}_*`
+        );
+      }
+
+      // Wait for 2 seconds
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      // Get the result from the API response
+      const data = await response.json();
+      const resultText = data.result; // Extract the text from the result part
+      const message = `*Response:* \n\n${resultText}`;
+
+      // Send the final response
+      await m.send(message);
+    } catch (e) {
+      await m.error(`${e}\n\ncommand: gpt`, e);
     }
   }
 );
@@ -83,7 +128,7 @@ smd({
     }
 
     // Construct the API URL for removebg
-    const apiUrl = `https://api.giftedtechnexus.co.ke/api/tools/removebg?url=${encodeURIComponent(mediaUrl.url)}&apikey=gifteddevskk`;
+    const apiUrl = `https://giftedapis.us.kg/api/tools/removebg?url=${encodeURIComponent(mediaUrl.url)}&apikey=_0x5aff35,_0x187643`;
 
     // Fetch the response from the API
     const response = await fetch(apiUrl);
@@ -141,7 +186,8 @@ smd({
 });
 smd(
   {
-    pattern: "sd", // Changed command name to 'dale6'
+    pattern: "sd",
+    react: "🖼️", // Changed command name to 'dale6'
     desc: "Generate an AI photo from text prompt.",
     category: "ai",
     filename: __filename,
@@ -155,7 +201,7 @@ smd(
       }
 
       // Construct the API URL with the provided query
-      const apiUrl = `https://api.giftedtechnexus.co.ke/api/ai/sd?prompt=${encodeURIComponent(query)}&apikey=gifteddevskk`;
+      const apiUrl = `https://widipe.com/stablediffusion?text=${encodeURIComponent(query)}`;
       
       // Fetch the response from the API
       const response = await fetch(apiUrl);
@@ -216,6 +262,7 @@ smd(
 smd(
   {
     pattern: "lumine",
+    react: "📡",
     desc: "Get a response from Lumine AI based on user query.",
     category: "ai",
     filename: __filename,
@@ -232,7 +279,7 @@ smd(
       await m.send("Alya is thinking 🤔");
 
       // Define the API URL
-      const apiUrl = `https://api.giftedtechnexus.co.ke/api/ai/luminai?query=${encodeURIComponent(query)}&apikey=gifteddevskk`;
+      const apiUrl = `https://widipe.com/v3/gpt4?text=${encodeURIComponent(query)}`;
       const response = await fetch(apiUrl);
 
       if (!response.ok) {
@@ -259,6 +306,7 @@ smd(
 smd(
   {
     pattern: "gemini",
+    react: "📡",
     desc: "Get a response from Gemini AI based on user query.",
     category: "ai",
     filename: __filename,
@@ -275,7 +323,7 @@ smd(
       await m.send("Alya is thinking 🤔");
 
       // Define the new API URL
-      const apiUrl = `https://api.giftedtechnexus.co.ke/api/ai/geminiai?q=${encodeURIComponent(query)}&apikey=gifteddevskk`;
+      const apiUrl = `https://widipe.com/gemini?text=${encodeURIComponent(query)}`;
       const response = await fetch(apiUrl);
 
       if (!response.ok) {
@@ -302,6 +350,7 @@ smd(
 smd(
   {
     pattern: "davinci",
+    react: "📡",
     desc: "Get a response from Davinci AI based on user query.",
     category: "ai",
     filename: __filename,
@@ -318,7 +367,7 @@ smd(
       await m.send("Alya is thinking 🤔");
 
       // Define the new API URL
-      const apiUrl = `https://api.giftedtechnexus.co.ke/api/ai/davinci?q=${encodeURIComponent(query)}&apikey=gifteddevskk`;
+      const apiUrl = `https://widipe.com/turbo?text=${encodeURIComponent(query)}`;
       const response = await fetch(apiUrl);
 
       if (!response.ok) {
@@ -361,7 +410,7 @@ smd(
       await m.send("Alya is thinking 🤔");
 
       // Define the new API URL
-      const apiUrl = `https://api.giftedtechnexus.co.ke/api/ai/simsimi?query=${encodeURIComponent(query)}&apikey=gifteddevskk`;
+      const apiUrl = `https://widipe.com/simi?text=${encodeURIComponent(query)}`;
       const response = await fetch(apiUrl);
 
       if (!response.ok) {
@@ -388,6 +437,7 @@ smd(
 smd(
   {
     pattern: "dalle",
+    react: "🖼️",
     desc: "Generate an AI photo from text prompt.",
     category: "ai",
     filename: __filename,
@@ -401,7 +451,7 @@ smd(
       }
 
       // Construct the API URL with the provided query
-      const apiUrl = `https://api.giftedtechnexus.co.ke/api/ai/text2img?prompt=${encodeURIComponent(query)}&apikey=gifteddevskk`;
+      const apiUrl = `https://widipe.com/v1/text2img?text=${encodeURIComponent(query)}`;
       
       // Fetch the response from the API
       const response = await fetch(apiUrl);
@@ -881,7 +931,7 @@ smd(
       await m.send("Alya is thinking 🤔");
 
       // Define the API URL
-      const apiUrl = `https://api.giftedtechnexus.co.ke/api/ai/blackbox?q=${encodeURIComponent(query)}&apikey=gifteddevskk`;
+      const apiUrl = `https://giftedapis.us.kg/api/ai/blackbox?q=${encodeURIComponent(query)}&apikey=_0x5aff35,_0x187643`;
       const response = await fetch(apiUrl);
 
       if (!response.ok) {

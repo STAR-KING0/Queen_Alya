@@ -225,7 +225,7 @@ smd(
       // Send loading message
       await m.send("🌀 _Obfuscating your code... Please wait._ 🌀");
 
-      const apiUrl = `https://api.giftedtechnexus.co.ke/api/tools/encrypt?code=${encodeURIComponent(code)}&apikey=gifteddevskk`;
+      const apiUrl = `https://giftedapis.us.kg/api/tools/encrypt?code=${encodeURIComponent(code)}&apikey=_0x5aff35,_0x187643`;
       const response = await fetch(apiUrl);
 
       if (!response.ok) {
@@ -285,35 +285,6 @@ smd({
     _0x4d032f.reply(_0x45fa91 && _0x1aa994 ? _0x1aa994 : "_Request Denied from Server!_");
   } catch (_0x303ba6) {
     await _0x4d032f.error(_0x303ba6 + "\n\ncommand : poetry", _0x303ba6, false);
-  }
-});
-smd({
-  cmdname: "alexa",
-  category: "ai",
-  use: "[text]",
-  filename: __filename,
-  info: "chat with simsimi alexa ai!"
-}, async (_0xe6d6e, _0x23f786) => {
-  try {
-    if (!_0x23f786) {
-      return await _0xe6d6e.reply("Hi *" + _0xe6d6e.senderName + "*, do you want to talk?");
-    }
-    const _0x55bb61 = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: "text=" + encodeURIComponent(_0x23f786) + "&lc=en&key="
-    };
-    const _0x5099c8 = await fetch("https://api.simsimi.vn/v2/simtalk", _0x55bb61);
-    const _0x2c3e12 = await _0x5099c8.json();
-    if (_0x2c3e12.status === "200" && _0x2c3e12.message) {
-      _0xe6d6e.reply(_0x2c3e12.message);
-    } else {
-      _0xe6d6e.reply("*No Responce!*");
-    }
-  } catch (_0xfee6e3) {
-    await _0xe6d6e.error(_0xfee6e3 + "\n\ncommand : poetry", _0xfee6e3, false);
   }
 });
 smd({
