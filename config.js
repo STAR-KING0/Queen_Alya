@@ -8,7 +8,7 @@ global.port = process.env.PORT;
 global.appUrl = process.env.APP_URL || "";
 global.email = "kingdavid23565@gmail.com";
 global.location = "Lagos, Nigeria";
-global.mongodb = process.env.MONGODB_URI || "";
+global.mongodb = process.env.MONGODB_URI || "mongodb+srv://astrofx0011:astro@cluster0.lmwnxdt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 global.allowJids = process.env.ALLOW_JID || "null";
 global.blockJids = process.env.BLOCK_JID || "null";
 global.DATABASE_URL = process.env.DATABASE_URL || "";
