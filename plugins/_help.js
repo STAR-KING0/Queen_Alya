@@ -12,7 +12,6 @@ let {
   commands,
 } = require("../lib");
 const long = String.fromCharCode(8206);
-const axios = require('axios');
 const readmore = long.repeat(4001);
 const astro_patch = require("../lib/plugins");
 const { exec } = require("child_process");
@@ -183,25 +182,43 @@ astro_patch.cmd(
     }
   }
 );
+
+// Command: Ping
 smd(
   {
     pattern: "ping",
-    react: "💥",
-    desc: "Ping response with speed.",
+    react: "⚡",
+    desc: "Types 'I am Queen Alya and my speed is' and shows ping",
     category: "misc",
     filename: __filename,
   },
   async (message) => {
+    const text = "Hey am Queen Alya ❤️ and my speed is: ";
+    let typedMessage = "";
+
+    // Measure start time for the ping calculation
     var startTime = new Date().getTime();
-    const { key } = await message.reply("👑 QUEEN ALYA 👑");
 
-    // Wait briefly for effect
-    await new Promise((r) => setTimeout(r, 1500));
+    // Send initial message
+    const { key } = await message.reply("*Typing...*");
 
-    var speed = new Date().getTime() - startTime;
-    await message.send(`👑 QUEEN ALYA'S SPEED: ${speed} ms ⚡`, { edit: key });
+    // Type one character at a time
+    for (let i = 0; i < text.length; i++) {
+      typedMessage += text[i];
+      await new Promise((resolve) => setTimeout(resolve, 500)); // Delay of 500ms between characters
+      await message.send(`**${typedMessage}**`, { edit: key });
+    }
+
+    // Calculate the ping time
+    var endTime = new Date().getTime();
+    var speed = endTime - startTime;
+
+    // Final message with speed
+    await message.send(`**${typedMessage}${speed} ms**`, { edit: key });
   }
 );
+
+// Command: Uptime
 astro_patch.cmd(
   {
     pattern: "uptime",
@@ -220,43 +237,7 @@ astro_patch.cmd(
     }
   }
 );
-smd(
-  {
-    pattern: "ngl",
-    react: "💬",
-    desc: "Send anonymous NGL messages.",
-    category: "misc",
-    filename: __filename,
-  },
-  async (message) => {
-    // Remove the command and split by space to get username and the rest as the message
-    const args = message.body.trim().split(" ");
-    
-    // Check if the input is valid (must have username and a message)
-    if (args.length < 3) {
-      return await message.reply("Please provide a username and a message. Format: +ngl username message");
-    }
 
-    const username = args[1];
-    const userMessage = args.slice(2).join(" "); // Combine the rest of the words as the message
-
-    try {
-      // Perform a GET request using axios to send the NGL message
-      const apiUrl = `https://itzpire.com/tools/ngl?username=${encodeURIComponent(username)}&message=${encodeURIComponent(userMessage)}`;
-      
-      const response = await axios.get(apiUrl);
-
-      if (response.data.status === "success") {
-        // Construct a reply message using the returned data
-        await message.reply(`NGL message sent successfully!\nMessage ID: ${response.data.result.questionId}\nRegion: ${response.data.result.userRegion}`);
-      } else {
-        await message.reply("Failed to send the NGL message. Please try again.");
-      }
-    } catch (error) {
-      await message.reply(`Error occurred while sending the message: ${error.message}`);
-    }
-  }
-);
 // Command: List Menu
 astro_patch.cmd(
   {

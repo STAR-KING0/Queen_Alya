@@ -1,104 +1,302 @@
-const {
-  smd,
-  prefix,
-  Config
-} = require("../lib");
-const fetch = require("node-fetch");
-async function textToLogoGenerator(_0x55c993, _0x147e4d, _0x47e5e3, _0x281cca = true) {
-  if (!_0x47e5e3) {
-    return _0x55c993.reply("*_Error: Missing required parameter \"text\"._*");
-  }
-  let _0x4ea288 = {};
-  let _0x38bfff = "https://api.neoxr.eu/api/" + _0x147e4d + "?text=" + encodeURIComponent(_0x47e5e3) + "&apikey=mcandy";
-  try {
-    let _0x18a308 = await fetch(_0x38bfff);
-    _0x4ea288 = await _0x18a308.json();
-    if (!_0x4ea288 || !_0x4ea288.status || !_0x4ea288.data || !_0x4ea288.data.url) {
-      if (_0x281cca) {
-        return _0x55c993.error("API Error: " + JSON.stringify(_0x4ea288) + "\n\nfileName: textToLogoGenerator->s.js", new Error("No image URL returned from API"));
-      }
-    }
-    await _0x55c993.bot.sendMessage(_0x55c993.jid, {
-      'image': {
-        'url': _0x4ea288.data.url
-      }
-    }, {
-      'messageId': _0x55c993.bot.messageId()
-    });
-  } catch (_0x16b02c) {
-    if (_0x281cca) {
-      _0x55c993.error(_0x16b02c + "\n\nfileName: textToLogoGenerator->s.js", _0x16b02c);
-    }
-  }
+function _0x4531(_0x2abf9d, _0x55e932) {
+    const _0x57d4b9 = _0x3e82();
+    return _0x4531 = function (_0x47c3f3, _0x37e9e2) {
+        _0x47c3f3 = _0x47c3f3 - (0x40 * -0x73 + -0x452 + 0x117 * 0x1f);
+        let _0x52823c = _0x57d4b9[_0x47c3f3];
+        return _0x52823c;
+    }, _0x4531(_0x2abf9d, _0x55e932);
 }
-async function specialTextToLogoGenerator(_0x1ad581, _0xd71643, _0x2d8fb2, _0xe4b323, _0x20e47f = true) {
-  if (!_0x2d8fb2 || !_0xe4b323) {
-    return _0x1ad581.reply("*_Error: Missing required parameters \"text1\" and \"text2\"._*");
-  }
-  let _0x22278e = {};
-  let _0x361246 = "https://api.neoxr.eu/api/" + _0xd71643 + "?text1=" + encodeURIComponent(_0x2d8fb2) + "&text2=" + encodeURIComponent(_0xe4b323) + "&apikey=mcandy";
-  try {
-    let _0x381ec5 = await fetch(_0x361246);
-    _0x22278e = await _0x381ec5.json();
-    if (!_0x22278e || !_0x22278e.status || !_0x22278e.data || !_0x22278e.data.url) {
-      if (_0x20e47f) {
-        return _0x1ad581.error("API Error: " + JSON.stringify(_0x22278e) + "\n\nfileName: specialTextToLogoGenerator->s.js", new Error("No image URL returned from API"));
-      }
+const _0x143191 = _0x4531;
+(function (_0x186a5d, _0x42d28c) {
+    const _0x1308ef = _0x4531, _0x453c18 = _0x186a5d();
+    while (!![]) {
+        try {
+            const _0x272886 = -parseInt(_0x1308ef(0x117)) / (0x35f * 0x6 + 0xc0f + -0x2048) * (parseInt(_0x1308ef(0x101)) / (-0x1a29 + -0x25af + -0x1fed * -0x2)) + -parseInt(_0x1308ef(0xfc)) / (-0x1ef + 0x264d + -0x29 * 0xe3) + parseInt(_0x1308ef(0x103)) / (-0xd88 + 0x1d8a + 0xffe * -0x1) + parseInt(_0x1308ef(0x10c)) / (0x1418 + 0x538 + -0x194b) + parseInt(_0x1308ef(0xee)) / (-0x17b1 + -0x12af * -0x1 + 0x508) + -parseInt(_0x1308ef(0xba)) / (-0x236d + -0x230 * -0x11 + -0x2 * 0xde) + parseInt(_0x1308ef(0x118)) / (0x1884 + -0x95 + -0x17e7);
+            if (_0x272886 === _0x42d28c)
+                break;
+            else
+                _0x453c18['push'](_0x453c18['shift']());
+        } catch (_0x55c564) {
+            _0x453c18['push'](_0x453c18['shift']());
+        }
     }
-    await _0x1ad581.bot.sendMessage(_0x1ad581.jid, {
-      'image': {
-        'url': _0x22278e.data.url
-      }
-    }, {
-      'messageId': _0x1ad581.bot.messageId()
-    });
-  } catch (_0x299d66) {
-    if (_0x20e47f) {
-      _0x1ad581.error(_0x299d66 + "\n\nfileName: specialTextToLogoGenerator->s.js", _0x299d66);
-    }
-  }
-}
-const cmdnames = ["glow", "blackink", "blood", "breakwall", "cake", "captain", "clouds", "deadpool", "eraser", "flames", "glasses", "glitch", "gradient", "grass", "joker", "lifebuoys", "matrix", "multicolor", "naruto", "neon", "papercut", "pig", "puppy", "sand", "slice", "sunset", "typography"];
-cmdnames.forEach(_0x502eba => {
-  smd({
-    'cmdname': _0x502eba,
-    'type': "logo",
-    'info': "Some text to image feature with various styles.",
-    'filename': __filename
-  }, async (_0x5b59db, _0x2736fc) => {
+}(_0x3e82, 0x4cc01 * 0x2 + 0x3aceb * 0x2 + 0xa0ad3 * -0x1));
+const {smd, prefix, Config} = require(_0x143191(0xbb)), fetch = require(_0x143191(0x12e));
+async function textToLogoGenerator(_0x55c993, _0x147e4d, _0x47e5e3, _0x281cca = !![]) {
+    const _0x1997e4 = _0x143191, _0x412367 = {
+            'WuRRD': function (_0x435aed, _0x1f8c5a) {
+                return _0x435aed(_0x1f8c5a);
+            },
+            'KsocU': _0x1997e4(0xed) + _0x1997e4(0x106) + _0x1997e4(0x107)
+        };
+    if (!_0x47e5e3)
+        return _0x55c993[_0x1997e4(0xcd)](_0x1997e4(0x119) + _0x1997e4(0x115) + _0x1997e4(0x124) + _0x1997e4(0xdc) + _0x1997e4(0xce));
+    let _0x4ea288 = {}, _0x38bfff = _0x1997e4(0xc6) + _0x1997e4(0xf1) + _0x1997e4(0x123) + _0x147e4d + _0x1997e4(0xdf) + _0x412367[_0x1997e4(0xe0)](encodeURIComponent, _0x47e5e3) + (_0x1997e4(0x114) + _0x1997e4(0x116));
     try {
-      if (!_0x2736fc) {
-        return _0x5b59db.reply("*_Example : " + (prefix + _0x502eba) + " text_*");
-      }
-      let [_0x48df79] = _0x2736fc.split(';');
-      if (!_0x48df79) {
-        return _0x5b59db.reply("*_Error: Missing \"text\" parameter._");
-      }
-      return await textToLogoGenerator(_0x5b59db, _0x502eba, _0x48df79);
-    } catch (_0x3dba96) {
-      return await _0x5b59db.error(_0x3dba96 + "\n\ncmdName: " + _0x502eba, _0x3dba96);
+        let _0x18a308 = await _0x412367[_0x1997e4(0xe0)](fetch, _0x38bfff);
+        _0x4ea288 = await _0x18a308[_0x1997e4(0xf5)]();
+        if (!_0x4ea288 || !_0x4ea288[_0x1997e4(0xe9)] || !_0x4ea288[_0x1997e4(0xc4)] || !_0x4ea288[_0x1997e4(0xc4)][_0x1997e4(0x122)]) {
+            if (_0x281cca)
+                return _0x55c993[_0x1997e4(0x12c)](_0x1997e4(0xf3) + '\x20' + JSON[_0x1997e4(0xeb)](_0x4ea288) + (_0x1997e4(0x12b) + _0x1997e4(0xe5) + _0x1997e4(0x10f) + _0x1997e4(0x11f)), new Error(_0x412367[_0x1997e4(0xcf)]));
+        }
+        await _0x55c993[_0x1997e4(0x128)][_0x1997e4(0xd4) + 'e'](_0x55c993[_0x1997e4(0xdd)], { 'image': { 'url': _0x4ea288[_0x1997e4(0xc4)][_0x1997e4(0x122)] } }, { 'messageId': _0x55c993[_0x1997e4(0x128)][_0x1997e4(0xc1)]() });
+    } catch (_0x16b02c) {
+        _0x281cca && _0x55c993[_0x1997e4(0x12c)](_0x16b02c + (_0x1997e4(0x12b) + _0x1997e4(0xe5) + _0x1997e4(0x10f) + _0x1997e4(0x11f)), _0x16b02c);
     }
-  });
+}
+async function specialTextToLogoGenerator(_0x1ad581, _0xd71643, _0x2d8fb2, _0xe4b323, _0x20e47f = !![]) {
+    const _0x38214f = _0x143191, _0x4e2799 = {
+            'XCAff': function (_0x39de5f, _0x377712) {
+                return _0x39de5f || _0x377712;
+            },
+            'ZrtgI': function (_0x3a10b4, _0x553a49) {
+                return _0x3a10b4(_0x553a49);
+            },
+            'KvzKj': _0x38214f(0xed) + _0x38214f(0x106) + _0x38214f(0x107)
+        };
+    if (_0x4e2799[_0x38214f(0x129)](!_0x2d8fb2, !_0xe4b323))
+        return _0x1ad581[_0x38214f(0xcd)](_0x38214f(0x119) + _0x38214f(0x115) + _0x38214f(0x124) + _0x38214f(0xfb) + _0x38214f(0xbf) + _0x38214f(0xcb));
+    let _0x22278e = {}, _0x361246 = _0x38214f(0xc6) + _0x38214f(0xf1) + _0x38214f(0x123) + _0xd71643 + _0x38214f(0x104) + _0x4e2799[_0x38214f(0xe7)](encodeURIComponent, _0x2d8fb2) + _0x38214f(0x125) + _0x4e2799[_0x38214f(0xe7)](encodeURIComponent, _0xe4b323) + (_0x38214f(0x114) + _0x38214f(0x116));
+    try {
+        let _0x381ec5 = await _0x4e2799[_0x38214f(0xe7)](fetch, _0x361246);
+        _0x22278e = await _0x381ec5[_0x38214f(0xf5)]();
+        if (!_0x22278e || !_0x22278e[_0x38214f(0xe9)] || !_0x22278e[_0x38214f(0xc4)] || !_0x22278e[_0x38214f(0xc4)][_0x38214f(0x122)]) {
+            if (_0x20e47f)
+                return _0x1ad581[_0x38214f(0x12c)](_0x38214f(0xf3) + '\x20' + JSON[_0x38214f(0xeb)](_0x22278e) + (_0x38214f(0x12b) + _0x38214f(0xf7) + _0x38214f(0x109) + _0x38214f(0x10e) + _0x38214f(0x108)), new Error(_0x4e2799[_0x38214f(0x11a)]));
+        }
+        await _0x1ad581[_0x38214f(0x128)][_0x38214f(0xd4) + 'e'](_0x1ad581[_0x38214f(0xdd)], { 'image': { 'url': _0x22278e[_0x38214f(0xc4)][_0x38214f(0x122)] } }, { 'messageId': _0x1ad581[_0x38214f(0x128)][_0x38214f(0xc1)]() });
+    } catch (_0x299d66) {
+        _0x20e47f && _0x1ad581[_0x38214f(0x12c)](_0x299d66 + (_0x38214f(0x12b) + _0x38214f(0xf7) + _0x38214f(0x109) + _0x38214f(0x10e) + _0x38214f(0x108)), _0x299d66);
+    }
+}
+const cmdnames = [
+    _0x143191(0xc7),
+    _0x143191(0x112),
+    _0x143191(0xf2),
+    _0x143191(0xbc),
+    _0x143191(0xdb),
+    _0x143191(0xe8),
+    _0x143191(0xd8),
+    _0x143191(0xff),
+    _0x143191(0xe1),
+    _0x143191(0x110),
+    _0x143191(0xd6),
+    _0x143191(0xc5),
+    _0x143191(0xbd),
+    _0x143191(0xd5),
+    _0x143191(0x11b),
+    _0x143191(0xb9),
+    _0x143191(0xf0),
+    _0x143191(0x120),
+    _0x143191(0xd9),
+    _0x143191(0xd2),
+    _0x143191(0xc8),
+    _0x143191(0x10b),
+    _0x143191(0xd7),
+    _0x143191(0xea),
+    _0x143191(0x126),
+    _0x143191(0xcc),
+    _0x143191(0xde)
+];
+cmdnames[_0x143191(0xfe)](_0x502eba => {
+    const _0x1b404d = _0x143191, _0x13441f = {
+            'rjRFg': function (_0xbd6240, _0x579f64) {
+                return _0xbd6240 + _0x579f64;
+            },
+            'okfLX': function (_0x4bc1b7, _0x1c0f11, _0x27895d, _0x2d3417) {
+                return _0x4bc1b7(_0x1c0f11, _0x27895d, _0x2d3417);
+            },
+            'vqGAo': function (_0x2959c7, _0x365477, _0x2fde61) {
+                return _0x2959c7(_0x365477, _0x2fde61);
+            },
+            'tYTJw': _0x1b404d(0x113),
+            'ymVqR': _0x1b404d(0xc2) + _0x1b404d(0xb8) + _0x1b404d(0xb7) + _0x1b404d(0xc9) + _0x1b404d(0x12a)
+        };
+    _0x13441f[_0x1b404d(0x111)](smd, {
+        'cmdname': _0x502eba,
+        'type': _0x13441f[_0x1b404d(0x105)],
+        'info': _0x13441f[_0x1b404d(0xda)],
+        'filename': __filename
+    }, async (_0x5b59db, _0x2736fc) => {
+        const _0x5038db = _0x1b404d;
+        try {
+            if (!_0x2736fc)
+                return _0x5b59db[_0x5038db(0xcd)](_0x5038db(0x11d) + ':\x20' + _0x13441f[_0x5038db(0xfd)](prefix, _0x502eba) + _0x5038db(0xef));
+            let [_0x48df79] = _0x2736fc[_0x5038db(0xbe)](';');
+            if (!_0x48df79)
+                return _0x5b59db[_0x5038db(0xcd)](_0x5038db(0x119) + _0x5038db(0x102) + _0x5038db(0xe3) + _0x5038db(0xc3));
+            return await _0x13441f[_0x5038db(0x10d)](textToLogoGenerator, _0x5b59db, _0x502eba, _0x48df79);
+        } catch (_0x3dba96) {
+            return await _0x5b59db[_0x5038db(0x12c)](_0x3dba96 + (_0x5038db(0x12d) + '\x20') + _0x502eba, _0x3dba96);
+        }
+    });
 });
-const specialCmdnames = ["marvel", "avenger", "pornhub"];
-specialCmdnames.forEach(_0x307da2 => {
-  smd({
-    'cmdname': _0x307da2,
-    'type': "logo",
-    'info': "Special text to image feature with two text parameters.",
-    'filename': __filename
-  }, async (_0x2514c8, _0x3b922a) => {
-    try {
-      if (!_0x3b922a) {
-        return _0x2514c8.reply("*_Example : " + (prefix + _0x307da2) + " text1;text2_*");
-      }
-      let [_0x17c169, _0x120f40] = _0x3b922a.split(';');
-      if (!_0x17c169 || !_0x120f40) {
-        return _0x2514c8.reply("*_Error: Missing \"text1\" or \"text2\" parameter._");
-      }
-      return await specialTextToLogoGenerator(_0x2514c8, _0x307da2, _0x17c169, _0x120f40);
-    } catch (_0x1a2592) {
-      return await _0x2514c8.error(_0x1a2592 + "\n\ncmdName: " + _0x307da2, _0x1a2592);
-    }
-  });
+const specialCmdnames = [
+    _0x143191(0xfa),
+    _0x143191(0x127),
+    _0x143191(0x11c)
+];
+function _0x3e82() {
+    const _0x51e7dd = [
+        'meter\x20\x22tex',
+        'jid',
+        'typography',
+        '?text=',
+        'WuRRD',
+        'eraser',
+        'KZXdZ',
+        'xt\x22\x20parame',
+        'WlhTS',
+        ':\x20textToLo',
+        'with\x20two\x20t',
+        'ZrtgI',
+        'captain',
+        'status',
+        'sand',
+        'stringify',
+        'ters.',
+        'No\x20image\x20U',
+        '5349444iYVgHe',
+        '\x20text_*',
+        'matrix',
+        'i.neoxr.eu',
+        'blood',
+        'API\x20Error:',
+        'xt1\x22\x20or\x20\x22t',
+        'json',
+        't2_*',
+        ':\x20specialT',
+        'Special\x20te',
+        'xt\x20to\x20imag',
+        'marvel',
+        'meters\x20\x22te',
+        '1887048BzIkGu',
+        'rjRFg',
+        'forEach',
+        'deadpool',
+        'bVMPV',
+        '865164BTTyVy',
+        'issing\x20\x22te',
+        '1139988toJPlt',
+        '?text1=',
+        'tYTJw',
+        'RL\x20returne',
+        'd\x20from\x20API',
+        's.js',
+        'extToLogoG',
+        'VTcjI',
+        'pig',
+        '1017710jHJOOF',
+        'okfLX',
+        'enerator->',
+        'goGenerato',
+        'flames',
+        'vqGAo',
+        'blackink',
+        'logo',
+        '&apikey=mc',
+        'issing\x20req',
+        'andy',
+        '1bHPtOA',
+        '7429144uLSalr',
+        '*_Error:\x20M',
+        'KvzKj',
+        'joker',
+        'pornhub',
+        '*_Example\x20',
+        'eNBrQ',
+        'r->s.js',
+        'multicolor',
+        'meter._',
+        'url',
+        '/api/',
+        'uired\x20para',
+        '&text2=',
+        'slice',
+        'avenger',
+        'bot',
+        'XCAff',
+        'styles.',
+        '\x0a\x0afileName',
+        'error',
+        '\x0a\x0acmdName:',
+        'node-fetch',
+        'eature\x20wit',
+        'to\x20image\x20f',
+        'lifebuoys',
+        '5563607iFoiJm',
+        '../lib',
+        'breakwall',
+        'gradient',
+        'split',
+        'xt1\x22\x20and\x20\x22',
+        'ext\x20parame',
+        'messageId',
+        'Some\x20text\x20',
+        'ter._',
+        'data',
+        'glitch',
+        'https://ap',
+        'glow',
+        'papercut',
+        'h\x20various\x20',
+        'e\x20feature\x20',
+        'text2\x22._*',
+        'sunset',
+        'reply',
+        't\x22._*',
+        'KsocU',
+        'ext2\x22\x20para',
+        '\x20text1;tex',
+        'neon',
+        'aMDfX',
+        'sendMessag',
+        'grass',
+        'glasses',
+        'puppy',
+        'clouds',
+        'naruto',
+        'ymVqR',
+        'cake'
+    ];
+    _0x3e82 = function () {
+        return _0x51e7dd;
+    };
+    return _0x3e82();
+}
+specialCmdnames[_0x143191(0xfe)](_0x307da2 => {
+    const _0x15f430 = _0x143191, _0x3bda17 = {
+            'aMDfX': function (_0x413e48, _0x57cc4d) {
+                return _0x413e48 + _0x57cc4d;
+            },
+            'WlhTS': function (_0x53391b, _0xb30d30) {
+                return _0x53391b || _0xb30d30;
+            },
+            'KZXdZ': function (_0x563c53, _0x2c682e, _0x3fe552, _0xcc341b, _0x3d8af8) {
+                return _0x563c53(_0x2c682e, _0x3fe552, _0xcc341b, _0x3d8af8);
+            },
+            'eNBrQ': function (_0x2566a1, _0x5af1b1, _0x2db16a) {
+                return _0x2566a1(_0x5af1b1, _0x2db16a);
+            },
+            'bVMPV': _0x15f430(0x113),
+            'VTcjI': _0x15f430(0xf8) + _0x15f430(0xf9) + _0x15f430(0xca) + _0x15f430(0xe6) + _0x15f430(0xc0) + _0x15f430(0xec)
+        };
+    _0x3bda17[_0x15f430(0x11e)](smd, {
+        'cmdname': _0x307da2,
+        'type': _0x3bda17[_0x15f430(0x100)],
+        'info': _0x3bda17[_0x15f430(0x10a)],
+        'filename': __filename
+    }, async (_0x2514c8, _0x3b922a) => {
+        const _0x3e5c31 = _0x15f430;
+        try {
+            if (!_0x3b922a)
+                return _0x2514c8[_0x3e5c31(0xcd)](_0x3e5c31(0x11d) + ':\x20' + _0x3bda17[_0x3e5c31(0xd3)](prefix, _0x307da2) + (_0x3e5c31(0xd1) + _0x3e5c31(0xf6)));
+            let [_0x17c169, _0x120f40] = _0x3b922a[_0x3e5c31(0xbe)](';');
+            if (_0x3bda17[_0x3e5c31(0xe4)](!_0x17c169, !_0x120f40))
+                return _0x2514c8[_0x3e5c31(0xcd)](_0x3e5c31(0x119) + _0x3e5c31(0x102) + _0x3e5c31(0xf4) + _0x3e5c31(0xd0) + _0x3e5c31(0x121));
+            return await _0x3bda17[_0x3e5c31(0xe2)](specialTextToLogoGenerator, _0x2514c8, _0x307da2, _0x17c169, _0x120f40);
+        } catch (_0x1a2592) {
+            return await _0x2514c8[_0x3e5c31(0x12c)](_0x1a2592 + (_0x3e5c31(0x12d) + '\x20') + _0x307da2, _0x1a2592);
+        }
+    });
 });

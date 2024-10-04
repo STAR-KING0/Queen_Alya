@@ -5,7 +5,7 @@ const Config = require("../config");
 
 smd(
   {
-    pattern: "rwallpaper",
+    pattern: "wallpaper",
     category: "wallpaper",
     filename: __filename,
     desc: "Get a random wallpaper.",

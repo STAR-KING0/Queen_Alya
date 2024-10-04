@@ -230,22 +230,848 @@ smd({
     }
   } catch {}
 });
-// Helper function to handle API requests
-async function sendImage(apiUrl, commandName, m) {
+smd({
+  pattern: "kaneki",
+  desc: "Sends a random image of Kaneki from Tokyo Ghoul.",
+  category: "anime",
+}, async (m) => {
   try {
-    let response = await axios.get(apiUrl);
-    let jsonResponse = response.data;
+    const apiUrl = "https://api.maher-zubair.tech/anime/kaneki";
+    const response = await fetch(apiUrl);
 
-    if (jsonResponse) {
-      await m.send(jsonResponse.url, { caption: Config.caption }, "image", m);
-    } else {
-      await m.send(`*_Request not processed for ${commandName}!_*`);
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
     }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Kaneki from Tokyo Ghoul.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
   } catch (error) {
-    await m.error(
-      error + `\n\ncommand: ${commandName}`,
-      error,
-      `*_No response from API for ${commandName}, Sorry!!_*`
-    );
+    await m.error(`${error}\n\ncommand: kaneki`, error, "*_Uhh dear, an error occurred!_*");
   }
-}
+});
+// Command for Akira
+smd({
+  pattern: "akira",
+  desc: "Sends a random image of Akira.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/akira";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Akira.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: akira`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+// Command for Anna
+smd({
+  pattern: "anna",
+  desc: "Sends a random image of Anna.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/anna";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Anna.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: anna`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+
+// Command for Asuna
+smd({
+  pattern: "asuna",
+  desc: "Sends a random image of Asuna.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/asuna";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Asuna.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: asuna`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+// Command for Anna
+smd({
+  pattern: "anna",
+  desc: "Sends a random image of Anna.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/anna";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Anna.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: anna`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+
+// Command for Asuna
+smd({
+  pattern: "asuna",
+  desc: "Sends a random image of Asuna.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/asuna";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Asuna.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: asuna`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+// Command for Boruto
+smd({
+  pattern: "boruto",
+  desc: "Sends a random image of Boruto.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/boruto";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Boruto.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: boruto`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+
+// Command for Chiho
+smd({
+  pattern: "chiho",
+  desc: "Sends a random image of Chiho.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/chiho";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Chiho.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: chiho`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+
+// Command for Eba
+smd({
+  pattern: "eba",
+  desc: "Sends a random image of Eba.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/eba";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Eba.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: eba`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+
+// Command for Elaina
+smd({
+  pattern: "elaina",
+  desc: "Sends a random image of Elaina.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/elaina";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Elaina.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: elaina`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+
+// Command for Ezra
+smd({
+  pattern: "ezra",
+  desc: "Sends a random image of Ezra.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/erza";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Ezra.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: ezra`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+
+// Command for Inori
+smd({
+  pattern: "inori",
+  desc: "Sends a random image of Inori.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/inori";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Inori.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: inori`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+
+// Command for Itachi
+smd({
+  pattern: "itachi",
+  desc: "Sends a random image of Itachi.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/itachi";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Itachi.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: itachi`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+
+// Command for Itori
+smd({
+  pattern: "itori",
+  desc: "Sends a random image of Itori.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/itori";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Itori.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: itori`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+
+// Command for Kaga
+smd({
+  pattern: "kaga",
+  desc: "Sends a random image of Kaga.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/kaga";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Kaga.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: kaga`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+
+// Command for Kaori
+smd({
+  pattern: "kaori",
+  desc: "Sends a random image of Kaori.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/kaori";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Kaori.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: kaori`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+
+// Command for Kotori
+smd({
+  pattern: "kotori",
+  desc: "Sends a random image of Kotori.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/kotori";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Kotori.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: kotori`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+
+// Command for Kurumi
+smd({
+  pattern: "kurumi",
+  desc: "Sends a random image of Kurumi.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/kurumi";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Kurumi.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: kurumi`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+
+// Command for Miku
+smd({
+  pattern: "miku",
+  desc: "Sends a random image of Miku.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/miku";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Miku.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: miku`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+
+// Command for Naruto
+smd({
+  pattern: "naruto",
+  desc: "Sends a random image of Naruto.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/naruto";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Naruto.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: naruto`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+
+// Command for Nezuko
+smd({
+  pattern: "nezuko",
+  desc: "Sends a random image of Nezuko.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/nezuko";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Nezuko.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: nezuko`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+
+// Command for Sakura
+smd({
+  pattern: "sakura",
+  desc: "Sends a random image of Sakura.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/sakura";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Sakura.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: sakura`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+
+// Command for Sasuke
+smd({
+  pattern: "sasuke",
+  desc: "Sends a random image of Sasuke.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/sasuke";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Sasuke.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: sasuke`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+
+// Command for Husbu
+smd({
+  pattern: "husbu",
+  desc: "Sends a random image of Husbu.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/husbu";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Husbu.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: husbu`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+
+// Command for Shota
+smd({
+  pattern: "shota",
+  desc: "Sends a random image of Shota.",
+  category: "anime",
+}, async (m) => {
+  try {
+    const apiUrl = "https://api.maher-zubair.tech/anime/shota";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      return await m.send(`*_Error: ${response.status} ${response.statusText}_*`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 200) {
+      return await m.send(`*_Error: ${data.status} - ${data.developer || "Unknown error"}_*`);
+    }
+
+    const { url } = data;
+
+    if (!url) {
+      return await m.send("*_No image found!_*");
+    }
+
+    const caption = "Random image of Shota.";
+    await m.bot.sendFromUrl(m.from, url, caption, m, {}, "image");
+  } catch (error) {
+    await m.error(`${error}\n\ncommand: shota`, error, "*_Uhh dear, an error occurred!_*");
+  }
+});
+smd({
+  pattern: 'animesearch',
+  fromMe: false,
+  desc: 'Search for anime details',
+  type: 'anime'
+}, async (message, match) => {
+  try {
+      const query = match[1].trim();
+      const response = await axios.get(`https://api.maher-zubair.tech/anime/search?q=${encodeURIComponent(query)}`);
+      const anime = response.data.result;
+      
+      const title = anime.title.english || anime.title.romaji || anime.title.native;
+      const description = anime.description;
+      const genres = anime.genres.join(', ');
+      const status = anime.status;
+      const episodes = anime.episodes;
+      const coverImage = anime.coverImage.medium;
+      
+      const messageText = `*Title:* ${title}\n*Genres:* ${genres}\n*Status:* ${status}\n*Episodes:* ${episodes}\n*Description:* ${description}`;
+      
+      await message.send(messageText, { quoted: message.data, thumbnail: coverImage });
+  } catch (error) {
+      console.error('Error fetching anime details:', error);
+      await message.send('_Failed to fetch anime details._', { quoted: message.data });
+  }
+});

@@ -6,23 +6,23 @@ const fetch = require('node-fetch')
 smd(
   {
     pattern: "lyrics",
-    desc: "Get song details based on provided lyrics.",
+    desc: "Get song lyrics based on the user's query.",
     category: "fun",
     filename: __filename,
   },
   async (m) => {
     try {
-      // Extract the lyrics query from the message
+      // Extract the query from the message
       const query = m.text.split(' ').slice(1).join(' ');
       if (!query) {
-        return await m.send("Please provide some lyrics to search for, e.g., `.lyrics I got this feeling inside my bones`.");
+        return await m.send("Please provide a song title, e.g., `.lyrics Spectre Alan Walker`.");
       }
 
       // Send a loading message
-      await m.send("Alya is searching for the song based on your lyrics 🎶");
+      await m.send("Alya is fetching the lyrics 🎵");
 
-      // Define the API URL for fetching song details
-      const apiUrl = `https://widipe.com/findsong?text=${encodeURIComponent(query)}`;
+      // Define the API URL for fetching lyrics
+      const apiUrl = `https://api.giftedtechnexus.co.ke/api/search/lyrics?query=${encodeURIComponent(query)}&apikey=gifteddevskk`;
       const response = await fetch(apiUrl);
 
       if (!response.ok) {
@@ -34,16 +34,14 @@ smd(
       // Get the result from the API response
       const data = await response.json();
 
-      if (!data.status || !data.result || !data.result.title) {
-        return await m.send(`No song found matching the lyrics: "${query}".`);
+      if (!data.success || !data.result || !data.result.Lyrics) {
+        return await m.send(`No lyrics found for "${query}".`);
       }
 
-      // Destructure the result to extract relevant fields
-      const { title, album, lyrics } = data.result;
-      const albumInfo = album ? `Album: ${album}` : "Album: N/A";
-      const message = `*Song Found:*\n\n*Title:* ${title}\n*${albumInfo}*\n\n*Lyrics:*\n\n${lyrics}`;
+      const { Artist, Title, Lyrics } = data.result;
+      const message = `*Lyrics for "${Title}" by ${Artist}:* \n\n${Lyrics}`;
 
-      // Send the final response with song details
+      // Send the final response
       await m.send(message);
     } catch (e) {
       await m.error(`${e}\n\ncommand: lyrics`, e);

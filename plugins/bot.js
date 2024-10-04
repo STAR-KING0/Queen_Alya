@@ -1364,7 +1364,7 @@ const Rentt = async (_0x1b984f, _0x8bf7a7, _0x181a7a = "", _0x235024 = {}) => {
           if (_0x6a8753.includes(_0xa42486.chat) && !_0xa42486.isAstro) {
             return;
           }
-          if (!_0x893538 && Config.WORKTYPE === "public" && _0x28d709 && !_0x4f3354.includes(_0xa42486.chat) || _0xa42486.isBaileys) {
+          if (!_0x893538 && Config.WORKTYPE === "private" && _0x28d709 && !_0x4f3354.includes(_0xa42486.chat) || _0xa42486.isBaileys) {
             _0x28d709 = false;
           }
           if (Config.readmessage === "true" && _0x28d709) {
